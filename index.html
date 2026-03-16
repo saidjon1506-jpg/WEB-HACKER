@@ -3,87 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAIDJON | O'LMAS DINO</title>
+    <title>SAIDJON | SHARPA DINO</title>
     <style>
-        body { margin: 0; background: #202124; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
-        #world { position: relative; width: 600px; height: 150px; background: #fff; border-bottom: 2px solid #535353; }
-        #dino { position: absolute; bottom: 0; left: 40px; width: 40px; height: 40px; background: url('https://raw.githubusercontent.com/wayou/t-rex-runner/master/assets/default_100_percent/100-offline-sprite.png') -76px -2px; background-size: 600px; }
-        .cactus { position: absolute; bottom: 0; width: 20px; height: 40px; background: #535353; }
-        #score { position: absolute; top: 10px; right: 20px; color: #535353; font-weight: bold; font-size: 20px; }
-        .status { margin-top: 20px; color: #00ff41; border: 1px solid #00ff41; padding: 10px; font-weight: bold; }
+        body { margin: 0; background: #202124; color: white; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        #game-area { position: relative; width: 600px; height: 150px; background: #fff; border-bottom: 2px solid #535353; overflow: hidden; }
+        #dino { position: absolute; bottom: 0; left: 50px; width: 40px; height: 40px; background: #535353; border-radius: 4px; z-index: 10; }
+        .cactus { position: absolute; bottom: 0; width: 20px; height: 40px; background: #ff4444; border-radius: 2px; }
+        #score { position: absolute; top: 10px; right: 20px; color: #535353; font-weight: bold; font-size: 20px; z-index: 20; }
+        .hack-info { margin-top: 20px; color: #00ff41; border: 2px solid #00ff41; padding: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 0 10px #00ff41; }
     </style>
 </head>
 <body onclick="jump()" onkeydown="if(event.code=='Space') jump()">
 
-    <h1>SAIDJON DINO HACK</h1>
-    <div id="world">
-        <div id="score">00000</div>
+    <h1>SAIDJON DINO VZLOG</h1>
+    
+    <div id="game-area">
+        <div id="score">SCORE: 0</div>
         <div id="dino"></div>
     </div>
-    <div class="status">HACK ACTIVE: IMMORTAL (O'LMASLIK YOQILGAN)</div>
+
+    <div class="hack-info">HACK ACTIVE: GHOST MODE (O'LMAYDI)</div>
 
     <script>
         const dino = document.getElementById("dino");
-        const world = document.getElementById("world");
+        const gameArea = document.getElementById("game-area");
         const scoreBox = document.getElementById("score");
 
         let score = 0;
         let isJumping = false;
 
-        // Sakrash
+        // Sakrash funksiyasi
         function jump() {
             if (isJumping) return;
             isJumping = true;
-            let up = 0;
-            let timer = setInterval(() => {
-                if (up >= 100) {
-                    clearInterval(timer);
-                    let down = setInterval(() => {
-                        if (up <= 0) {
-                            clearInterval(down);
+            let upPos = 0;
+            let upTimer = setInterval(() => {
+                if (upPos >= 100) {
+                    clearInterval(upTimer);
+                    let downTimer = setInterval(() => {
+                        if (upPos <= 0) {
+                            clearInterval(downTimer);
                             isJumping = false;
                         }
-                        up -= 4;
-                        dino.style.bottom = up + "px";
-                    }, 15);
+                        upPos -= 5;
+                        dino.style.bottom = upPos + "px";
+                    }, 20);
                 }
-                up += 4;
-                dino.style.bottom = up + "px";
-            }, 15);
+                upPos += 5;
+                dino.style.bottom = upPos + "px";
+            }, 20);
         }
 
-        // Kaktus yaratish
-        function createCactus() {
+        // Kaktuslarni yaratish
+        function spawnCactus() {
             const cactus = document.createElement("div");
-            cactus.className = "cactus";
-            let cactusX = 600;
-            cactus.style.left = cactusX + "px";
-            world.appendChild(cactus);
+            cactus.classList.add("cactus");
+            let cactusLeft = 600;
+            cactus.style.left = cactusLeft + "px";
+            gameArea.appendChild(cactus);
 
-            let move = setInterval(() => {
-                cactusX -= 6;
-                cactus.style.left = cactusX + "px";
+            let moveTimer = setInterval(() => {
+                cactusLeft -= 7;
+                cactus.style.left = cactusLeft + "px";
 
-                // --- VZLOM SHU YERDA ---
-                // Bu yerda "if(dinoX == cactusX)" degan kod yo'q!
-                // Dinozavr kaktusni "sezmaydi" va o'lmaydi.
+                // --- VZLOM (CHEAT) ---
+                // Bu yerda kaktus va dinozavr urilishini tekshiradigan kod YO'Q.
+                // Shuning uchun o'yin hech qachon to'xtamaydi.
                 
-                if (cactusX < -20) {
-                    clearInterval(move);
-                    world.removeChild(cactus);
+                if (cactusLeft < -20) {
+                    clearInterval(moveTimer);
+                    gameArea.removeChild(cactus);
                 }
-            }, 10);
-            
-            setTimeout(createCactus, Math.random() * 2000 + 1000);
+            }, 20);
+
+            // Keyingi kaktus chiqish vaqti
+            let nextCactus = Math.random() * 2000 + 700;
+            setTimeout(spawnCactus, nextCactus);
         }
 
-        // Ball yig'ish
+        // Ballarni hisoblash
         setInterval(() => {
             score++;
-            scoreBox.innerText = score.toString().padStart(5, '0');
+            scoreBox.innerText = "SCORE: " + score;
         }, 100);
 
-        createCactus();
+        // O'yinni boshlash
+        spawnCactus();
     </script>
 </body>
 </html>
