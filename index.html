@@ -1,60 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <title>DA7RKX0 | ANDROID EXPLOIT</title>
+    <title>SAIDJON | REMOTE ACCESS PRO</title>
     <style>
-        body { background: #000; color: #00ff41; font-family: 'Courier New', monospace; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
-        #terminal { width: 80%; height: 300px; border: 1px solid #00ff41; padding: 20px; overflow-y: auto; background: rgba(0,20,0,0.9); box-shadow: 0 0 20px #00ff41; }
-        .mirror-screen { display: none; width: 200px; height: 400px; border: 5px solid #333; border-radius: 20px; margin-top: 20px; background: url('https://raw.githubusercontent.com/Saidjon-code/assets/main/mock-phone.png'); background-size: cover; position: relative; animation: flash 0.1s infinite; }
-        @keyframes flash { 0% { opacity: 1; } 50% { opacity: 0.8; } 100% { opacity: 1; } }
-        .loading-bar { width: 0%; height: 2px; background: #00ff41; margin-top: 10px; transition: 5s; }
+        :root { --neon: #00ff41; --bg: #050505; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        
+        .panel { border: 2px solid var(--neon); padding: 30px; background: #000; box-shadow: 0 0 30px rgba(0,255,65,0.3); text-align: center; max-width: 500px; width: 90%; }
+        
+        #qr-container { background: #fff; padding: 15px; display: inline-block; margin: 20px 0; border: 5px solid var(--neon); }
+        
+        .loading-text { font-size: 0.8rem; height: 50px; overflow: hidden; margin-top: 10px; color: #888; }
+        
+        .status-badge { background: #ff0000; color: #fff; padding: 5px 10px; font-weight: bold; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0.5; } }
+
+        #success-screen { display: none; }
     </style>
 </head>
 <body>
 
-    <h2>[ DA7RKX0 EXPLOIT ENGINE ]</h2>
-    <div id="terminal">
-        > Initializing 0-day exploit...<br>
-        > Searching for nearby Android devices...<br>
-    </div>
-    <div class="loading-bar" id="bar"></div>
+    <div class="panel" id="main-panel">
+        <h2 style="margin: 0; letter-spacing: 3px;">REMOTE CONTROL v4.2</h2>
+        <p>[ SERVER: ONLINE | ENCRYPTION: AES-256 ]</p>
+        
+        <div id="qr-container">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=EXPLOIT_CONNECTED_ID_9921" alt="QR Code">
+        </div>
 
-    <div class="mirror-screen" id="phone">
-        <div style="color:red; font-size:10px; text-align:center; margin-top:50%; font-weight:bold;">
-            REMOTE CONTROL ACTIVE<br>IP: 192.168.1.105
+        <p>Skanerlangandan so'ng "Payload" avtomatik yuklanadi</p>
+        
+        <div class="loading-text" id="logs">
+            > Waiting for connection...<br>
+            > Listening on port 4444...
+        </div>
+    </div>
+
+    <div class="panel" id="success-screen">
+        <h2 style="color: #ff0000;">CONNECTION ESTABLISHED!</h2>
+        <div class="status-badge">TARGET: ANDROID_13_REMOTE</div>
+        <div style="text-align: left; margin-top: 20px; font-size: 0.9rem;">
+            > IP: 192.168.1.105<br>
+            > Location: Tashkent, UZ<br>
+            > Battery: 77% (Charging)<br>
+            > Mirroring: STARTING...
+        </div>
+        <div style="margin-top: 20px; border: 1px solid var(--neon); height: 100px; display: flex; align-items: center; justify-content: center;">
+            [ EKRAX TASVIRI YUKLANMOQDA... ]
         </div>
     </div>
 
     <script>
-        const term = document.getElementById('terminal');
-        const phone = document.getElementById('phone');
-        const bar = document.getElementById('bar');
+        const logs = document.getElementById('logs');
+        const main = document.getElementById('main-panel');
+        const success = document.getElementById('success-screen');
 
-        const logs = [
-            "> Target found: SM-G998B (Android 13)",
-            "> Bypassing Knox security...",
-            "> Injecting payload.apk...",
-            "> Establishing reverse shell...",
-            "> Remote screen mirroring: ENABLED",
-            "> ACCESS GRANTED!"
-        ];
-
-        let i = 0;
-        const interval = setInterval(() => {
-            if(i < logs.length) {
-                term.innerHTML += `<br>${logs[i]}`;
-                term.scrollTop = term.scrollHeight;
-                i++;
-            } else {
-                clearInterval(interval);
-                bar.style.width = "100%";
+        // Bu qismda ulanish simulyatsiyasi (10 soniyadan keyin ulanadi)
+        setTimeout(() => {
+            logs.innerHTML += "<br>> Connection detected from 192.168.1.105";
+            setTimeout(() => {
+                logs.innerHTML += "<br>> Bypassing security layers...";
                 setTimeout(() => {
-                    phone.style.display = "block";
-                    alert("DIQQAT: Telefoningiz DA7RKX0 tomonidan nazoratga olindi!");
-                }, 1000);
-            }
-        }, 1500);
+                    main.style.display = "none";
+                    success.style.display = "block";
+                }, 2000);
+            }, 2000);
+        }, 5000);
     </script>
+
 </body>
 </html>
