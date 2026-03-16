@@ -2,93 +2,59 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAIDJON | SHARPA DINO</title>
+    <title>DA7RKX0 | ANDROID EXPLOIT</title>
     <style>
-        body { margin: 0; background: #202124; color: white; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
-        #game-area { position: relative; width: 600px; height: 150px; background: #fff; border-bottom: 2px solid #535353; overflow: hidden; }
-        #dino { position: absolute; bottom: 0; left: 50px; width: 40px; height: 40px; background: #535353; border-radius: 4px; z-index: 10; }
-        .cactus { position: absolute; bottom: 0; width: 20px; height: 40px; background: #ff4444; border-radius: 2px; }
-        #score { position: absolute; top: 10px; right: 20px; color: #535353; font-weight: bold; font-size: 20px; z-index: 20; }
-        .hack-info { margin-top: 20px; color: #00ff41; border: 2px solid #00ff41; padding: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 0 10px #00ff41; }
+        body { background: #000; color: #00ff41; font-family: 'Courier New', monospace; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+        #terminal { width: 80%; height: 300px; border: 1px solid #00ff41; padding: 20px; overflow-y: auto; background: rgba(0,20,0,0.9); box-shadow: 0 0 20px #00ff41; }
+        .mirror-screen { display: none; width: 200px; height: 400px; border: 5px solid #333; border-radius: 20px; margin-top: 20px; background: url('https://raw.githubusercontent.com/Saidjon-code/assets/main/mock-phone.png'); background-size: cover; position: relative; animation: flash 0.1s infinite; }
+        @keyframes flash { 0% { opacity: 1; } 50% { opacity: 0.8; } 100% { opacity: 1; } }
+        .loading-bar { width: 0%; height: 2px; background: #00ff41; margin-top: 10px; transition: 5s; }
     </style>
 </head>
-<body onclick="jump()" onkeydown="if(event.code=='Space') jump()">
+<body>
 
-    <h1>SAIDJON DINO VZLOG</h1>
-    
-    <div id="game-area">
-        <div id="score">SCORE: 0</div>
-        <div id="dino"></div>
+    <h2>[ DA7RKX0 EXPLOIT ENGINE ]</h2>
+    <div id="terminal">
+        > Initializing 0-day exploit...<br>
+        > Searching for nearby Android devices...<br>
+    </div>
+    <div class="loading-bar" id="bar"></div>
+
+    <div class="mirror-screen" id="phone">
+        <div style="color:red; font-size:10px; text-align:center; margin-top:50%; font-weight:bold;">
+            REMOTE CONTROL ACTIVE<br>IP: 192.168.1.105
+        </div>
     </div>
 
-    <div class="hack-info">HACK ACTIVE: GHOST MODE (O'LMAYDI)</div>
-
     <script>
-        const dino = document.getElementById("dino");
-        const gameArea = document.getElementById("game-area");
-        const scoreBox = document.getElementById("score");
+        const term = document.getElementById('terminal');
+        const phone = document.getElementById('phone');
+        const bar = document.getElementById('bar');
 
-        let score = 0;
-        let isJumping = false;
+        const logs = [
+            "> Target found: SM-G998B (Android 13)",
+            "> Bypassing Knox security...",
+            "> Injecting payload.apk...",
+            "> Establishing reverse shell...",
+            "> Remote screen mirroring: ENABLED",
+            "> ACCESS GRANTED!"
+        ];
 
-        // Sakrash funksiyasi
-        function jump() {
-            if (isJumping) return;
-            isJumping = true;
-            let upPos = 0;
-            let upTimer = setInterval(() => {
-                if (upPos >= 100) {
-                    clearInterval(upTimer);
-                    let downTimer = setInterval(() => {
-                        if (upPos <= 0) {
-                            clearInterval(downTimer);
-                            isJumping = false;
-                        }
-                        upPos -= 5;
-                        dino.style.bottom = upPos + "px";
-                    }, 20);
-                }
-                upPos += 5;
-                dino.style.bottom = upPos + "px";
-            }, 20);
-        }
-
-        // Kaktuslarni yaratish
-        function spawnCactus() {
-            const cactus = document.createElement("div");
-            cactus.classList.add("cactus");
-            let cactusLeft = 600;
-            cactus.style.left = cactusLeft + "px";
-            gameArea.appendChild(cactus);
-
-            let moveTimer = setInterval(() => {
-                cactusLeft -= 7;
-                cactus.style.left = cactusLeft + "px";
-
-                // --- VZLOM (CHEAT) ---
-                // Bu yerda kaktus va dinozavr urilishini tekshiradigan kod YO'Q.
-                // Shuning uchun o'yin hech qachon to'xtamaydi.
-                
-                if (cactusLeft < -20) {
-                    clearInterval(moveTimer);
-                    gameArea.removeChild(cactus);
-                }
-            }, 20);
-
-            // Keyingi kaktus chiqish vaqti
-            let nextCactus = Math.random() * 2000 + 700;
-            setTimeout(spawnCactus, nextCactus);
-        }
-
-        // Ballarni hisoblash
-        setInterval(() => {
-            score++;
-            scoreBox.innerText = "SCORE: " + score;
-        }, 100);
-
-        // O'yinni boshlash
-        spawnCactus();
+        let i = 0;
+        const interval = setInterval(() => {
+            if(i < logs.length) {
+                term.innerHTML += `<br>${logs[i]}`;
+                term.scrollTop = term.scrollHeight;
+                i++;
+            } else {
+                clearInterval(interval);
+                bar.style.width = "100%";
+                setTimeout(() => {
+                    phone.style.display = "block";
+                    alert("DIQQAT: Telefoningiz DA7RKX0 tomonidan nazoratga olindi!");
+                }, 1000);
+            }
+        }, 1500);
     </script>
 </body>
 </html>
