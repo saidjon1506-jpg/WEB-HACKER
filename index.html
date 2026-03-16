@@ -1,127 +1,90 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAIDJON HACKED DINO</title>
+    <title>IMMORTAL DINO | SAIDJON</title>
     <style>
-        body {
-            margin: 0; padding: 0; background: #f7f7f7;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            height: 100vh; font-family: 'Courier New', Courier, monospace;
-        }
-        #game-box {
-            position: relative; width: 600px; height: 200px;
-            background: #fff; border-bottom: 2px solid #535353;
-            overflow: hidden; cursor: pointer;
-        }
-        .dino {
-            position: absolute; bottom: 0; left: 50px;
-            width: 44px; height: 47px; z-index: 10;
-        }
-        .cactus {
-            position: absolute; bottom: 0;
-            width: 25px; height: 50px;
-        }
-        #score-board {
-            position: absolute; top: 10px; right: 20px;
-            font-size: 20px; color: #535353; font-weight: bold;
-        }
-        .hacker-label {
-            margin-top: 20px; padding: 10px 20px;
-            background: #000; color: #00ff41;
-            border-radius: 5px; font-weight: bold;
-            box-shadow: 0 0 10px rgba(0,255,65,0.5);
-        }
+        body { margin: 0; padding: 0; background: #f7f7f7; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; font-family: monospace; }
+        #game { position: relative; width: 600px; height: 200px; background: #fff; border-bottom: 2px solid #535353; overflow: hidden; }
+        #dino { position: absolute; bottom: 0; left: 50px; width: 40px; height: 40px; background: #535353; border-radius: 5px; transition: bottom 0.1s; }
+        .cactus { position: absolute; bottom: 0; width: 20px; height: 40px; background: #ff0000; border-radius: 3px; }
+        #score { position: absolute; top: 10px; right: 20px; font-size: 20px; color: #535353; font-weight: bold; }
+        .hack-status { margin-top: 20px; color: #00ff00; background: #000; padding: 10px; font-weight: bold; border-radius: 5px; }
     </style>
 </head>
-<body onclick="jump()">
+<body onclick="jump()" onkeydown="if(event.code=='Space') jump()">
 
-    <h1>DINO HACK v2.0</h1>
+    <h1>SAIDJON HACKED DINO</h1>
     
-    <div id="game-box">
-        <div id="score-board">00000</div>
-        
-        <svg id="dino-player" class="dino" viewBox="0 0 24 24" fill="#535353">
-            <path d="M22,13V7H21L20,6H19V5H18V4H17V3H12V4H11V5H10V6H9V7H8V8H7V9H6V10H5V11H3V14H4V15H5V16H6V17H7V18H8V19H9V20H15V19H14V18H13V17H12V16H11V15H10V14H9V13H8V12H9V11H10V10H11V9H12V8H15V9H16V10H17V11H18V12H19V13H22M7,3H8V4H7V3M15,3H16V4H15V3Z"/>
-        </svg>
-
-        <div id="obstacles"></div>
+    <div id="game">
+        <div id="score">SCORE: 0</div>
+        <div id="dino"></div>
     </div>
 
-    <div class="hacker-label">HACK STATUS: IMMORTAL (O'LMAS) 🦖🔥</div>
+    <div class="hack-status">STATUS: SHARPA REJIMI (TO'QNASHUV O'CHIRILGAN) 👻</div>
 
     <script>
-        const dino = document.getElementById("dino-player");
-        const obstaclesCont = document.getElementById("obstacles");
-        const scoreBoard = document.getElementById("score-board");
+        const dino = document.getElementById("dino");
+        const game = document.getElementById("game");
+        const scoreDisplay = document.getElementById("score");
 
         let isJumping = false;
         let score = 0;
-        let gameActive = true;
 
         // Sakrash funksiyasi
         function jump() {
             if (isJumping) return;
             isJumping = true;
             let pos = 0;
-            let timer = setInterval(() => {
-                if (pos >= 100) {
-                    clearInterval(timer);
-                    let downTimer = setInterval(() => {
+            let up = setInterval(() => {
+                if (pos >= 120) {
+                    clearInterval(up);
+                    let down = setInterval(() => {
                         if (pos <= 0) {
-                            clearInterval(downTimer);
+                            clearInterval(down);
                             isJumping = false;
                         }
                         pos -= 5;
                         dino.style.bottom = pos + "px";
                     }, 20);
                 }
-                pos += 5;
+                pos += 8;
                 dino.style.bottom = pos + "px";
             }, 20);
         }
 
-        // Kaktuslarni yaratish
+        // Kaktuslarni yaratish va harakatlantirish
         function createCactus() {
-            if (!gameActive) return;
             const cactus = document.createElement("div");
             cactus.classList.add("cactus");
-            
-            // Kaktus ko'rinishi (SVG)
-            cactus.innerHTML = `<svg viewBox="0 0 24 24" fill="#535353"><path d="M10,12V8H14V12H17V15H14V19H10V15H7V12H10Z"/></svg>`;
-            
             let cactusPos = 600;
             cactus.style.left = cactusPos + "px";
-            obstaclesCont.appendChild(cactus);
+            game.appendChild(cactus);
 
-            let timer = setInterval(() => {
-                // --- VZLOM (CHEAT) ---
-                // Bu yerda urilishni tekshirmaymiz, shuning uchun o'yin tugamaydi!
-                
+            let moveCactus = setInterval(() => {
                 if (cactusPos < -20) {
-                    clearInterval(timer);
-                    obstaclesCont.removeChild(cactus);
+                    clearInterval(moveCactus);
+                    game.removeChild(cactus);
                 }
-                cactusPos -= 7;
+                cactusPos -= 8;
                 cactus.style.left = cactusPos + "px";
+
+                // --- DIQQAT: BU YERDA URILISHNI TEKSHIRADIGAN KOD YO'Q! ---
+                // Shuning uchun dinozavr kaktusga tegsa ham hech narsa bo'lmaydi.
             }, 20);
 
-            let nextCactus = Math.random() * 2000 + 1000;
-            setTimeout(createCactus, nextCactus);
+            // Keyingi kaktus chiqish vaqti
+            setTimeout(createCactus, Math.random() * 2000 + 800);
         }
 
         // Ballarni hisoblash
         setInterval(() => {
             score++;
-            scoreBoard.innerText = score.toString().padStart(5, '0');
+            scoreDisplay.innerText = "SCORE: " + score;
         }, 100);
 
-        // Klaviaturada sakrash (Probel)
-        document.addEventListener("keydown", (e) => {
-            if (e.code === "Space") jump();
-        });
-
+        // O'yinni boshlash
         createCactus();
     </script>
 </body>
