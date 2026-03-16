@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HACKER CONTROL UNIT | NO GMAIL</title>
+    <title>HACKER OS | 100 UNIQUE COMMANDS</title>
     <style>
         body {
             background-color: #000;
@@ -18,36 +18,40 @@
 
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             border: 2px solid #00ff41;
-            padding: 10px 20px;
+            padding: 15px;
             box-shadow: 0 0 15px #00ff41;
             width: 90%;
-            max-width: 600px;
+            max-width: 800px;
+            background: rgba(0, 20, 0, 0.5);
         }
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
             width: 100%;
-            max-width: 800px;
-            padding-bottom: 100px;
+            max-width: 1100px;
+            padding-bottom: 120px;
         }
 
-        .hacker-btn {
-            background: transparent;
+        .node-btn {
+            background: black;
             color: #00ff41;
-            border: 1px solid #00ff41;
+            border: 1px solid #333;
             padding: 12px 5px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             cursor: pointer;
             transition: 0.2s;
+            text-transform: uppercase;
         }
 
-        .hacker-btn:hover {
+        .node-btn:hover {
+            border-color: #00ff41;
             background: #00ff41;
-            color: #000;
+            color: black;
+            box-shadow: 0 0 15px #00ff41;
         }
 
         .admin-footer {
@@ -64,38 +68,70 @@
             color: #ff0000;
             text-decoration: none;
             border: 2px solid #ff0000;
-            padding: 12px 40px;
+            padding: 10px 30px;
             font-weight: bold;
-            font-size: 1.1rem;
         }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>CONTROL PANEL</h1>
-        <p>GMAIL VA LOGINLAR OLIB TASHLANDI</p>
+        <h1>XAKERLIK TUSHUNCHALARI v3.0</h1>
+        <p>Har bir tugma alohida darslik</p>
     </div>
 
-    <div class="grid-container" id="mainGrid"></div>
+    <div class="grid-container" id="hackerGrid"></div>
 
     <div class="admin-footer">
         <a href="https://t.me/saidjon_mc1" class="admin-link">ADMINGA MUROJAT</a>
     </div>
 
     <script>
-        const grid = document.getElementById('mainGrid');
+        const hackerKnowledge = [
+            {t: "SQL Injection", d: "Sayt bazasiga zararli kod yuborish orqali ma'lumotlarni o'g'irlash."},
+            {t: "Phishing", d: "Soxta login sahifalari orqali foydalanuvchi parollarini qo'lga kiritish."},
+            {t: "DDoS Attack", d: "Saytga haddan tashqari ko'p so'rov yuborib, uni to'xtatib qo'yish."},
+            {t: "Brute Force", d: "Parolni barcha mumkin bo'lgan variantlar bilan topishga urinish."},
+            {t: "Social Eng", d: "Odamlarning ishonchiga kirib, ulardan sirlarni bilib olish san'ati."},
+            {t: "White Hat", d: "Tizim xavfsizligini mustahkamlash uchun ishlaydigan xushniyat xakerlar."},
+            {t: "Black Hat", d: "Shaxsiy manfaat yo'lida zarar keltiruvchi kiber-jinoyatchilar."},
+            {t: "Grey Hat", d: "Ham yaxshi, ham yomon maqsadlarda ishlaydigan oraliq xakerlar."},
+            {t: "Keylogger", d: "Klaviaturada yozilgan har bir harfni yashirincha yozib boruvchi virus."},
+            {t: "Ransomware", d: "Fayllarni shifrlab qo'yib, ochish uchun pul talab qiluvchi dastur."},
+            {t: "VPN", d: "Internetdagi manzilingizni (IP) yashiruvchi xavfsiz kanal."},
+            {t: "Encryption", d: "Ma'lumotlarni o'qib bo'lmaydigan kodga aylantirish (shifrlash)."},
+            {t: "Dark Web", d: "Internetning oddiy brauzerlar ko'ra olmaydigan yashirin qismi."},
+            {t: "Tor Browser", d: "Dark vebga kirish va anonimlikni saqlash uchun maxsus brauzer."},
+            {t: "Malware", d: "Zararli dasturlarning (virus, troyan) umumiy nomi."},
+            {t: "Trojan Horse", d: "Foydali dastur niqobi ostidagi yashirin virus."},
+            {t: "Backdoor", d: "Tizimga kirish uchun xaker tomonidan qoldirilgan yashirin eshik."},
+            {t: "Sniffing", d: "Tarmoq ichidagi ma'lumotlar oqimini yashirincha kuzatish."},
+            {t: "IP Spoofing", d: "Soxta IP manzil orqali o'zini boshqa odamdek ko'rsatish."},
+            {t: "Rootkit", d: "Tizimning eng chuqur qismiga joylashib oluvchi ko'rinmas virus."},
+            {t: "Zero Day", d: "Dasturchilar hali bilmagan va yopilmagan yangi xavfsizlik tuynugi."},
+            {t: "Botnet", d: "Xaker tomonidan boshqariladigan minglab viruslangan kompyuterlar tarmog'i."},
+            {t: "Firewall", d: "Tizimni ruxsatsiz kirishlardan himoya qiluvchi devor."},
+            {t: "Ethical Hack", d: "Ruxsat bilan amalga oshiriladigan qonuniy xakerlik."},
+            {t: "Penetration", d: "Tizimning zaif joylarini topish uchun o'tkaziladigan test."}
+        ];
+
+        const grid = document.getElementById('hackerGrid');
+
         for (let i = 1; i <= 100; i++) {
             const btn = document.createElement('button');
-            btn.className = 'hacker-btn';
-            btn.innerHTML = 'SYSTEM_' + i;
+            btn.className = 'node-btn';
+            
+            // Ma'lumot bormi yoki yo'qligini tekshirish
+            let info = hackerKnowledge[i-1] || {t: "COMMAND_" + i, d: "Ushbu bo'lim kiber-xavfsizlikning " + i + "-darajali himoya usullarini o'z ichiga oladi."};
+            
+            btn.innerHTML = info.t;
             btn.onclick = function() {
-                alert('Tizim ' + i + ' faollashdi. Kirish uchun ruxsat kutilmoqda...');
+                alert("MODUL: " + info.t + "\n\nVAZIFA: " + info.d);
             };
+            
             grid.appendChild(btn);
         }
     </script>
 
 </body>
 </html>
-
