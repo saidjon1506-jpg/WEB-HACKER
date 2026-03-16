@@ -3,146 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CYBER SNAKE GAME</title>
+    <title>SAIDJON GAMES | 50+ ONLINE GAMES</title>
     <style>
-        body {
-            background: #000;
-            color: #00ff41;
-            font-family: 'Courier New', monospace;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
+        :root { --neon: #00ff41; --bg: #0a0a0a; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; text-align: center; }
+        
+        header { padding: 20px; border-bottom: 2px solid var(--neon); background: #000; position: sticky; top: 0; z-index: 100; }
+        h1 { margin: 0; letter-spacing: 5px; font-size: 1.5rem; }
+
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; padding: 20px; }
+        
+        .game-card {
+            background: #151515; border: 1px solid #333; border-radius: 10px;
+            padding: 15px; cursor: pointer; transition: 0.3s;
         }
-        canvas {
-            border: 2px solid #00ff41;
-            box-shadow: 0 0 20px #00ff41;
-            background: #050505;
+        .game-card:hover { border-color: var(--neon); transform: scale(1.05); box-shadow: 0 0 15px var(--neon); }
+        .game-card img { width: 100%; border-radius: 5px; margin-bottom: 10px; }
+        .game-card span { font-weight: bold; font-size: 0.9rem; display: block; }
+
+        /* O'yin oynasi (Full Screen) */
+        #game-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; display: none; flex-direction: column; z-index: 1000;
         }
-        .info { margin-bottom: 10px; text-align: center; }
-        .score { font-size: 24px; font-weight: bold; }
-        .controls {
-            margin-top: 20px;
-            display: grid;
-            grid-template-columns: repeat(3, 60px);
-            gap: 10px;
-        }
-        .btn {
-            width: 60px; height: 60px;
-            background: rgba(0, 255, 65, 0.2);
-            border: 1px solid #00ff41;
-            color: #00ff41;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-        .btn:active { background: #00ff41; color: #000; }
+        .close-btn { background: #ff3333; color: white; padding: 10px; cursor: pointer; font-weight: bold; text-align: center; }
+        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-    <div class="info">
-        <h2>CYBER SNAKE v1.0</h2>
-        <div class="score">DATA COLLECTED: <span id="scoreVal">0</span></div>
+<header>
+    <h1>SAIDJON GAMES</h1>
+    <p>50 ta TOP o'yinlar to'plami</p>
+</header>
+
+<div class="game-grid" id="gameGrid">
     </div>
 
-    <canvas id="gameCanvas" width="300" height="300"></canvas>
+<div id="game-overlay">
+    <div class="close-btn" onclick="closeGame()">O'YINNI YOPISH [X]</div>
+    <iframe id="gameFrame" src=""></iframe>
+</div>
 
-    <div class="controls">
-        <div></div><div class="btn" onclick="changeDir('UP')">▲</div><div></div>
-        <div class="btn" onclick="changeDir('LEFT')">◀</div>
-        <div class="btn" onclick="changeDir('DOWN')">▼</div>
-        <div class="btn" onclick="changeDir('RIGHT')">▶</div>
-    </div>
+<script>
+    // Mashhur bepul HTML5 o'yinlar ro'yxati (namuna)
+    // Manba sifatida bepul ochiq platformalardan foydalanamiz
+    const games = [
+        { name: "Snake Retro", url: "https://www.google.com/logos/2010/pacman10-i.html" },
+        { name: "Tetris Elite", url: "https://tetris.com/play-tetris" },
+        { name: "Flappy Bird", url: "https://flappybird.io/" },
+        { name: "2048 Cyber", url: "https://2048game.com/" },
+        { name: "Dino Run", url: "https://chromedino.com/" },
+        { name: "Cyber Racing", url: "https://www.google.com/logos/2010/pacman10-i.html" },
+        { name: "Space Invaders", url: "https://freeinvaders.org/" },
+        { name: "Minecraft 2D", url: "https://classic.minecraft.net/" },
+        { name: "Tic Tac Toe", url: "https://playtictactoe.org/" },
+        { name: "Sudoku Pro", url: "https://sudoku.com/" }
+        // ... bu ro'yxatni 50 tagacha davom ettiramiz
+    ];
 
-    <script>
-        const canvas = document.getElementById("gameCanvas");
-        const ctx = canvas.getContext("2d");
-        const scoreElement = document.getElementById("scoreVal");
+    // 50 tagacha to'ldirish uchun takrorlash (namuna uchun)
+    for(let i = 11; i <= 50; i++) {
+        games.push({ name: "Hacker Game #" + i, url: "https://m.gamey.com/" });
+    }
 
-        const box = 20;
-        let snake = [{ x: 9 * box, y: 10 * box }];
-        let food = {
-            x: Math.floor(Math.random() * 14 + 1) * box,
-            y: Math.floor(Math.random() * 14 + 1) * box
-        };
-        let score = 0;
-        let d;
+    const grid = document.getElementById('gameGrid');
 
-        document.addEventListener("keydown", direction);
+    games.forEach(game => {
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.innerHTML = `
+            <div style="font-size: 40px; margin-bottom:10px;">🎮</div>
+            <span>${game.name}</span>
+        `;
+        card.onclick = () => openGame(game.url);
+        grid.appendChild(card);
+    });
 
-        function direction(event) {
-            if(event.keyCode == 37 && d != "RIGHT") d = "LEFT";
-            else if(event.keyCode == 38 && d != "DOWN") d = "UP";
-            else if(event.keyCode == 39 && d != "LEFT") d = "RIGHT";
-            else if(event.keyCode == 40 && d != "UP") d = "DOWN";
-        }
+    function openGame(url) {
+        document.getElementById('gameFrame').src = url;
+        document.getElementById('game-overlay').style.display = 'flex';
+    }
 
-        function changeDir(dir) {
-            if(dir == "LEFT" && d != "RIGHT") d = "LEFT";
-            if(dir == "UP" && d != "DOWN") d = "UP";
-            if(dir == "RIGHT" && d != "LEFT") d = "RIGHT";
-            if(dir == "DOWN" && d != "UP") d = "DOWN";
-        }
+    function closeGame() {
+        document.getElementById('game-overlay').style.display = 'none';
+        document.getElementById('gameFrame').src = '';
+    }
+</script>
 
-        function draw() {
-            ctx.fillStyle = "#050505";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            for(let i = 0; i < snake.length; i++) {
-                ctx.fillStyle = (i == 0) ? "#00ff41" : "#008021";
-                ctx.fillRect(snake[i].x, snake[i].y, box, box);
-                ctx.strokeStyle = "#000";
-                ctx.strokeRect(snake[i].x, snake[i].y, box, box);
-            }
-
-            ctx.fillStyle = "#ff0000"; // Food color
-            ctx.fillRect(food.x, food.y, box, box);
-
-            let snakeX = snake[0].x;
-            let snakeY = snake[0].y;
-
-            if( d == "LEFT") snakeX -= box;
-            if( d == "UP") snakeY -= box;
-            if( d == "RIGHT") snakeX += box;
-            if( d == "DOWN") snakeY += box;
-
-            if(snakeX == food.x && snakeY == food.y) {
-                score++;
-                scoreElement.innerHTML = score;
-                food = {
-                    x: Math.floor(Math.random() * 14 + 1) * box,
-                    y: Math.floor(Math.random() * 14 + 1) * box
-                };
-            } else {
-                snake.pop();
-            }
-
-            let newHead = { x: snakeX, y: snakeY };
-
-            // Devorga urilish yoki o'ziga urilish
-            if(snakeX < 0 || snakeX >= canvas.width || snakeY < 0 || snakeY >= canvas.height || collision(newHead, snake)) {
-                clearInterval(game);
-                alert("TIZIM HALOKATI! O'yin tugadi. Ballingiz: " + score);
-                location.reload();
-            }
-
-            snake.unshift(newHead);
-        }
-
-        function collision(head, array) {
-            for(let i = 0; i < array.length; i++) {
-                if(head.x == array[i].x && head.y == array[i].y) return true;
-            }
-            return false;
-        }
-
-        let game = setInterval(draw, 150);
-    </script>
 </body>
 </html>
