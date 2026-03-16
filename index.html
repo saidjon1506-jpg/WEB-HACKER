@@ -3,93 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAIDJON | ULTIMATE TERMINAL</title>
+    <title>CYBER SNAKE GAME</title>
     <style>
-        :root { --neon: #00ff41; --bg: #000; --red: #ff0000; }
-        body, html { margin: 0; padding: 0; background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; overflow-x: hidden; }
-        #matrix { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.25; }
-        .wrapper { padding: 20px; max-width: 800px; margin: auto; }
-        header { text-align: center; border: 2px solid var(--neon); padding: 20px; margin-bottom: 20px; box-shadow: 0 0 20px var(--neon); background: rgba(0,0,0,0.8); }
-        .glitch { font-size: 2.2rem; font-weight: bold; text-shadow: 3px 3px var(--red); letter-spacing: 5px; }
-        .status-bar { display: flex; justify-content: space-between; font-size: 0.75rem; border-bottom: 1px solid #333; padding: 10px; margin-bottom: 20px; color: #aaa; }
-        section { margin-bottom: 30px; }
-        h2 { border-left: 5px solid var(--red); padding-left: 10px; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 15px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
-        .card { border: 1px solid var(--neon); padding: 18px; text-align: center; cursor: pointer; transition: 0.3s; background: rgba(0,255,65,0.05); font-weight: bold; font-size: 0.85rem; }
-        .card:hover { background: var(--neon); color: #000; box-shadow: 0 0 25px var(--neon); transform: translateY(-3px); }
-        .terminal { background: #050505; border: 1px solid #222; padding: 15px; font-size: 0.85rem; height: 180px; overflow-y: auto; color: #00ff41; box-shadow: inset 0 0 10px #000; }
-        .footer { text-align: center; margin-top: 40px; padding-bottom: 40px; }
-        .admin-btn { border: 2px solid var(--red); color: var(--red); padding: 15px 45px; text-decoration: none; font-weight: bold; font-size: 1rem; transition: 0.4s; }
-        .admin-btn:hover { background: var(--red); color: #fff; box-shadow: 0 0 30px var(--red); }
+        body {
+            background: #000;
+            color: #00ff41;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        canvas {
+            border: 2px solid #00ff41;
+            box-shadow: 0 0 20px #00ff41;
+            background: #050505;
+        }
+        .info { margin-bottom: 10px; text-align: center; }
+        .score { font-size: 24px; font-weight: bold; }
+        .controls {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            gap: 10px;
+        }
+        .btn {
+            width: 60px; height: 60px;
+            background: rgba(0, 255, 65, 0.2);
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .btn:active { background: #00ff41; color: #000; }
     </style>
 </head>
 <body>
 
-    <canvas id="matrix"></canvas>
+    <div class="info">
+        <h2>CYBER SNAKE v1.0</h2>
+        <div class="score">DATA COLLECTED: <span id="scoreVal">0</span></div>
+    </div>
 
-    <div class="wrapper">
-        <header>
-            <div class="glitch">SAIDJON ADMIN</div>
-            <p style="margin: 5px 0 0 0; font-size: 0.8rem; color: #fff;">AUTHORIZED PERSONNEL ONLY</p>
-        </header>
+    <canvas id="gameCanvas" width="300" height="300"></canvas>
 
-        <div class="status-bar">
-            <span>NODE: UZ_TASHKENT</span>
-            <span>SEC_LEVEL: RED</span>
-            <span>ENCRYPTION: AES-256</span>
-        </div>
-
-        <section>
-            <h2>Exploit Console</h2>
-            <div class="terminal" id="term">
-                [SYSTEM]: Booting v6.0.4...<br>
-                [SYSTEM]: Satellite link stable.<br>
-                [SYSTEM]: Ready for command input...
-            </div>
-        </section>
-
-        <section>
-            <h2>Attack Modules</h2>
-            <div class="grid">
-                <div class="card" onclick="msg('Nishon IP: 172.67.14.120. Paketlar yuborilmoqda... Server bloklandi!')">DDoS ATTACK</div>
-                <div class="card" onclick="msg('SQL Injection muvaffaqiyatli! Admin paroli: hashes_8829_adminx')">DATABASE BYPASS</div>
-                <div class="card" onclick="msg('Handshake ushlandi. Parolni parchalash (Brute Force) boshlandi...')">WIFI CRACK</div>
-                <div class="card" onclick="msg('O\'zbekiston Proxy zanjiri yaratildi. Siz endi ko\'rinmasiz!')">GHOST PROXY</div>
-                <div class="card" onclick="msg('Troyan yaratildi. Nishon qurilmaga yuborishga tayyor.')">MALWARE INJECT</div>
-                <div class="card" onclick="msg('Markaziy serverga kirildi. Barcha ma\'lumotlar yuklab olindi.')">ROOT ACCESS</div>
-            </div>
-        </section>
-
-        <div class="footer">
-            <a href="https://t.me/saidjon_mc1" class="admin-btn">ADMINGA MUROJAT</a>
-        </div>
+    <div class="controls">
+        <div></div><div class="btn" onclick="changeDir('UP')">▲</div><div></div>
+        <div class="btn" onclick="changeDir('LEFT')">◀</div>
+        <div class="btn" onclick="changeDir('DOWN')">▼</div>
+        <div class="btn" onclick="changeDir('RIGHT')">▶</div>
     </div>
 
     <script>
-        const c = document.getElementById("matrix");
-        const ctx = c.getContext("2d");
-        c.width = window.innerWidth; c.height = window.innerHeight;
-        const txts = "01010101SAIDJONHACKER01010101";
-        const drops = Array(Math.floor(c.width/16)).fill(1);
-        function draw() {
-            ctx.fillStyle = "rgba(0,0,0,0.05)"; ctx.fillRect(0,0,c.width,c.height);
-            ctx.fillStyle = "#0f0"; ctx.font = "16px monospace";
-            drops.forEach((y, i) => {
-                const text = txts[Math.floor(Math.random()*txts.length)];
-                ctx.fillText(text, i*16, y*16);
-                if(y*16 > c.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
-            });
-        }
-        setInterval(draw, 33);
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const scoreElement = document.getElementById("scoreVal");
 
-        function msg(text) {
-            const term = document.getElementById('term');
-            const time = new Date().toLocaleTimeString();
-            term.innerHTML += `<br><span style="color:var(--red)">[${time}]</span> > ${text}`;
-            term.scrollTop = term.scrollHeight; // Terminalni avtomatik pastga tushiradi
-            alert(text);
+        const box = 20;
+        let snake = [{ x: 9 * box, y: 10 * box }];
+        let food = {
+            x: Math.floor(Math.random() * 14 + 1) * box,
+            y: Math.floor(Math.random() * 14 + 1) * box
+        };
+        let score = 0;
+        let d;
+
+        document.addEventListener("keydown", direction);
+
+        function direction(event) {
+            if(event.keyCode == 37 && d != "RIGHT") d = "LEFT";
+            else if(event.keyCode == 38 && d != "DOWN") d = "UP";
+            else if(event.keyCode == 39 && d != "LEFT") d = "RIGHT";
+            else if(event.keyCode == 40 && d != "UP") d = "DOWN";
         }
+
+        function changeDir(dir) {
+            if(dir == "LEFT" && d != "RIGHT") d = "LEFT";
+            if(dir == "UP" && d != "DOWN") d = "UP";
+            if(dir == "RIGHT" && d != "LEFT") d = "RIGHT";
+            if(dir == "DOWN" && d != "UP") d = "DOWN";
+        }
+
+        function draw() {
+            ctx.fillStyle = "#050505";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            for(let i = 0; i < snake.length; i++) {
+                ctx.fillStyle = (i == 0) ? "#00ff41" : "#008021";
+                ctx.fillRect(snake[i].x, snake[i].y, box, box);
+                ctx.strokeStyle = "#000";
+                ctx.strokeRect(snake[i].x, snake[i].y, box, box);
+            }
+
+            ctx.fillStyle = "#ff0000"; // Food color
+            ctx.fillRect(food.x, food.y, box, box);
+
+            let snakeX = snake[0].x;
+            let snakeY = snake[0].y;
+
+            if( d == "LEFT") snakeX -= box;
+            if( d == "UP") snakeY -= box;
+            if( d == "RIGHT") snakeX += box;
+            if( d == "DOWN") snakeY += box;
+
+            if(snakeX == food.x && snakeY == food.y) {
+                score++;
+                scoreElement.innerHTML = score;
+                food = {
+                    x: Math.floor(Math.random() * 14 + 1) * box,
+                    y: Math.floor(Math.random() * 14 + 1) * box
+                };
+            } else {
+                snake.pop();
+            }
+
+            let newHead = { x: snakeX, y: snakeY };
+
+            // Devorga urilish yoki o'ziga urilish
+            if(snakeX < 0 || snakeX >= canvas.width || snakeY < 0 || snakeY >= canvas.height || collision(newHead, snake)) {
+                clearInterval(game);
+                alert("TIZIM HALOKATI! O'yin tugadi. Ballingiz: " + score);
+                location.reload();
+            }
+
+            snake.unshift(newHead);
+        }
+
+        function collision(head, array) {
+            for(let i = 0; i < array.length; i++) {
+                if(head.x == array[i].x && head.y == array[i].y) return true;
+            }
+            return false;
+        }
+
+        let game = setInterval(draw, 150);
     </script>
 </body>
 </html>
