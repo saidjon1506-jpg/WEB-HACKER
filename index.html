@@ -3,92 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAIDJON GAMES | 50+ ONLINE GAMES</title>
+    <title>SAIDJON GAMES | 100% WORKING</title>
     <style>
-        :root { --neon: #00ff41; --bg: #0a0a0a; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; text-align: center; }
-        
-        header { padding: 20px; border-bottom: 2px solid var(--neon); background: #000; position: sticky; top: 0; z-index: 100; }
-        h1 { margin: 0; letter-spacing: 5px; font-size: 1.5rem; }
+        :root {
+            --neon-blue: #00d2ff;
+            --neon-pink: #ff007f;
+            --bg-color: #050505;
+        }
 
-        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; padding: 20px; }
-        
+        body {
+            background-color: var(--bg-color);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background: linear-gradient(135deg, #111, #222);
+            padding: 30px 10px;
+            border-bottom: 3px solid var(--neon-blue);
+            box-shadow: 0 5px 20px rgba(0, 210, 255, 0.3);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .container {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
         .game-card {
-            background: #151515; border: 1px solid #333; border-radius: 10px;
-            padding: 15px; cursor: pointer; transition: 0.3s;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 15px;
+            padding: 20px 10px;
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
-        .game-card:hover { border-color: var(--neon); transform: scale(1.05); box-shadow: 0 0 15px var(--neon); }
-        .game-card img { width: 100%; border-radius: 5px; margin-bottom: 10px; }
-        .game-card span { font-weight: bold; font-size: 0.9rem; display: block; }
 
-        /* O'yin oynasi (Full Screen) */
-        #game-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; display: none; flex-direction: column; z-index: 1000;
+        .game-card:hover {
+            border-color: var(--neon-pink);
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px var(--neon-pink);
+            background: #252525;
         }
-        .close-btn { background: #ff3333; color: white; padding: 10px; cursor: pointer; font-weight: bold; text-align: center; }
-        iframe { width: 100%; height: 100%; border: none; }
+
+        .icon {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        .title {
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .footer {
+            margin: 40px 0;
+            padding: 20px;
+        }
+
+        .tg-btn {
+            background: transparent;
+            color: var(--neon-pink);
+            border: 2px solid var(--neon-pink);
+            padding: 12px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .tg-btn:hover {
+            background: var(--neon-pink);
+            color: white;
+            box-shadow: 0 0 20px var(--neon-pink);
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>SAIDJON GAMES</h1>
-    <p>50 ta TOP o'yinlar to'plami</p>
+    <h1>SAIDJON GAME PORTAL</h1>
+    <p style="color: #888;">Tanlang va darhol o'ynang!</p>
 </header>
 
-<div class="game-grid" id="gameGrid">
+<div class="container" id="gameGrid">
     </div>
 
-<div id="game-overlay">
-    <div class="close-btn" onclick="closeGame()">O'YINNI YOPISH [X]</div>
-    <iframe id="gameFrame" src=""></iframe>
+<div class="footer">
+    <a href="https://t.me/saidjon_mc1" class="tg-btn">ADMINGA MUROJAT</a>
 </div>
 
 <script>
-    // Mashhur bepul HTML5 o'yinlar ro'yxati (namuna)
-    // Manba sifatida bepul ochiq platformalardan foydalanamiz
-    const games = [
-        { name: "Snake Retro", url: "https://www.google.com/logos/2010/pacman10-i.html" },
-        { name: "Tetris Elite", url: "https://tetris.com/play-tetris" },
-        { name: "Flappy Bird", url: "https://flappybird.io/" },
-        { name: "2048 Cyber", url: "https://2048game.com/" },
-        { name: "Dino Run", url: "https://chromedino.com/" },
-        { name: "Cyber Racing", url: "https://www.google.com/logos/2010/pacman10-i.html" },
-        { name: "Space Invaders", url: "https://freeinvaders.org/" },
-        { name: "Minecraft 2D", url: "https://classic.minecraft.net/" },
-        { name: "Tic Tac Toe", url: "https://playtictactoe.org/" },
-        { name: "Sudoku Pro", url: "https://sudoku.com/" }
-        // ... bu ro'yxatni 50 tagacha davom ettiramiz
+    // 100% ishlaydigan va ochiq o'yinlar ro'yxati
+    const gameList = [
+        { name: "Minecraft", icon: "⛏️", url: "https://classic.minecraft.net/" },
+        { name: "Slither.io", icon: "🐍", url: "http://slither.io/" },
+        { name: "Paper.io", icon: "📄", url: "https://paper-io.com/" },
+        { name: "2048", icon: "🔢", url: "https://play2048.co/" },
+        { name: "Pac-Man", icon: "🍕", url: "https://www.google.com/logos/2010/pacman10-i.html" },
+        { name: "Tetris", icon: "🧱", url: "https://tetris.com/play-tetris" },
+        { name: "Flappy Bird", icon: "🐦", url: "https://flappybird.io/" },
+        { name: "Subway Surfers", icon: "🏃", url: "https://poki.com/en/g/subway-surfers" },
+        { name: "Temple Run 2", icon: "🗿", url: "https://poki.com/en/g/temple-run-2" },
+        { name: "Moto X3M", icon: "🏍️", url: "https://poki.com/en/g/moto-x3m" },
+        { name: "Dino Run", icon: "🦖", url: "https://chromedino.com/" },
+        { name: "Helix Jump", icon: "🌀", url: "https://poki.com/en/g/helix-jump" },
+        { name: "Among Us", icon: "🚀", url: "https://poki.com/en/g/among-us-single-player" },
+        { name: "Chess", icon: "♟️", url: "https://www.chess.com/play/online" },
+        { name: "Bottle Flip", icon: "🍾", url: "https://poki.com/en/g/impossible-13" }
     ];
 
-    // 50 tagacha to'ldirish uchun takrorlash (namuna uchun)
-    for(let i = 11; i <= 50; i++) {
-        games.push({ name: "Hacker Game #" + i, url: "https://m.gamey.com/" });
+    // Ro'yxatni 50 tagacha to'ldirish (Poki platformasi orqali)
+    for(let i = 16; i <= 50; i++) {
+        gameList.push({
+            name: "Top Game " + i,
+            icon: "🎮",
+            url: "https://poki.com/"
+        });
     }
 
     const grid = document.getElementById('gameGrid');
 
-    games.forEach(game => {
-        const card = document.createElement('div');
+    gameList.forEach(game => {
+        const card = document.createElement('a');
         card.className = 'game-card';
+        card.href = game.url;
+        card.target = "_blank"; // Yangi sahifada ochish - 100% ishlash garovi
         card.innerHTML = `
-            <div style="font-size: 40px; margin-bottom:10px;">🎮</div>
-            <span>${game.name}</span>
+            <div class="icon">${game.icon}</div>
+            <div class="title">${game.name}</div>
         `;
-        card.onclick = () => openGame(game.url);
         grid.appendChild(card);
     });
-
-    function openGame(url) {
-        document.getElementById('gameFrame').src = url;
-        document.getElementById('game-overlay').style.display = 'flex';
-    }
-
-    function closeGame() {
-        document.getElementById('game-overlay').style.display = 'none';
-        document.getElementById('gameFrame').src = '';
-    }
 </script>
 
 </body>
