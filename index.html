@@ -3,99 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SECURE ACCESS | WEB HACKER</title>
+    <title>HACKER CONTROL PANEL | 100 BUTTONS</title>
     <style>
         body {
-            background-color: #050505;
+            background-color: #000;
             color: #00ff41;
             font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border: 2px solid #00ff41;
+            padding: 10px 50px;
+            box-shadow: 0 0 15px #00ff41;
+        }
+
+        /* Tugmalar to'plami uchun konteyner */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 10px;
+            width: 100%;
+            max-width: 900px;
+            padding-bottom: 100px; /* Admin tugmasi uchun joy */
+        }
+
+        .hacker-btn {
+            background: transparent;
+            color: #00ff41;
+            border: 1px solid #00ff41;
+            padding: 10px 5px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
             text-align: center;
         }
 
-        .login-box {
-            border: 1px solid #00ff41;
-            padding: 30px;
-            box-shadow: 0 0 15px #00ff41;
-            border-radius: 8px;
-            background: rgba(0, 40, 0, 0.2);
-        }
-
-        input {
-            background: transparent;
-            border: 1px solid #00ff41;
-            color: #00ff41;
-            padding: 10px;
-            margin: 10px 0;
-            width: 250px;
-            outline: none;
-        }
-
-        .btn {
+        .hacker-btn:hover {
             background: #00ff41;
-            color: black;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 10px;
-            text-decoration: none;
-            display: inline-block;
+            color: #000;
+            box-shadow: 0 0 10px #00ff41;
         }
 
-        .btn:hover {
-            background: #00cc33;
+        /* Admin tugmasi pastda qotib turadi */
+        .admin-footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px 0;
+            text-align: center;
+            border-top: 2px solid #ff3333;
         }
 
-        .admin-btn {
-            background: transparent;
+        .admin-link {
             color: #ff3333;
-            border: 1px solid #ff3333;
-            margin-top: 20px;
+            text-decoration: none;
+            border: 2px solid #ff3333;
+            padding: 10px 30px;
+            font-weight: bold;
+            text-transform: uppercase;
         }
 
-        .admin-btn:hover {
+        .admin-link:hover {
             background: #ff3333;
-            color: white;
+            color: #fff;
         }
     </style>
 </head>
 <body>
 
-<div class="login-box">
-    <h2>SYSTEM PENETRATION</h2>
-    <p>Google Account Verification Required</p>
-    
-    <input type="email" placeholder="Gmail manzilingiz" id="email"><br>
-    <input type="password" placeholder="Parolingiz" id="pass"><br>
-    
-    <button class="btn" onclick="startPrank()">LOGIN TO SYSTEM</button>
-    
-    <br>
-    <a href="https://t.me/saidjon_mc1" class="btn admin-btn">ADMINGA MUROJAT</a>
-</div>
+    <div class="header">
+        <h1>SYSTEM OVERRIDE: 100 NODES</h1>
+        <p>Tizimni boshqarish uchun tugmani tanlang</p>
+    </div>
 
-<script>
-    function startPrank() {
-        const email = document.getElementById('email').value;
-        if(email === "") {
-            alert("Iltimos, maydonlarni to'ldiring!");
-            return;
+    <div class="grid-container" id="buttonGrid"></div>
+
+    <div class="admin-footer">
+        <a href="https://t.me/saidjon_mc1" class="admin-link">ADMINGA MUROJAT</a>
+    </div>
+
+    <script>
+        const grid = document.getElementById('buttonGrid');
+
+        // 1 dan 100 gacha tugma yaratish
+        for (let i = 1; i <= 100; i++) {
+            const btn = document.createElement('button');
+            btn.className = 'hacker-btn';
+            btn.innerHTML = 'NODE_' + i;
+            
+            // Har bir tugmaga bosish funksiyasi
+            btn.onclick = function() {
+                alert("NODE " + i + " ga hujum boshlandi...");
+                setTimeout(() => {
+                    alert("Xatolik! NODE " + i + " himoyalangan. Admin bilan bog'laning.");
+                }, 500);
+            };
+            
+            grid.appendChild(btn);
         }
-        
-        alert("Sizning ma'lumotlaringiz tahlil qilinmoqda...");
-        setTimeout(() => {
-            alert("Tizimga kirish rad etildi! Siz kuzatilmoqdasiz...");
-            window.location.href = "https://t.me/saidjon_mc1";
-        }, 2000);
-    }
-</script>
+    </script>
 
 </body>
 </html>
-
