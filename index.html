@@ -5,88 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HACKER MOTIVATION</title>
     <style>
-        :root { --neon: #00ff41; --bg: #0a0a0a; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; overflow-x: hidden; }
-
-        header { display: flex; justify-content: space-between; padding: 20px; border-bottom: 1px solid var(--neon); align-items: center; background: #000; }
-        .menu-dots { font-size: 30px; cursor: pointer; color: var(--neon); }
-        
-        #sidebar {
-            position: fixed; top: 0; right: -100%; width: 250px; height: 100%;
-            background: rgba(0, 0, 0, 0.95); border-left: 2px solid var(--neon);
-            transition: 0.5s; z-index: 100; padding: 20px;
-        }
-        #sidebar.active { right: 0; }
-        .menu-item { display: block; color: var(--neon); text-decoration: none; margin: 20px 0; border-bottom: 1px solid #111; padding-bottom: 5px; cursor: pointer; }
-
-        .container { padding: 30px; text-align: center; }
-        
-        .motivation-card {
-            border: 1px solid var(--neon); padding: 30px; margin-top: 20px;
-            box-shadow: 0 0 20px var(--neon); background: rgba(0, 255, 65, 0.05);
-            border-radius: 10px;
-        }
-
-        h2 { text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px; }
-        .quote { font-size: 1.2rem; font-style: italic; line-height: 1.5; color: #fff; text-shadow: 0 0 5px var(--neon); }
-        
-        .typing-text { border-right: 2px solid var(--neon); white-space: nowrap; overflow: hidden; display: inline-block; animation: typing 3s steps(30, end), blink 0.5s step-end infinite; }
-        @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink { from, to { border-color: transparent } 50% { border-color: var(--neon) } }
-
-        #info-box { margin-top: 30px; text-align: left; background: #001100; padding: 20px; border: 1px dashed var(--neon); display: none; }
-        .admin-btn { display: inline-block; margin-top: 40px; color: #ff3333; text-decoration: none; border: 1px solid #ff3333; padding: 10px 30px; transition: 0.3s; }
-        .admin-btn:hover { background: #ff3333; color: white; }
+        body { background: #000; color: #00ff41; font-family: 'Courier New', monospace; text-align: center; padding: 50px 20px; }
+        .box { border: 2px solid #00ff41; padding: 30px; box-shadow: 0 0 20px #00ff41; border-radius: 15px; }
+        h1 { font-size: 1.8rem; text-shadow: 0 0 10px #00ff41; }
+        p { font-size: 1.2rem; line-height: 1.6; color: #fff; }
+        .admin { display: inline-block; margin-top: 30px; color: #ff3333; border: 1px solid #ff3333; padding: 10px 20px; text-decoration: none; }
     </style>
 </head>
 <body>
 
-<header>
-    <span>HACKER_SPIRIT_v5.0</span>
-    <div class="menu-dots" onclick="toggleMenu()">⋮</div>
-</header>
-
-<div id="sidebar">
-    <div style="text-align:right; font-size:30px; cursor:pointer" onclick="toggleMenu()">×</div>
-    <h3>SYSTEM INFO</h3>
-    <div class="menu-item" onclick="showInfo('hack')">XAKER KIM?</div>
-    <div class="menu-item" onclick="showInfo('motto')">SHIORLAR</div>
-    <div class="menu-item" onclick="showInfo('path')">RIVOJLANISH</div>
-    <a href="https://t.me/saidjon_mc1" class="menu-item" style="color:#ff3333">ALOQA</a>
-</div>
-
-<div class="container">
-    <div class="motivation-card">
-        <h2>MOTIVATSIYA</h2>
-        <p class="quote">"Xakerlik — bu tizimni buzish emas, balki tizim qanday ishlashini hamma biladiganidan ko'ra yaxshiroq bilishdir."</p>
-        <br>
-        <span class="typing-text">Bilim — bu eng katta qurol.</span>
+    <div class="box">
+        <h1>XAKERLIK FALSAFASI</h1>
+        <p>"Muvaffaqiyat — bu to'xtovsiz o'rganish natijasidir. Haqiqiy xaker tizimni buzmaydi, u uni boshqalardan ko'ra chuqurroq tushunadi."</p>
+        <p><b>Sen eng zo'ri bo'lishing kerak!</b></p>
+        
+        <a href="https://t.me/saidjon_mc1" class="admin">ADMINGA MUROJAT</a>
     </div>
-
-    <div id="info-box"></div>
-    
-    <a href="https://t.me/saidjon_mc1" class="admin-btn">ADMINGA MUROJAT</a>
-</div>
-
-<script>
-    function toggleMenu() {
-        document.getElementById('sidebar').classList.toggle('active');
-    }
-
-    function showInfo(type) {
-        let box = document.getElementById('info-box');
-        box.style.display = "block";
-        toggleMenu();
-
-        if(type === 'hack') {
-            box.innerHTML = "<h3>XAKER KIM?</h3><p>Xaker — bu intellektual qiziquvchanlikka ega bo'lgan va muammolarni kreativ yo'l bilan hal qiluvchi inson. U hech qachon 'mumkin emas' degan so'zga ishonmaydi.</p>";
-        } else if(type === 'motto') {
-            box.innerHTML = "<h3>XAKERLAR SHIORI:</h3><ul><li>Bilim hamma uchun ochiq bo'lishi kerak.</li><li>Xavfsizlik — bu shunchaki illyuziya.</li><li>To'xtash — orqaga ketish demakdir.</li></ul>";
-        } else if(type === 'path') {
-            box.innerHTML = "<h3>RIVOJLANISH:</h3><p>Bugun 1 soat o'rgangan bilimingiz, ertaga sizni minglab odamlardan oldinga olib chiqadi. Kod yozishni to'xtatmang!</p>";
-        }
-    }
-</script>
 
 </body>
 </html>
