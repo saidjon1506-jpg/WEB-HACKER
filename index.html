@@ -3,55 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WIFI BREAKER PRO</title>
+    <title>HACKER MOTIVATION</title>
     <style>
-        :root { --neon: #00ff41; --bg: #050505; }
+        :root { --neon: #00ff41; --bg: #0a0a0a; }
         body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; overflow-x: hidden; }
 
-        /* Header va Menu */
-        header { display: flex; justify-content: space-between; padding: 20px; border-bottom: 1px solid var(--neon); align-items: center; }
-        .menu-dots { font-size: 30px; cursor: pointer; padding: 0 10px; }
+        header { display: flex; justify-content: space-between; padding: 20px; border-bottom: 1px solid var(--neon); align-items: center; background: #000; }
+        .menu-dots { font-size: 30px; cursor: pointer; color: var(--neon); }
         
-        /* Sidebar (Yashirin menyu) */
         #sidebar {
             position: fixed; top: 0; right: -100%; width: 250px; height: 100%;
-            background: rgba(0, 20, 0, 0.95); border-left: 2px solid var(--neon);
+            background: rgba(0, 0, 0, 0.95); border-left: 2px solid var(--neon);
             transition: 0.5s; z-index: 100; padding: 20px;
         }
         #sidebar.active { right: 0; }
         .menu-item { display: block; color: var(--neon); text-decoration: none; margin: 20px 0; border-bottom: 1px solid #111; padding-bottom: 5px; cursor: pointer; }
 
-        /* Main Content */
-        .container { padding: 20px; text-align: center; }
-        .wifi-card { border: 1px solid var(--neon); padding: 20px; margin-top: 50px; box-shadow: 0 0 15px var(--neon); }
-        .btn { background: var(--neon); color: black; border: none; padding: 15px 30px; font-weight: bold; cursor: pointer; margin-top: 20px; width: 100%; }
+        .container { padding: 30px; text-align: center; }
         
-        /* Matn maydoni */
-        #info-box { margin-top: 30px; text-align: left; line-height: 1.6; display: none; background: #001100; padding: 15px; border-radius: 5px; }
-        .admin-btn { display: block; margin-top: 50px; color: #ff3333; text-decoration: none; border: 1px solid #ff3333; padding: 10px; }
+        .motivation-card {
+            border: 1px solid var(--neon); padding: 30px; margin-top: 20px;
+            box-shadow: 0 0 20px var(--neon); background: rgba(0, 255, 65, 0.05);
+            border-radius: 10px;
+        }
+
+        h2 { text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px; }
+        .quote { font-size: 1.2rem; font-style: italic; line-height: 1.5; color: #fff; text-shadow: 0 0 5px var(--neon); }
+        
+        .typing-text { border-right: 2px solid var(--neon); white-space: nowrap; overflow: hidden; display: inline-block; animation: typing 3s steps(30, end), blink 0.5s step-end infinite; }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink { from, to { border-color: transparent } 50% { border-color: var(--neon) } }
+
+        #info-box { margin-top: 30px; text-align: left; background: #001100; padding: 20px; border: 1px dashed var(--neon); display: none; }
+        .admin-btn { display: inline-block; margin-top: 40px; color: #ff3333; text-decoration: none; border: 1px solid #ff3333; padding: 10px 30px; transition: 0.3s; }
+        .admin-btn:hover { background: #ff3333; color: white; }
     </style>
 </head>
 <body>
 
 <header>
-    <span>WIFI_SYSTEM_v4.0</span>
+    <span>HACKER_SPIRIT_v5.0</span>
     <div class="menu-dots" onclick="toggleMenu()">⋮</div>
 </header>
 
 <div id="sidebar">
     <div style="text-align:right; font-size:30px; cursor:pointer" onclick="toggleMenu()">×</div>
-    <h3>MENYU</h3>
-    <div class="menu-item" onclick="showInfo('apps')">TOP 3 ILOVA</div>
-    <div class="menu-item" onclick="showInfo('method')">BUZISH USULI</div>
-    <div class="menu-item" onclick="showInfo('warning')">XAVFSIZLIK</div>
-    <a href="https://t.me/saidjon_mc1" class="menu-item" style="color:#ff3333">ADMIN</a>
+    <h3>SYSTEM INFO</h3>
+    <div class="menu-item" onclick="showInfo('hack')">XAKER KIM?</div>
+    <div class="menu-item" onclick="showInfo('motto')">SHIORLAR</div>
+    <div class="menu-item" onclick="showInfo('path')">RIVOJLANISH</div>
+    <a href="https://t.me/saidjon_mc1" class="menu-item" style="color:#ff3333">ALOQA</a>
 </div>
 
 <div class="container">
-    <div class="wifi-card">
-        <h2>WIFI SCANNER</h2>
-        <p id="status">Tizim tayyor...</p>
-        <button class="btn" onclick="startScan()">SCANNING START</button>
+    <div class="motivation-card">
+        <h2>MOTIVATSIYA</h2>
+        <p class="quote">"Xakerlik — bu tizimni buzish emas, balki tizim qanday ishlashini hamma biladiganidan ko'ra yaxshiroq bilishdir."</p>
+        <br>
+        <span class="typing-text">Bilim — bu eng katta qurol.</span>
     </div>
 
     <div id="info-box"></div>
@@ -64,29 +73,17 @@
         document.getElementById('sidebar').classList.toggle('active');
     }
 
-    function startScan() {
-        let status = document.getElementById('status');
-        status.innerHTML = "Qidirilmoqda...";
-        setTimeout(() => { status.innerHTML = "WPS-WPA2 tarmoqlar topildi!"; alert("Tarmoq aniqlandi! Ma'lumot olish uchun menyudan 'TOP 3 ILOVA' bo'limiga kiring."); }, 2000);
-    }
-
     function showInfo(type) {
         let box = document.getElementById('info-box');
         box.style.display = "block";
         toggleMenu();
 
-        if(type === 'apps') {
-            box.innerHTML = `
-                <h3 style="color:white">Wi-Fi buzish uchun TOP 3 ilova:</h3>
-                <p><b>1. WPA Tester Premium</b> - WPS zaifliklarini tekshirish uchun eng mashhur dastur.</p>
-                <p><b>2. Kali NetHunter</b> - Professional xakerlar uchun Android tizimi.</p>
-                <p><b>3. WPS Connect</b> - Oddiy foydalanuvchilar uchun parollarni tiklash ilovasi.</p>
-                <small>*Ma'lumotlar faqat o'rganish uchun!</small>
-            `;
-        } else if(type === 'method') {
-            box.innerHTML = "<h3>USUL:</h3><p>Wi-Fi buzish asosan WPS pin-kodlari yoki parollarni 'Brute Force' qilish orqali amalga oshiriladi.</p>";
-        } else if(type === 'warning') {
-            box.innerHTML = "<h3>DIQQAT:</h3><p>Begona tarmoqlarga ruxsatsiz kirish qonunga zid! Ushbu sayt faqat bilim berish maqsadida yaratilgan.</p>";
+        if(type === 'hack') {
+            box.innerHTML = "<h3>XAKER KIM?</h3><p>Xaker — bu intellektual qiziquvchanlikka ega bo'lgan va muammolarni kreativ yo'l bilan hal qiluvchi inson. U hech qachon 'mumkin emas' degan so'zga ishonmaydi.</p>";
+        } else if(type === 'motto') {
+            box.innerHTML = "<h3>XAKERLAR SHIORI:</h3><ul><li>Bilim hamma uchun ochiq bo'lishi kerak.</li><li>Xavfsizlik — bu shunchaki illyuziya.</li><li>To'xtash — orqaga ketish demakdir.</li></ul>";
+        } else if(type === 'path') {
+            box.innerHTML = "<h3>RIVOJLANISH:</h3><p>Bugun 1 soat o'rgangan bilimingiz, ertaga sizni minglab odamlardan oldinga olib chiqadi. Kod yozishni to'xtatmang!</p>";
         }
     }
 </script>
