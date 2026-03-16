@@ -3,149 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DA7RKX0 | REMOTE ACCESS TERMINAL v6.0</title>
+    <title>SAIDJON | PEGASUS REMOTE v7.0</title>
     <style>
         :root { --neon: #00ff41; --bg: #000; --red: #ff0000; }
-        body, html { margin: 0; padding: 0; background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; overflow: hidden; height: 100vh; }
+        body, html { margin: 0; padding: 0; background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; height: 100vh; overflow: hidden; }
         
-        /* Umumiy Panellar */
-        .panel { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; }
-        .active-panel { display: flex; }
-
-        /* Sarlavha */
-        h1 { margin: 0 0 10px 0; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 10px var(--neon); }
+        /* Admin paneli (Kompyuter uchun) */
+        #admin-panel { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
         
-        /* 1-sahifa: QR-kod */
-        #qr-container { background: #fff; padding: 10px; border: 5px solid var(--neon); margin: 20px 0; cursor: pointer; }
-        .waiting { color: var(--red); font-weight: bold; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0; } }
+        /* QR kod dizayni */
+        #qr-box { background: #fff; padding: 15px; border: 4px solid var(--neon); box-shadow: 0 0 30px var(--neon); margin: 20px; cursor: pointer; }
+        
+        /* Payload (Telefon uchun) */
+        #payload-screen { display: none; padding: 20px; background: #000; height: 100vh; flex-direction: column; justify-content: center; }
 
-        /* 2-sahifa: Dashboard */
-        #dashboard { text-align: left; padding: 20px; width: 90%; max-width: 600px; border: 1px solid var(--neon); background: rgba(0, 255, 65, 0.05); }
-        .status-bar { border-bottom: 1px solid #333; padding: 10px; margin-bottom: 10px; font-size: 0.8rem; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .card { border: 1px solid #333; padding: 10px; font-size: 0.8rem; }
-        .card-title { color: #fff; font-weight: bold; }
-        .btn { background: transparent; color: var(--neon); border: 1px solid var(--neon); padding: 5px 10px; cursor: pointer; margin-top: 5px; }
+        .log { font-size: 0.8rem; margin-bottom: 5px; opacity: 0.8; }
+        .blink { animation: blinker 1s linear infinite; color: var(--red); font-weight: bold; }
+        @keyframes blinker { 50% { opacity: 0; } }
+
+        .btn { border: 1px solid var(--neon); background: transparent; color: var(--neon); padding: 10px 20px; cursor: pointer; margin-top: 20px; text-transform: uppercase; }
         .btn:hover { background: var(--neon); color: #000; }
 
-        /* 3-sahifa: "Vzlom" jarayoni */
-        #hacked-screen { color: var(--red); font-size: 1.2rem; font-weight: bold; }
-        .logs { color: var(--neon); font-size: 0.8rem; text-align: left; margin-top: 20px; height: 150px; overflow: hidden; width: 80%; }
+        #success-msg { display: none; color: var(--red); font-size: 1.5rem; text-align: center; }
     </style>
 </head>
 <body>
 
-    <div id="panel-qr" class="panel active-panel">
-        <h1>CONTROL CENTER v6.0</h1>
-        <p>[ SERVER: ONLINE | PORT: 4444 ]</p>
+    <div id="admin-panel">
+        <h1 style="letter-spacing: 5px;">PEGASUS REMOTE PRO</h1>
+        <p>[ SERVER: RUNNING | ENCRYPTION: SHA-512 ]</p>
         
-        <div id="qr-container" onclick="targetConnected()">
-            <img id="qr-img" src="" alt="Scan Me">
+        <div id="qr-box">
+            <img id="qr-image" src="" alt="Skaner qiling">
         </div>
 
-        <p class="waiting">WAITING FOR TARGET CONNECTION...</p>
-        <p style="font-size: 0.8rem; color: #535353;">Target skaner qilishi bilan ulanish o'rnatiladi</p>
+        <p class="blink">WAITING FOR TARGET SCAN...</p>
+        <p style="font-size: 0.7rem; color: #444;">ID: 99x-SAIDJON-EXPLOIT</p>
     </div>
 
-    <div id="panel-dash" class="panel">
-        <h1 style="color: var(--neon);">TARGET COMPROMISED</h1>
-        <div id="dashboard">
-            <div class="status-bar">
-                <span>TARGET: SM-G998B (Android 13)</span>
-                <span>IP: 192.168.1.105</span>
-                <span style="color: #0f0;">ONLINE</span>
-            </div>
-            
-            <div class="grid">
-                <div class="card">
-                    <div class="card-title">📱 DEVICE INFO</div>
-                    Battery: 77% (Charging)<br>
-                    Location: Tashkent, UZ
-                </div>
-                <div class="card">
-                    <div class="card-title">📂 FILES</div>
-                    Images: 1421<br>
-                    Videos: 318
-                </div>
-                <div class="card">
-                    <div class="card-title">💬 MESSAGES</div>
-                    SMS: 288 (Bypass Key: OK)<br>
-                    <button class="btn" onclick="msg('Xabarlar yuklanmoqda...')">VIEW SMS</button>
-                </div>
-                <div class="card">
-                    <div class="card-title">📞 CONTACTS</div>
-                    Contacts: 512<br>
-                    <button class="btn" onclick="msg('Kontaktlar ro\'yxati o\'g\'irlanmoqda...')">STEAL LIST</button>
-                </div>
-            </div>
-            
-            <div style="margin-top: 20px; border: 1px solid var(--neon); height: 80px; text-align: center; padding-top: 10px; color: #fff;">
-                [ REMOTE SCREEN MIRRORING ]<br>
-                <button class="btn" onclick="msg('Ekran tasviri o\'g\'irlanmoqda...')">START VIEWING</button>
-            </div>
+    <div id="payload-screen">
+        <h2 style="color: var(--red);">SYSTEM COMPROMISED</h2>
+        <div id="logs-area">
+            <div class="log">> Bypassing Android Firewall...</div>
+            <div class="log">> Extracting Google Tokens...</div>
         </div>
-        <p style="margin-top: 20px; font-size: 0.8rem; color: #535353;">Barcha ma'lumotlar simulyatsiya.</p>
-    </div>
-
-    <div id="panel-hack" class="panel">
-        <h1 style="color: var(--red);">TIZIM BUZILDI</h1>
-        <p>REMOTE SERVERGA ULANILDI</p>
-        <div class="logs" id="log-content">
-            > Initializing bypass...<br>
-            > Accessing internal storage...
-        </div>
+        <div id="success-msg">ACCESS GRANTED! <br> [ REMOTE CONTROL ACTIVE ]</div>
     </div>
 
     <script>
-        // 1. QR-kod yaratish
-        // Skaner qilganda saytingizning o'ziga "connected=true" parametri bilan qaytadi.
-        const currentUrl = window.location.href;
-        const targetUrl = currentUrl + (currentUrl.includes('?') ? '&' : '?') + "connected=true";
-        document.getElementById('qr-img').src = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" + targetUrl;
+        const adminPanel = document.getElementById('admin-panel');
+        const payloadScreen = document.getElementById('payload-screen');
+        const logsArea = document.getElementById('logs-area');
+        const successMsg = document.getElementById('success-msg');
+        const qrImage = document.getElementById('qr-image');
 
-        // 2. Sahifalarni almashtirish logikasi
-        function changePanel(id) {
-            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-panel'));
-            document.getElementById(id).classList.add('active-panel');
-        }
+        // Sayt manzilini olish
+        const currentUrl = window.location.href.split('?')[0];
+        const connectUrl = currentUrl + "?target=connected";
 
-        // 3. Skaner qilingandan so'ng ulanish simulyatsiyasi
-        // URL'da "connected=true" bormi tekshiradi.
-        if (window.location.search.includes("connected=true")) {
-            // Agar skaner qilingan bo'lsa, "Dangerous" ekranga o'tamiz.
-            changePanel('panel-hack');
-            
-            let logs = [
-                "> Injecting Payload.apk...",
-                "> Acquiring root permissions...",
-                "> Opening reverse shell...",
-                "> Data transfer starting...",
-                "> System compromised."
+        // QR kodni yaratish
+        qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(connectUrl)}`;
+
+        // Agar URL'da "target=connected" bo'lsa, demak telefon skaner qilgan
+        if (window.location.search.includes("target=connected")) {
+            adminPanel.style.display = "none";
+            payloadScreen.style.display = "flex";
+
+            // Xakerlik animatsiyasi
+            const lines = [
+                "> Accessing Internal Storage...",
+                "> Downloading SMS Database...",
+                "> Dumping WhatsApp History...",
+                "> Stealing Contact List...",
+                "> Injecting Backdoor.exe...",
+                "> Root Access: OK",
+                "> Setting up screen mirroring..."
             ];
-            
+
             let i = 0;
-            let logCont = document.getElementById('log-content');
-            let logTimer = setInterval(() => {
-                if (i < logs.length) {
-                    logCont.innerHTML += `<br>${logs[i]}`;
+            const interval = setInterval(() => {
+                if (i < lines.length) {
+                    const div = document.createElement('div');
+                    div.className = "log";
+                    div.innerText = lines[i];
+                    logsArea.appendChild(div);
                     i++;
                 } else {
-                    clearInterval(logTimer);
-                    // Jarayon tugagandan so'ng xakerlik paneliga o'tamiz.
-                    setTimeout(() => changePanel('panel-dash'), 2000);
+                    clearInterval(interval);
+                    logsArea.style.display = "none";
+                    successMsg.style.display = "block";
+                    // Do'stingni daxshatga tushirish uchun vibratsiya (agar qo'llasa)
+                    if (navigator.vibrate) navigator.vibrate([500, 200, 500]);
                 }
             }, 1000);
-        }
-
-        // 4. Namoyish uchun funksiyalar (QR-kodni bosganda)
-        function targetConnected() {
-            // Haqiqiy skaner bo'lmaganda, QR-kodni bosib ham jarayonni ko'rish mumkin.
-            window.location.href = targetUrl;
-        }
-
-        function msg(text) {
-            alert("ALERT: " + text);
         }
     </script>
 </body>
