@@ -1,86 +1,97 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HACKED DINO | SAIDJON</title>
+    <title>HACKED DINO - SAIDJON</title>
     <style>
-        body {
-            background: #202124;
-            color: #fff;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-        .info {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .status {
-            color: #00ff41;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-        iframe {
-            border: 5px solid #00ff41;
-            box-shadow: 0 0 20px #00ff41;
-            border-radius: 10px;
-            width: 100%;
-            max-width: 600px;
-            height: 400px;
-        }
-        .footer { margin-top: 20px; }
-        .btn {
-            color: #ff3333;
-            border: 1px solid #ff3333;
-            padding: 10px 20px;
-            text-decoration: none;
-        }
+        body { background: #f7f7f7; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; font-family: sans-serif; }
+        #game-container { width: 600px; height: 150px; background: #fff; border-bottom: 2px solid #535353; overflow: hidden; position: relative; }
+        #dino { width: 40px; height: 44px; position: absolute; bottom: 0; left: 50px; background: url('https://www.google.com/logos/2010/pacman10-i.html') -0px -0px; /* Almashtiriladi */ }
+        .cactus { width: 20px; height: 40px; background: #535353; position: absolute; bottom: 0; }
+        #score { position: absolute; top: 10px; right: 20px; font-size: 20px; color: #535353; }
+        .hacker-info { margin-top: 20px; color: #00ff41; background: #000; padding: 10px; border-radius: 5px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div class="info">
-        <h1>SAIDJON HACKED DINO</h1>
-        <p>STATUS: <span class="status">IMMORTAL MODE ACTIVE (O'LMAS)</span></p>
-        <p style="font-size: 0.8rem; color: #888;">Ekranni bosing yoki Probelni bosing</p>
+    <h1>SAIDJON VZLOG DINO</h1>
+    <div id="game-container">
+        <div id="score">00000</div>
+        <canvas id="dinoGame" width="600" height="150"></canvas>
     </div>
-
-    <iframe id="dino-frame" src="https://chromedino.com/" scrolling="no"></iframe>
+    <div class="hacker-info">IMMORTAL MODE: ON (Kaktuslardan o'tib ketaveradi)</div>
 
     <script>
-        // O'yin ichiga xakerlik kodini yuborish
-        const frame = document.getElementById('dino-frame');
-        
-        frame.onload = function() {
-            // Diqqat: Bu kod iframe ichidagi o'yin funksiyasini o'zgartiradi
-            // Dino kaktusga urilganda "GameOver" funksiyasini bo'shatib qo'yamiz
-            setTimeout(() => {
-                try {
-                    const script = document.createElement('script');
-                    script.innerHTML = `
-                        var original = Runner.prototype.gameOver;
-                        Runner.prototype.gameOver = function() {
-                            console.log("Saidjon Hack: O'lim bekor qilindi!");
-                            // Hech narsa qilma, shunchaki davom etaver
-                        };
-                    `;
-                    frame.contentWindow.document.body.appendChild(script);
-                } catch(e) {
-                    console.log("Xavfsizlik cheklovi: Brauzer kodi o'zgartirishga ruxsat bermadi.");
+        // Dinozavr o'yini logikasi (Soddalashtirilgan va Vzlom qilingan)
+        const canvas = document.getElementById('dinoGame');
+        const ctx = canvas.getContext('2d');
+
+        let score = 0;
+        let gameSpeed = 5;
+        let isJumping = false;
+        let dinoY = 130;
+        let gravity = 0.6;
+        let jumpPower = -12;
+        let velocityY = 0;
+
+        let obstacles = [];
+
+        // Sakrashni boshqarish
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && dinoY === 130) {
+                velocityY = jumpPower;
+                isJumping = true;
+            }
+        });
+
+        function spawnObstacle() {
+            if (Math.random() < 0.02) {
+                obstacles.push({ x: 600, width: 20, height: 30 + Math.random() * 20 });
+            }
+        }
+
+        function update() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Dinozavr fizikasi
+            velocityY += gravity;
+            dinoY += velocityY;
+            if (dinoY > 130) {
+                dinoY = 130;
+                velocityY = 0;
+            }
+
+            // Dinozavrni chizish
+            ctx.fillStyle = '#535353';
+            ctx.fillRect(50, dinoY - 40, 40, 40);
+
+            // To'siqlar (Kaktuslar)
+            for (let i = 0; i < obstacles.length; i++) {
+                obstacles[i].x -= gameSpeed;
+                ctx.fillStyle = '#ff3333'; // Kaktuslar qizil
+                ctx.fillRect(obstacles[i].x, 150 - obstacles[i].height, obstacles[i].width, obstacles[i].height);
+
+                // --- VZLOM QISMI SHU YERDA ---
+                // Odatda bu yerda urilish (Collision) tekshiriladi va o'yin to'xtatiladi.
+                // Biz esa "GameOver" funksiyasini shunchaki yozmaymiz! 
+                // Dinozavr kaktus ichidan o'tib ketaveradi.
+                // -----------------------------
+
+                if (obstacles[i].x < -20) {
+                    obstacles.splice(i, 1);
+                    i--;
                 }
-            }, 2000);
-        };
+            }
+
+            score++;
+            document.getElementById('score').innerText = Math.floor(score / 5);
+            gameSpeed += 0.001;
+
+            spawnObstacle();
+            requestAnimationFrame(update);
+        }
+
+        update();
     </script>
-
-    <div class="footer">
-        <a href="https://t.me/saidjon_mc1" class="btn">ADMINGA MUROJAT</a>
-    </div>
-
 </body>
 </html>
