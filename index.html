@@ -3,59 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAIDJON | CYBER HUB</title>
+    <title>SAIDJON | ELITE HUB v6.0</title>
     <style>
-        :root { --green: #00ff41; --dark: #000; }
-        body, html { margin: 0; padding: 0; background: var(--dark); color: var(--green); font-family: 'Courier New', monospace; overflow-x: hidden; }
+        :root { --neon: #00ff41; --bg: #000; --red: #ff0000; }
+        body, html { margin: 0; padding: 0; background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; }
         
-        /* Matrix orqa foni */
-        #matrix { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.3; }
+        #matrix { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.2; }
 
-        .container { display: flex; flex-direction: column; align-items: center; padding: 20px; min-height: 100vh; }
-        
-        .header { text-align: center; margin-top: 30px; border: 2px solid var(--green); padding: 20px; background: rgba(0,0,0,0.8); box-shadow: 0 0 20px var(--green); width: 90%; max-width: 500px; }
-        
-        .name-glitch { font-size: 2.5rem; font-weight: bold; letter-spacing: 5px; text-shadow: 2px 2px #f00; animation: glitch 1s infinite; }
-        @keyframes glitch { 0% { opacity: 1; } 50% { opacity: 0.7; transform: skew(2deg); } 100% { opacity: 1; } }
+        .wrapper { padding: 20px; max-width: 800px; margin: auto; }
 
-        /* Tugmalar bo'limi */
-        .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; max-width: 500px; margin-top: 30px; }
-        
-        .hack-btn {
-            background: rgba(0, 40, 0, 0.6); color: var(--green); border: 1px solid var(--green);
-            padding: 20px 10px; cursor: pointer; font-weight: bold; transition: 0.3s;
-            text-transform: uppercase; font-size: 0.8rem; text-align: center;
-        }
+        /* Header Bo'limi */
+        header { text-align: center; border: 1px solid var(--neon); padding: 20px; margin-bottom: 20px; box-shadow: 0 0 15px var(--neon); }
+        .glitch { font-size: 2rem; font-weight: bold; text-shadow: 2px 2px var(--red); }
 
-        .hack-btn:hover { background: var(--green); color: #000; box-shadow: 0 0 20px var(--green); transform: scale(1.05); }
+        /* Status Bo'limi */
+        .status-bar { display: flex; justify-content: space-between; font-size: 0.8rem; border-bottom: 1px solid #333; padding: 10px; margin-bottom: 20px; }
 
-        .admin-link {
-            margin-top: 40px; border: 2px solid #ff0000; color: #ff0000; padding: 15px 40px;
-            text-decoration: none; font-weight: bold; letter-spacing: 2px;
-        }
-        .admin-link:hover { background: #ff0000; color: #fff; box-shadow: 0 0 25px #ff0000; }
+        /* Asosiy Bo'limlar */
+        section { margin-bottom: 30px; }
+        h2 { border-left: 5px solid var(--neon); padding-left: 10px; font-size: 1.2rem; text-transform: uppercase; }
+
+        /* Tugmalar Grid */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+        .card { border: 1px solid var(--neon); padding: 15px; text-align: center; cursor: pointer; transition: 0.3s; background: rgba(0,255,65,0.05); }
+        .card:hover { background: var(--neon); color: #000; box-shadow: 0 0 20px var(--neon); }
+
+        /* Terminal Bo'limi */
+        .terminal { background: #050505; border: 1px solid #333; padding: 15px; font-size: 0.8rem; height: 150px; overflow-y: hidden; position: relative; }
+        .terminal::after { content: "_"; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .footer { text-align: center; margin-top: 50px; padding-bottom: 30px; }
+        .admin-btn { border: 1px solid var(--red); color: var(--red); padding: 15px 40px; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <canvas id="matrix"></canvas>
 
-    <div class="container">
-        <div class="header">
-            <div class="name-glitch">SAIDJON</div>
-            <p>[ SYSTEM OVERRIDE ACTIVE ]</p>
+    <div class="wrapper">
+        <header>
+            <div class="glitch">SAIDJON TERMINAL</div>
+            <p>ACCESS GRANTED - SESSION 0x992</p>
+        </header>
+
+        <div class="status-bar">
+            <span>IP: 192.168.1.254</span>
+            <span>STATUS: ENCRYPTED</span>
+            <span>CPU: 88%</span>
         </div>
 
-        <div class="grid-menu">
-            <button class="hack-btn" onclick="run('DDoS Hujum boshlandi...')">DDoS ATTACK</button>
-            <button class="hack-btn" onclick="run('Baza skanerlanmoqda...')">SQL INJECT</button>
-            <button class="hack-btn" onclick="run('Proxy zanjiri ulanmoqda...')">IP SPOOFING</button>
-            <button class="hack-btn" onclick="run('WPS PIN aniqlanmoqda...')">WIFI CRACK</button>
-            <button class="hack-btn" onclick="run('Kodni shifrlash...')">ENCRYPTION</button>
-            <button class="hack-btn" onclick="run('Barcha tizimlar OK!')">SYSTEM CHECK</button>
-        </div>
+        <section>
+            <h2>Live Console</h2>
+            <div class="terminal" id="term">
+                > Initializing bypass...<br>
+                > Loading modules...<br>
+                > Connection established with satellite...<br>
+                > Root access secured.
+            </div>
+        </section>
 
-        <a href="https://t.me/saidjon_mc1" class="admin-link">ADMINGA MUROJAT</a>
+        <section>
+            <h2>Tools & Exploits</h2>
+            <div class="grid">
+                <div class="card" onclick="msg('WiFi Cracker v2.1 ishga tushdi')">WIFI CRACK</div>
+                <div class="card" onclick="msg('Baza yuklanmoqda...')">SQL DUMP</div>
+                <div class="card" onclick="msg('DDoS port 80 orqali yuborilmoqda')">DDOS ATTACK</div>
+                <div class="card" onclick="msg('Anonim chat ulanmoqda')">DARK CHAT</div>
+                <div class="card" onclick="msg('IP manzillar o\'zgartirildi')">PROXY LIST</div>
+                <div class="card" onclick="msg('Virus yaratilmoqda...')">MALWARE GEN</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Hacker Motto</h2>
+            <p style="font-style: italic; color: #fff;">"Haqiqiy xaker faqat bitta narsaga ishonadi: O'zi yozgan kodga. Dunyoni raqamlar boshqaradi, raqamlarni esa biz."</p>
+        </section>
+
+        <div class="footer">
+            <a href="https://t.me/saidjon_mc1" class="admin-btn">ADMINGA MUROJAT</a>
+        </div>
     </div>
 
     <script>
@@ -63,7 +90,7 @@
         const c = document.getElementById("matrix");
         const ctx = c.getContext("2d");
         c.width = window.innerWidth; c.height = window.innerHeight;
-        const txts = "01010101010101010101010101010101";
+        const txts = "0101HACKER0101SAIDJON0101";
         const drops = Array(Math.floor(c.width/16)).fill(1);
         function draw() {
             ctx.fillStyle = "rgba(0,0,0,0.05)"; ctx.fillRect(0,0,c.width,c.height);
@@ -77,8 +104,10 @@
         }
         setInterval(draw, 33);
 
-        function run(msg) {
-            alert("COMMAND EXECUTED:\n" + msg);
+        function msg(text) {
+            const term = document.getElementById('term');
+            term.innerHTML += `<br>> ${text}`;
+            alert(text);
         }
     </script>
 </body>
