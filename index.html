@@ -2,72 +2,151 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <title>SAIDJON | REMOTE ACCESS PRO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DA7RKX0 | REMOTE ACCESS TERMINAL v6.0</title>
     <style>
-        :root { --neon: #00ff41; --bg: #050505; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        :root { --neon: #00ff41; --bg: #000; --red: #ff0000; }
+        body, html { margin: 0; padding: 0; background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; overflow: hidden; height: 100vh; }
         
-        .panel { border: 2px solid var(--neon); padding: 30px; background: #000; box-shadow: 0 0 30px rgba(0,255,65,0.3); text-align: center; max-width: 500px; width: 90%; }
-        
-        #qr-container { background: #fff; padding: 15px; display: inline-block; margin: 20px 0; border: 5px solid var(--neon); }
-        
-        .loading-text { font-size: 0.8rem; height: 50px; overflow: hidden; margin-top: 10px; color: #888; }
-        
-        .status-badge { background: #ff0000; color: #fff; padding: 5px 10px; font-weight: bold; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0.5; } }
+        /* Umumiy Panellar */
+        .panel { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; }
+        .active-panel { display: flex; }
 
-        #success-screen { display: none; }
+        /* Sarlavha */
+        h1 { margin: 0 0 10px 0; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 3px; text-shadow: 0 0 10px var(--neon); }
+        
+        /* 1-sahifa: QR-kod */
+        #qr-container { background: #fff; padding: 10px; border: 5px solid var(--neon); margin: 20px 0; cursor: pointer; }
+        .waiting { color: var(--red); font-weight: bold; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* 2-sahifa: Dashboard */
+        #dashboard { text-align: left; padding: 20px; width: 90%; max-width: 600px; border: 1px solid var(--neon); background: rgba(0, 255, 65, 0.05); }
+        .status-bar { border-bottom: 1px solid #333; padding: 10px; margin-bottom: 10px; font-size: 0.8rem; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .card { border: 1px solid #333; padding: 10px; font-size: 0.8rem; }
+        .card-title { color: #fff; font-weight: bold; }
+        .btn { background: transparent; color: var(--neon); border: 1px solid var(--neon); padding: 5px 10px; cursor: pointer; margin-top: 5px; }
+        .btn:hover { background: var(--neon); color: #000; }
+
+        /* 3-sahifa: "Vzlom" jarayoni */
+        #hacked-screen { color: var(--red); font-size: 1.2rem; font-weight: bold; }
+        .logs { color: var(--neon); font-size: 0.8rem; text-align: left; margin-top: 20px; height: 150px; overflow: hidden; width: 80%; }
     </style>
 </head>
 <body>
 
-    <div class="panel" id="main-panel">
-        <h2 style="margin: 0; letter-spacing: 3px;">REMOTE CONTROL v4.2</h2>
-        <p>[ SERVER: ONLINE | ENCRYPTION: AES-256 ]</p>
+    <div id="panel-qr" class="panel active-panel">
+        <h1>CONTROL CENTER v6.0</h1>
+        <p>[ SERVER: ONLINE | PORT: 4444 ]</p>
         
-        <div id="qr-container">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=EXPLOIT_CONNECTED_ID_9921" alt="QR Code">
+        <div id="qr-container" onclick="targetConnected()">
+            <img id="qr-img" src="" alt="Scan Me">
         </div>
 
-        <p>Skanerlangandan so'ng "Payload" avtomatik yuklanadi</p>
-        
-        <div class="loading-text" id="logs">
-            > Waiting for connection...<br>
-            > Listening on port 4444...
-        </div>
+        <p class="waiting">WAITING FOR TARGET CONNECTION...</p>
+        <p style="font-size: 0.8rem; color: #535353;">Target skaner qilishi bilan ulanish o'rnatiladi</p>
     </div>
 
-    <div class="panel" id="success-screen">
-        <h2 style="color: #ff0000;">CONNECTION ESTABLISHED!</h2>
-        <div class="status-badge">TARGET: ANDROID_13_REMOTE</div>
-        <div style="text-align: left; margin-top: 20px; font-size: 0.9rem;">
-            > IP: 192.168.1.105<br>
-            > Location: Tashkent, UZ<br>
-            > Battery: 77% (Charging)<br>
-            > Mirroring: STARTING...
+    <div id="panel-dash" class="panel">
+        <h1 style="color: var(--neon);">TARGET COMPROMISED</h1>
+        <div id="dashboard">
+            <div class="status-bar">
+                <span>TARGET: SM-G998B (Android 13)</span>
+                <span>IP: 192.168.1.105</span>
+                <span style="color: #0f0;">ONLINE</span>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <div class="card-title">📱 DEVICE INFO</div>
+                    Battery: 77% (Charging)<br>
+                    Location: Tashkent, UZ
+                </div>
+                <div class="card">
+                    <div class="card-title">📂 FILES</div>
+                    Images: 1421<br>
+                    Videos: 318
+                </div>
+                <div class="card">
+                    <div class="card-title">💬 MESSAGES</div>
+                    SMS: 288 (Bypass Key: OK)<br>
+                    <button class="btn" onclick="msg('Xabarlar yuklanmoqda...')">VIEW SMS</button>
+                </div>
+                <div class="card">
+                    <div class="card-title">📞 CONTACTS</div>
+                    Contacts: 512<br>
+                    <button class="btn" onclick="msg('Kontaktlar ro\'yxati o\'g\'irlanmoqda...')">STEAL LIST</button>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px; border: 1px solid var(--neon); height: 80px; text-align: center; padding-top: 10px; color: #fff;">
+                [ REMOTE SCREEN MIRRORING ]<br>
+                <button class="btn" onclick="msg('Ekran tasviri o\'g\'irlanmoqda...')">START VIEWING</button>
+            </div>
         </div>
-        <div style="margin-top: 20px; border: 1px solid var(--neon); height: 100px; display: flex; align-items: center; justify-content: center;">
-            [ EKRAX TASVIRI YUKLANMOQDA... ]
+        <p style="margin-top: 20px; font-size: 0.8rem; color: #535353;">Barcha ma'lumotlar simulyatsiya.</p>
+    </div>
+
+    <div id="panel-hack" class="panel">
+        <h1 style="color: var(--red);">TIZIM BUZILDI</h1>
+        <p>REMOTE SERVERGA ULANILDI</p>
+        <div class="logs" id="log-content">
+            > Initializing bypass...<br>
+            > Accessing internal storage...
         </div>
     </div>
 
     <script>
-        const logs = document.getElementById('logs');
-        const main = document.getElementById('main-panel');
-        const success = document.getElementById('success-screen');
+        // 1. QR-kod yaratish
+        // Skaner qilganda saytingizning o'ziga "connected=true" parametri bilan qaytadi.
+        const currentUrl = window.location.href;
+        const targetUrl = currentUrl + (currentUrl.includes('?') ? '&' : '?') + "connected=true";
+        document.getElementById('qr-img').src = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" + targetUrl;
 
-        // Bu qismda ulanish simulyatsiyasi (10 soniyadan keyin ulanadi)
-        setTimeout(() => {
-            logs.innerHTML += "<br>> Connection detected from 192.168.1.105";
-            setTimeout(() => {
-                logs.innerHTML += "<br>> Bypassing security layers...";
-                setTimeout(() => {
-                    main.style.display = "none";
-                    success.style.display = "block";
-                }, 2000);
-            }, 2000);
-        }, 5000);
+        // 2. Sahifalarni almashtirish logikasi
+        function changePanel(id) {
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-panel'));
+            document.getElementById(id).classList.add('active-panel');
+        }
+
+        // 3. Skaner qilingandan so'ng ulanish simulyatsiyasi
+        // URL'da "connected=true" bormi tekshiradi.
+        if (window.location.search.includes("connected=true")) {
+            // Agar skaner qilingan bo'lsa, "Dangerous" ekranga o'tamiz.
+            changePanel('panel-hack');
+            
+            let logs = [
+                "> Injecting Payload.apk...",
+                "> Acquiring root permissions...",
+                "> Opening reverse shell...",
+                "> Data transfer starting...",
+                "> System compromised."
+            ];
+            
+            let i = 0;
+            let logCont = document.getElementById('log-content');
+            let logTimer = setInterval(() => {
+                if (i < logs.length) {
+                    logCont.innerHTML += `<br>${logs[i]}`;
+                    i++;
+                } else {
+                    clearInterval(logTimer);
+                    // Jarayon tugagandan so'ng xakerlik paneliga o'tamiz.
+                    setTimeout(() => changePanel('panel-dash'), 2000);
+                }
+            }, 1000);
+        }
+
+        // 4. Namoyish uchun funksiyalar (QR-kodni bosganda)
+        function targetConnected() {
+            // Haqiqiy skaner bo'lmaganda, QR-kodni bosib ham jarayonni ko'rish mumkin.
+            window.location.href = targetUrl;
+        }
+
+        function msg(text) {
+            alert("ALERT: " + text);
+        }
     </script>
-
 </body>
 </html>
