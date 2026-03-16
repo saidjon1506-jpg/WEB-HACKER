@@ -3,135 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HACKER OS | 100 UNIQUE COMMANDS</title>
+    <title>WIFI BREAKER PRO</title>
     <style>
-        body {
-            background-color: #000;
-            color: #00ff41;
-            font-family: 'Courier New', monospace;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        :root { --neon: #00ff41; --bg: #050505; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; overflow-x: hidden; }
 
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-            border: 2px solid #00ff41;
-            padding: 15px;
-            box-shadow: 0 0 15px #00ff41;
-            width: 90%;
-            max-width: 800px;
-            background: rgba(0, 20, 0, 0.5);
+        /* Header va Menu */
+        header { display: flex; justify-content: space-between; padding: 20px; border-bottom: 1px solid var(--neon); align-items: center; }
+        .menu-dots { font-size: 30px; cursor: pointer; padding: 0 10px; }
+        
+        /* Sidebar (Yashirin menyu) */
+        #sidebar {
+            position: fixed; top: 0; right: -100%; width: 250px; height: 100%;
+            background: rgba(0, 20, 0, 0.95); border-left: 2px solid var(--neon);
+            transition: 0.5s; z-index: 100; padding: 20px;
         }
+        #sidebar.active { right: 0; }
+        .menu-item { display: block; color: var(--neon); text-decoration: none; margin: 20px 0; border-bottom: 1px solid #111; padding-bottom: 5px; cursor: pointer; }
 
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 12px;
-            width: 100%;
-            max-width: 1100px;
-            padding-bottom: 120px;
-        }
-
-        .node-btn {
-            background: black;
-            color: #00ff41;
-            border: 1px solid #333;
-            padding: 12px 5px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: 0.2s;
-            text-transform: uppercase;
-        }
-
-        .node-btn:hover {
-            border-color: #00ff41;
-            background: #00ff41;
-            color: black;
-            box-shadow: 0 0 15px #00ff41;
-        }
-
-        .admin-footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: #000;
-            padding: 20px 0;
-            text-align: center;
-            border-top: 2px solid #ff0000;
-        }
-
-        .admin-link {
-            color: #ff0000;
-            text-decoration: none;
-            border: 2px solid #ff0000;
-            padding: 10px 30px;
-            font-weight: bold;
-        }
+        /* Main Content */
+        .container { padding: 20px; text-align: center; }
+        .wifi-card { border: 1px solid var(--neon); padding: 20px; margin-top: 50px; box-shadow: 0 0 15px var(--neon); }
+        .btn { background: var(--neon); color: black; border: none; padding: 15px 30px; font-weight: bold; cursor: pointer; margin-top: 20px; width: 100%; }
+        
+        /* Matn maydoni */
+        #info-box { margin-top: 30px; text-align: left; line-height: 1.6; display: none; background: #001100; padding: 15px; border-radius: 5px; }
+        .admin-btn { display: block; margin-top: 50px; color: #ff3333; text-decoration: none; border: 1px solid #ff3333; padding: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>XAKERLIK TUSHUNCHALARI v3.0</h1>
-        <p>Har bir tugma alohida darslik</p>
+<header>
+    <span>WIFI_SYSTEM_v4.0</span>
+    <div class="menu-dots" onclick="toggleMenu()">⋮</div>
+</header>
+
+<div id="sidebar">
+    <div style="text-align:right; font-size:30px; cursor:pointer" onclick="toggleMenu()">×</div>
+    <h3>MENYU</h3>
+    <div class="menu-item" onclick="showInfo('apps')">TOP 3 ILOVA</div>
+    <div class="menu-item" onclick="showInfo('method')">BUZISH USULI</div>
+    <div class="menu-item" onclick="showInfo('warning')">XAVFSIZLIK</div>
+    <a href="https://t.me/saidjon_mc1" class="menu-item" style="color:#ff3333">ADMIN</a>
+</div>
+
+<div class="container">
+    <div class="wifi-card">
+        <h2>WIFI SCANNER</h2>
+        <p id="status">Tizim tayyor...</p>
+        <button class="btn" onclick="startScan()">SCANNING START</button>
     </div>
 
-    <div class="grid-container" id="hackerGrid"></div>
+    <div id="info-box"></div>
+    
+    <a href="https://t.me/saidjon_mc1" class="admin-btn">ADMINGA MUROJAT</a>
+</div>
 
-    <div class="admin-footer">
-        <a href="https://t.me/saidjon_mc1" class="admin-link">ADMINGA MUROJAT</a>
-    </div>
+<script>
+    function toggleMenu() {
+        document.getElementById('sidebar').classList.toggle('active');
+    }
 
-    <script>
-        const hackerKnowledge = [
-            {t: "SQL Injection", d: "Sayt bazasiga zararli kod yuborish orqali ma'lumotlarni o'g'irlash."},
-            {t: "Phishing", d: "Soxta login sahifalari orqali foydalanuvchi parollarini qo'lga kiritish."},
-            {t: "DDoS Attack", d: "Saytga haddan tashqari ko'p so'rov yuborib, uni to'xtatib qo'yish."},
-            {t: "Brute Force", d: "Parolni barcha mumkin bo'lgan variantlar bilan topishga urinish."},
-            {t: "Social Eng", d: "Odamlarning ishonchiga kirib, ulardan sirlarni bilib olish san'ati."},
-            {t: "White Hat", d: "Tizim xavfsizligini mustahkamlash uchun ishlaydigan xushniyat xakerlar."},
-            {t: "Black Hat", d: "Shaxsiy manfaat yo'lida zarar keltiruvchi kiber-jinoyatchilar."},
-            {t: "Grey Hat", d: "Ham yaxshi, ham yomon maqsadlarda ishlaydigan oraliq xakerlar."},
-            {t: "Keylogger", d: "Klaviaturada yozilgan har bir harfni yashirincha yozib boruvchi virus."},
-            {t: "Ransomware", d: "Fayllarni shifrlab qo'yib, ochish uchun pul talab qiluvchi dastur."},
-            {t: "VPN", d: "Internetdagi manzilingizni (IP) yashiruvchi xavfsiz kanal."},
-            {t: "Encryption", d: "Ma'lumotlarni o'qib bo'lmaydigan kodga aylantirish (shifrlash)."},
-            {t: "Dark Web", d: "Internetning oddiy brauzerlar ko'ra olmaydigan yashirin qismi."},
-            {t: "Tor Browser", d: "Dark vebga kirish va anonimlikni saqlash uchun maxsus brauzer."},
-            {t: "Malware", d: "Zararli dasturlarning (virus, troyan) umumiy nomi."},
-            {t: "Trojan Horse", d: "Foydali dastur niqobi ostidagi yashirin virus."},
-            {t: "Backdoor", d: "Tizimga kirish uchun xaker tomonidan qoldirilgan yashirin eshik."},
-            {t: "Sniffing", d: "Tarmoq ichidagi ma'lumotlar oqimini yashirincha kuzatish."},
-            {t: "IP Spoofing", d: "Soxta IP manzil orqali o'zini boshqa odamdek ko'rsatish."},
-            {t: "Rootkit", d: "Tizimning eng chuqur qismiga joylashib oluvchi ko'rinmas virus."},
-            {t: "Zero Day", d: "Dasturchilar hali bilmagan va yopilmagan yangi xavfsizlik tuynugi."},
-            {t: "Botnet", d: "Xaker tomonidan boshqariladigan minglab viruslangan kompyuterlar tarmog'i."},
-            {t: "Firewall", d: "Tizimni ruxsatsiz kirishlardan himoya qiluvchi devor."},
-            {t: "Ethical Hack", d: "Ruxsat bilan amalga oshiriladigan qonuniy xakerlik."},
-            {t: "Penetration", d: "Tizimning zaif joylarini topish uchun o'tkaziladigan test."}
-        ];
+    function startScan() {
+        let status = document.getElementById('status');
+        status.innerHTML = "Qidirilmoqda...";
+        setTimeout(() => { status.innerHTML = "WPS-WPA2 tarmoqlar topildi!"; alert("Tarmoq aniqlandi! Ma'lumot olish uchun menyudan 'TOP 3 ILOVA' bo'limiga kiring."); }, 2000);
+    }
 
-        const grid = document.getElementById('hackerGrid');
+    function showInfo(type) {
+        let box = document.getElementById('info-box');
+        box.style.display = "block";
+        toggleMenu();
 
-        for (let i = 1; i <= 100; i++) {
-            const btn = document.createElement('button');
-            btn.className = 'node-btn';
-            
-            // Ma'lumot bormi yoki yo'qligini tekshirish
-            let info = hackerKnowledge[i-1] || {t: "COMMAND_" + i, d: "Ushbu bo'lim kiber-xavfsizlikning " + i + "-darajali himoya usullarini o'z ichiga oladi."};
-            
-            btn.innerHTML = info.t;
-            btn.onclick = function() {
-                alert("MODUL: " + info.t + "\n\nVAZIFA: " + info.d);
-            };
-            
-            grid.appendChild(btn);
+        if(type === 'apps') {
+            box.innerHTML = `
+                <h3 style="color:white">Wi-Fi buzish uchun TOP 3 ilova:</h3>
+                <p><b>1. WPA Tester Premium</b> - WPS zaifliklarini tekshirish uchun eng mashhur dastur.</p>
+                <p><b>2. Kali NetHunter</b> - Professional xakerlar uchun Android tizimi.</p>
+                <p><b>3. WPS Connect</b> - Oddiy foydalanuvchilar uchun parollarni tiklash ilovasi.</p>
+                <small>*Ma'lumotlar faqat o'rganish uchun!</small>
+            `;
+        } else if(type === 'method') {
+            box.innerHTML = "<h3>USUL:</h3><p>Wi-Fi buzish asosan WPS pin-kodlari yoki parollarni 'Brute Force' qilish orqali amalga oshiriladi.</p>";
+        } else if(type === 'warning') {
+            box.innerHTML = "<h3>DIQQAT:</h3><p>Begona tarmoqlarga ruxsatsiz kirish qonunga zid! Ushbu sayt faqat bilim berish maqsadida yaratilgan.</p>";
         }
-    </script>
+    }
+</script>
 
 </body>
 </html>
