@@ -2,63 +2,103 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <title>HAKIMJON | INSTA-BYPASS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAKIMJON | CYBER WORLD</title>
     <style>
-        body { background: #000; color: #00ff41; font-family: 'Courier New', monospace; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        .terminal { border: 2px solid #00ff41; padding: 25px; width: 350px; background: rgba(0,20,0,0.9); box-shadow: 0 0 15px #00ff41; border-radius: 8px; }
-        h2 { text-align: center; color: #fff; text-transform: uppercase; letter-spacing: 2px; }
-        input { width: 100%; padding: 10px; margin: 10px 0; background: #111; border: 1px solid #00ff41; color: #fff; box-sizing: border-box; }
-        .btn { width: 100%; padding: 12px; background: #00ff41; color: #000; border: none; font-weight: bold; cursor: pointer; text-transform: uppercase; }
-        #log { font-size: 11px; margin-top: 15px; height: 100px; overflow: hidden; display: none; border-top: 1px solid #333; padding-top: 10px; }
-        .error { color: #ff0000; font-weight: bold; text-align: center; display: none; margin-top: 10px; }
+        :root { --neon: #00ff41; --bg: #000; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        
+        .header { text-align: center; border: 2px solid var(--neon); padding: 15px; width: 90%; max-width: 500px; margin-bottom: 20px; box-shadow: 0 0 15px var(--neon); }
+        
+        /* Dino Rejimi */
+        #dino-game { position: relative; width: 100%; max-width: 600px; height: 150px; background: #fff; border-bottom: 3px solid var(--neon); overflow: hidden; display: block; }
+        #dino { position: absolute; bottom: 0; left: 40px; width: 35px; height: 35px; background: #535353; border-radius: 3px; }
+        .cactus { position: absolute; bottom: 0; width: 15px; height: 30px; background: #ff0000; }
+
+        /* QR va Hack Bo'limi */
+        .hack-box { border: 1px solid var(--neon); padding: 20px; margin-top: 20px; width: 90%; max-width: 400px; text-align: center; }
+        #qr-code { background: #fff; padding: 10px; margin: 15px auto; width: 150px; height: 150px; display: block; border: 3px solid var(--neon); }
+        
+        .btn { background: var(--neon); color: #000; border: none; padding: 10px 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        .blink { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
     </style>
 </head>
 <body>
 
-    <div class="terminal">
-        <h2>HAKIMJON MOD</h2>
-        <p style="font-size: 10px; text-align: center;">[ TARGET: INSTAGRAM DATA BYPASS ]</p>
-        
-        <input type="text" id="target" placeholder="Target Username (@nik)">
-        <button class="btn" onclick="hackStart()">PAROLNI ANIQLASH</button>
+    <div class="header">
+        <h1>HAKIMJON MOD v9.0</h1>
+        <p>"O'lim bor — yutqazish yo'q!"</p>
+    </div>
 
-        <div id="log"></div>
-        <div id="err" class="error">XATO: HAKIMJON SIZNI KO'RIB QOLDI! 😂</div>
+    <div id="dino-game" onclick="dinoJump()">
+        <div id="score" style="position:absolute; right:10px; color:#000; font-weight:bold;">0</div>
+        <div id="dino"></div>
+    </div>
+    <p style="font-size: 10px;">[ DINO O'LMAYDI - HAKIMJON VZLOMI ]</p>
+
+    <div class="hack-box">
+        <h3>REMOTE EXPLOIT</h3>
+        <img id="qr-code" src="" alt="QR">
+        <p class="blink" id="status">WAITING FOR TARGET...</p>
+        <button class="btn" onclick="startPrank()">VZLOMNI BOSHLASH</button>
+    </div>
+
+    <div style="margin-top: 30px; font-size: 11px; color: #888;">
+        Hakimjon Motivatsiyasi: "Koding o'xshamadimi? Demak, hali Hakimjon darajasiga yetmabsan uka!"
     </div>
 
     <script>
-        function hackStart() {
-            const target = document.getElementById('target').value;
-            if(!target) return alert("Nikni yozing!");
+        // --- DINO LOGIKASI ---
+        const dino = document.getElementById('dino');
+        const game = document.getElementById('dino-game');
+        const scoreEl = document.getElementById('score');
+        let score = 0;
+        let isJumping = false;
 
-            const log = document.getElementById('log');
-            const err = document.getElementById('err');
-            log.style.display = "block";
-            log.innerHTML = "";
-
-            const steps = [
-                `> Scanning @${target} account...`,
-                "> Bypassing Two-Factor Auth...",
-                "> Cracking password hash...",
-                "> Data leak detected: 88%",
-                "> Accessing private DMs...",
-                "> Hakimjon says: 'To'xta uka!'"
-            ];
-
-            let i = 0;
-            const timer = setInterval(() => {
-                if(i < steps.length) {
-                    log.innerHTML += `<div>${steps[i]}</div>`;
-                    i++;
-                } else {
-                    clearInterval(timer);
-                    setTimeout(() => {
-                        log.style.display = "none";
-                        err.style.display = "block";
-                        alert("HAKIMJON MASLAHATI: Birovning parolini emas, o'zingni ustingda ishlashni o'rgan, uka! 😉");
-                    }, 1000);
+        function dinoJump() {
+            if (isJumping) return;
+            isJumping = true;
+            let p = 0;
+            let up = setInterval(() => {
+                if (p >= 80) {
+                    clearInterval(up);
+                    let down = setInterval(() => {
+                        if (p <= 0) { clearInterval(down); isJumping = false; }
+                        p -= 4; dino.style.bottom = p + "px";
+                    }, 20);
                 }
-            }, 800);
+                p += 4; dino.style.bottom = p + "px";
+            }, 20);
+        }
+
+        function createCactus() {
+            const c = document.createElement('div');
+            c.className = 'cactus';
+            let x = 600;
+            c.style.left = x + 'px';
+            game.appendChild(c);
+            let move = setInterval(() => {
+                x -= 6; c.style.left = x + 'px';
+                if (x < -20) { clearInterval(move); game.removeChild(c); }
+                // O'lmaslik: Urilishni tekshirmaymiz!
+            }, 20);
+            setTimeout(createCactus, Math.random() * 2000 + 1000);
+        }
+        createCactus();
+        setInterval(() => { score++; scoreEl.innerText = score; }, 100);
+
+        // --- QR VA PRANK LOGIKASI ---
+        const qr = document.getElementById('qr-code');
+        qr.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://instagram.com/hakimjon_official_prank";
+
+        function startPrank() {
+            const st = document.getElementById('status');
+            st.innerHTML = "INJECTING PAYLOAD...";
+            st.style.color = "#00ff41";
+            setTimeout(() => {
+                alert("HAKIMJON: Tizim buzildi! Endi hamma narsa mening qo'limda! 😂");
+            }, 2000);
         }
     </script>
 </body>
