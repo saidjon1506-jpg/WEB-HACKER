@@ -1,105 +1,101 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HAKIMJON | CYBER WORLD</title>
+    <title>ORIGINAL DINO | HAKIMJON MOD</title>
     <style>
-        :root { --neon: #00ff41; --bg: #000; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        body { margin: 0; background: #f7f7f7; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        #game-box { position: relative; width: 600px; height: 150px; background: #fff; border-bottom: 2px solid #535353; overflow: hidden; }
         
-        .header { text-align: center; border: 2px solid var(--neon); padding: 15px; width: 90%; max-width: 500px; margin-bottom: 20px; box-shadow: 0 0 15px var(--neon); }
+        /* Dino Sprite */
+        #dino { position: absolute; bottom: 0; left: 50px; width: 44px; height: 47px; 
+                background: url('https://raw.githubusercontent.com/wayou/t-rex-runner/master/assets/default_100_percent/100-offline-sprite.png') -76px -2px; 
+                background-size: 600px; }
         
-        /* Dino Rejimi */
-        #dino-game { position: relative; width: 100%; max-width: 600px; height: 150px; background: #fff; border-bottom: 3px solid var(--neon); overflow: hidden; display: block; }
-        #dino { position: absolute; bottom: 0; left: 40px; width: 35px; height: 35px; background: #535353; border-radius: 3px; }
-        .cactus { position: absolute; bottom: 0; width: 15px; height: 30px; background: #ff0000; }
-
-        /* QR va Hack Bo'limi */
-        .hack-box { border: 1px solid var(--neon); padding: 20px; margin-top: 20px; width: 90%; max-width: 400px; text-align: center; }
-        #qr-code { background: #fff; padding: 10px; margin: 15px auto; width: 150px; height: 150px; display: block; border: 3px solid var(--neon); }
+        /* Kaktus Sprite */
+        .cactus { position: absolute; bottom: 0; width: 25px; height: 50px; 
+                  background: url('https://raw.githubusercontent.com/wayou/t-rex-runner/master/assets/default_100_percent/100-offline-sprite.png') -228px -2px; 
+                  background-size: 600px; }
         
-        .btn { background: var(--neon); color: #000; border: none; padding: 10px 20px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
-        .blink { animation: blinker 1s linear infinite; }
-        @keyframes blinker { 50% { opacity: 0; } }
+        #score { position: absolute; top: 10px; right: 20px; font-size: 20px; color: #535353; font-weight: bold; }
+        .h-mod { margin-top: 15px; color: #00ff41; background: #000; padding: 10px; font-weight: bold; border-radius: 5px; }
     </style>
 </head>
-<body>
+<body onclick="jump()" onkeydown="if(event.code=='Space') jump()">
 
-    <div class="header">
-        <h1>HAKIMJON MOD v9.0</h1>
-        <p>"O'lim bor — yutqazish yo'q!"</p>
-    </div>
-
-    <div id="dino-game" onclick="dinoJump()">
-        <div id="score" style="position:absolute; right:10px; color:#000; font-weight:bold;">0</div>
+    <h2 style="color: #535353;">HAKIMJON HACKED ORIGINAL DINO</h2>
+    
+    <div id="game-box">
+        <div id="score">00000</div>
         <div id="dino"></div>
     </div>
-    <p style="font-size: 10px;">[ DINO O'LMAYDI - HAKIMJON VZLOMI ]</p>
 
-    <div class="hack-box">
-        <h3>REMOTE EXPLOIT</h3>
-        <img id="qr-code" src="" alt="QR">
-        <p class="blink" id="status">WAITING FOR TARGET...</p>
-        <button class="btn" onclick="startPrank()">VZLOMNI BOSHLASH</button>
-    </div>
-
-    <div style="margin-top: 30px; font-size: 11px; color: #888;">
-        Hakimjon Motivatsiyasi: "Koding o'xshamadimi? Demak, hali Hakimjon darajasiga yetmabsan uka!"
-    </div>
+    <div class="h-mod">STATUS: IMMORTAL (O'LMAYDIGAN) ✅</div>
+    <p style="font-size: 12px; color: #888; margin-top: 10px;">Motivatsiya: "Kaktus Hakimjondan qo'rqadi!"</p>
 
     <script>
-        // --- DINO LOGIKASI ---
-        const dino = document.getElementById('dino');
-        const game = document.getElementById('dino-game');
-        const scoreEl = document.getElementById('score');
-        let score = 0;
-        let isJumping = false;
+        const dino = document.getElementById("dino");
+        const gameBox = document.getElementById("game-box");
+        const scoreDisplay = document.getElementById("score");
 
-        function dinoJump() {
+        let isJumping = false;
+        let score = 0;
+
+        // Sakrash funksiyasi
+        function jump() {
             if (isJumping) return;
             isJumping = true;
-            let p = 0;
+            let pos = 0;
+            // Sakrash animatsiyasi
             let up = setInterval(() => {
-                if (p >= 80) {
+                if (pos >= 100) {
                     clearInterval(up);
                     let down = setInterval(() => {
-                        if (p <= 0) { clearInterval(down); isJumping = false; }
-                        p -= 4; dino.style.bottom = p + "px";
-                    }, 20);
+                        if (pos <= 0) {
+                            clearInterval(down);
+                            isJumping = false;
+                        }
+                        pos -= 4;
+                        dino.style.bottom = pos + "px";
+                    }, 15);
                 }
-                p += 4; dino.style.bottom = p + "px";
-            }, 20);
+                pos += 4;
+                dino.style.bottom = pos + "px";
+            }, 15);
         }
 
-        function createCactus() {
-            const c = document.createElement('div');
-            c.className = 'cactus';
-            let x = 600;
-            c.style.left = x + 'px';
-            game.appendChild(c);
+        // Kaktuslarni yaratish
+        function spawnCactus() {
+            const cactus = document.createElement("div");
+            cactus.classList.add("cactus");
+            let cactusPos = 600;
+            cactus.style.left = cactusPos + "px";
+            gameBox.appendChild(cactus);
+
             let move = setInterval(() => {
-                x -= 6; c.style.left = x + 'px';
-                if (x < -20) { clearInterval(move); game.removeChild(c); }
-                // O'lmaslik: Urilishni tekshirmaymiz!
-            }, 20);
-            setTimeout(createCactus, Math.random() * 2000 + 1000);
-        }
-        createCactus();
-        setInterval(() => { score++; scoreEl.innerText = score; }, 100);
+                if (cactusPos < -30) {
+                    clearInterval(move);
+                    gameBox.removeChild(cactus);
+                }
+                cactusPos -= 6;
+                cactus.style.left = cactusPos + "px";
 
-        // --- QR VA PRANK LOGIKASI ---
-        const qr = document.getElementById('qr-code');
-        qr.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://instagram.com/hakimjon_official_prank";
+                // VZLOM: To'qnashuv tekshiruvi yo'q!
+            }, 10);
 
-        function startPrank() {
-            const st = document.getElementById('status');
-            st.innerHTML = "INJECTING PAYLOAD...";
-            st.style.color = "#00ff41";
-            setTimeout(() => {
-                alert("HAKIMJON: qondaysan. tel oynayapsanmi. soatni korib yubor men bilan hazillashma 1 deganda rasmingni saytimga joylab qoyaman! 😂");
-            }, 2000);
+            // Keyingi kaktus chiqish vaqti
+            setTimeout(spawnCactus, Math.random() * 2000 + 800);
         }
+
+        // Ballarni hisoblash
+        setInterval(() => {
+            score++;
+            scoreDisplay.innerText = score.toString().padStart(5, '0');
+        }, 100);
+
+        // O'yinni boshlash
+        spawnCactus();
     </script>
 </body>
 </html>
