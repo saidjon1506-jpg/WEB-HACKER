@@ -3,79 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REK-HASHTAG 2026 | SAIDJON</title>
+    <title>SAIDJON | REK-STRATEGY 2026</title>
     <style>
-        :root { --accent: #00d2ff; --bg: #0a0a0c; --card: #16161a; }
-        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        :root { --neon: #00ff41; --bg: #000; --glass: rgba(255, 255, 255, 0.1); }
+        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; }
         
-        header { width: 100%; padding: 30px 0; text-align: center; background: linear-gradient(to bottom, #111, var(--bg)); border-bottom: 1px solid #333; }
-        h1 { margin: 0; font-size: 2rem; letter-spacing: 2px; color: var(--accent); }
+        .card { background: var(--glass); border: 1px solid var(--neon); border-radius: 15px; padding: 20px; margin-bottom: 25px; backdrop-filter: blur(10px); }
+        .title { color: var(--neon); font-weight: bold; font-size: 1.2rem; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        
+        .sxema { background: #111; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 13px; color: #00d2ff; border-left: 3px solid #00d2ff; margin: 10px 0; }
+        
+        .caption-area { background: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px; font-size: 14px; color: #ccc; position: relative; }
+        .copy-btn { position: absolute; right: 5px; top: 5px; background: var(--neon); color: #000; border: none; padding: 5px 10px; cursor: pointer; font-size: 10px; font-weight: bold; border-radius: 3px; }
 
-        .container { width: 90%; max-width: 600px; margin-top: 40px; }
-        
-        .search-box { display: flex; gap: 10px; margin-bottom: 30px; }
-        input { flex: 1; padding: 15px; border-radius: 10px; border: 1px solid #333; background: #111; color: #fff; outline: none; transition: 0.3s; }
-        input:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(0, 210, 255, 0.3); }
-        
-        .btn { padding: 15px 25px; border-radius: 10px; border: none; background: var(--accent); color: #000; font-weight: bold; cursor: pointer; }
-
-        /* Natijalar */
-        #result-area { display: none; background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #222; }
-        .hashtag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
-        .tag { background: #222; padding: 8px 12px; border-radius: 5px; font-size: 14px; color: var(--accent); border: 1px solid #333; }
-        
-        .copy-btn { width: 100%; margin-top: 20px; padding: 10px; background: transparent; border: 1px solid var(--accent); color: var(--accent); cursor: pointer; border-radius: 8px; }
-        .copy-btn:hover { background: var(--accent); color: #000; }
-
-        footer { margin-top: auto; padding: 20px; color: #555; font-size: 12px; }
+        .tags { color: var(--neon); font-size: 12px; margin-top: 10px; }
+        .badge { background: red; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; vertical-align: middle; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>REK-GEN 2026</h1>
-        <p style="color: #888;">Saidjon Ahmadjonov tomonidan maxsus</p>
-    </header>
+    <h1 style="text-align: center; color: var(--neon);">SAIDJON REK-SCHEMES 2026</h1>
+    <p style="text-align: center; font-size: 12px; color: #888;">Instagram Editlari uchun professional algoritmlar</p>
 
-    <div class="container">
-        <div class="search-box">
-            <input type="text" id="topic" placeholder="Mavzuni yozing (masalan: Mashina, Edit, Food)">
-            <button class="btn" onclick="generateTags()">TOPISH</button>
+    <div class="card">
+        <div class="title">🚀 TEZLIK / MAGLEV / MACH 1 <span class="badge">HOT</span></div>
+        <div class="sxema">
+            [ SIMULATION_LOG_V8 ]<br>
+            > Velocity: 1,235 km/h (Mach 1)<br>
+            > Resistance: 0.001% (Vacuum Tube)<br>
+            > G-Force: 2.4G<br>
+            > Route: Tokyo - Osaka (18 min)
         </div>
-
-        <div id="result-area">
-            <h3 style="margin-top:0;">Topilgan Hashtaglar:</h3>
-            <div class="hashtag-list" id="tag-container">
-                </div>
-            <button class="copy-btn" onclick="copyTags()">Nusxa olish</button>
+        <div class="caption-area">
+            <button class="copy-btn" onclick="copyText('cap1')">COPY</button>
+            <span id="cap1">🚀 Bu tezlikka erishganingizda, siz endi yerda emas, tovush tezligida harakatlanayotgan bo'lasiz. Mach 1 simulyatsiyasi: Yaponiya bo'ylab 1,330 km/soat! 🌍🔥</span>
         </div>
+        <div class="tags">#mach1 #speed #future #simulation #japan #engineering #rek #saidjoneditz</div>
     </div>
 
-    <footer>© 2026 SAIDJON DEV | API READY</footer>
+    <div class="card">
+        <div class="title">💻 CYBERPUNK / CODING / SYSTEM</div>
+        <div class="sxema">
+            [ SYSTEM_OVERRIDE_ACTIVE ]<br>
+            > Kernel: v5.10-Saidjon<br>
+            > Encryption: AES-256<br>
+            > Status: REK_INJECTION_SUCCESS...<br>
+            > Target: Global_Explore_Page
+        </div>
+        <div class="caption-area">
+            <button class="copy-btn" onclick="copyText('cap2')">COPY</button>
+            <span id="cap2">💻 Tizim o'zgartirildi. 2026-yilning eng daxshatli texnologiyasi sening ekraningda. Kelajakni hozir ko'ring! ⚡🧬</span>
+        </div>
+        <div class="tags">#cyberpunk #coding #tech #future #matrix #aesthetic #2026 #reelsuzb</div>
+    </div>
 
     <script>
-        const hashDatabase = {
-            "edit": ["#edit", "#reels", "#instagram", "#trending", "#viral", "#alightmotion", "#capcut", "#2026", "#explore"],
-            "mashina": ["#car", "#speed", "#bmw", "#mercedes", "#uzb", "#auto", "#tuning", "#rek", "#avto"],
-            "food": ["#food", "#yummy", "#instafood", "#reelsuzb", "#mazzali", "#ovqat", "#dinner"],
-            "pubg": ["#pubg", "#pubgmobile", "#proplayer", "#gaming", "#highlights", "#headshot", "#reksayti"]
-        };
-
-        function generateTags() {
-            const topic = document.getElementById('topic').value.toLowerCase();
-            const container = document.getElementById('tag-container');
-            const area = document.getElementById('result-area');
-            
-            let tags = hashDatabase[topic] || ["#rek", "#top", "#uzbekistan", "#viral", "#trending", "#reels", "#fyp", "#explore"];
-            
-            container.innerHTML = tags.map(t => `<div class="tag">${t}</div>`).join('');
-            area.style.display = 'block';
-        }
-
-        function copyTags() {
-            const tags = Array.from(document.querySelectorAll('.tag')).map(t => t.innerText).join(' ');
-            navigator.clipboard.writeText(tags);
-            alert("Hashtaglar nusxalandi!");
+        function copyText(id) {
+            const text = document.getElementById(id).innerText;
+            const tags = document.getElementById(id).parentElement.nextElementSibling.innerText;
+            navigator.clipboard.writeText(text + "\n\n" + tags);
+            alert("Caption va Hashtaglar nusxalandi!");
         }
     </script>
 </body>
