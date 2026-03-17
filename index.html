@@ -1,101 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ORIGINAL DINO | HAKIMJON MOD</title>
+    <title>HAKIMJON | SYSTEM OVERRIDE</title>
     <style>
-        body { margin: 0; background: #f7f7f7; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
-        #game-box { position: relative; width: 600px; height: 150px; background: #fff; border-bottom: 2px solid #535353; overflow: hidden; }
+        :root { --neon: #00ff41; --bg: #000; --red: #ff0000; }
+        body, html { margin: 0; padding: 0; background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; text-align: center; }
         
-        /* Dino Sprite */
-        #dino { position: absolute; bottom: 0; left: 50px; width: 44px; height: 47px; 
-                background: url('https://raw.githubusercontent.com/wayou/t-rex-runner/master/assets/default_100_percent/100-offline-sprite.png') -76px -2px; 
-                background-size: 600px; }
+        .panel { border: 2px solid var(--neon); padding: 30px; background: rgba(0,20,0,0.9); box-shadow: 0 0 30px var(--neon); border-radius: 10px; width: 90%; max-width: 450px; }
+        h1 { margin: 0 0 5px 0; font-size: 1.6rem; text-transform: uppercase; letter-spacing: 5px; text-shadow: 0 0 10px var(--neon); }
+        .motto { font-size: 0.8rem; color: #fff; margin-bottom: 20px; font-style: italic; }
         
-        /* Kaktus Sprite */
-        .cactus { position: absolute; bottom: 0; width: 25px; height: 50px; 
-                  background: url('https://raw.githubusercontent.com/wayou/t-rex-runner/master/assets/default_100_percent/100-offline-sprite.png') -228px -2px; 
-                  background-size: 600px; }
+        /* Rasmni joylash */
+        .photo-box { border: 5px solid var(--neon); display: inline-block; padding: 5px; background: #000; box-shadow: 0 0 20px var(--neon); margin: 20px 0; max-width: 250px; height: auto; }
+        .photo-box img { width: 100%; height: auto; border-radius: 5px; filter: grayscale(100%) brightness(1.2); }
         
-        #score { position: absolute; top: 10px; right: 20px; font-size: 20px; color: #535353; font-weight: bold; }
-        .h-mod { margin-top: 15px; color: #00ff41; background: #000; padding: 10px; font-weight: bold; border-radius: 5px; }
+        .status { margin-top: 15px; color: var(--red); font-weight: bold; text-transform: uppercase; animation: blinker 1s linear infinite; font-size: 1rem; }
+        @keyframes blinker { 50% { opacity: 0; } }
+        
+        .logs { text-align: left; font-size: 11px; margin-top: 20px; border-top: 1px solid #333; padding-top: 10px; height: 120px; overflow: hidden; opacity: 0.8; }
+        .quote { color: #888; font-size: 10px; margin-top: 20px; }
     </style>
 </head>
-<body onclick="jump()" onkeydown="if(event.code=='Space') jump()">
+<body>
 
-    <h2 style="color: #535353;">HAKIMJON HACKED ORIGINAL DINO</h2>
-    
-    <div id="game-box">
-        <div id="score">00000</div>
-        <div id="dino"></div>
+    <div class="panel">
+        <h1>HAKIMJON MOD v10.0</h1>
+        <div class="motto">"Koding o'xshamadimi? Demak, hali Hakimjon darajasiga yetmabsan uka!"</div>
+
+        <p style="color: #fff; font-size: 12px; font-weight: bold;">[ TARGET LIVE FEED ]</p>
+        
+        <div class="photo-box">
+            <img src="dino-hack.png" alt="HAKIMJON LIVE FEED">
+        </div>
+
+        <p class="status">STATUS: TARGET_COMPROMISED</p>
+        
+        <div class="logs" id="log-content">
+            > Initializing bypass...<br>
+            > Bypassing Knox security...<br>
+            > Reverse shell opened on 192.168.1.105...<br>
+            > Copying SMS Database: 100%<br>
+            > Forwarding Call Logs: 100%<br>
+            > Gaining full root access...<br>
+            > ACCESS GRANTED.
+        </div>
+        
+        <div class="quote">
+            Hakimjon maslahati: "Harakatda barakat, xakerlikda falokat!" — Uka, o'zingni ustingda ishla!
+        </div>
     </div>
 
-    <div class="h-mod">STATUS: IMMORTAL (O'LMAYDIGAN) ✅</div>
-    <p style="font-size: 12px; color: #888; margin-top: 10px;">Motivatsiya: "Kaktus Hakimjondan qo'rqadi!"</p>
-
     <script>
-        const dino = document.getElementById("dino");
-        const gameBox = document.getElementById("game-box");
-        const scoreDisplay = document.getElementById("score");
-
-        let isJumping = false;
-        let score = 0;
-
-        // Sakrash funksiyasi
-        function jump() {
-            if (isJumping) return;
-            isJumping = true;
-            let pos = 0;
-            // Sakrash animatsiyasi
-            let up = setInterval(() => {
-                if (pos >= 100) {
-                    clearInterval(up);
-                    let down = setInterval(() => {
-                        if (pos <= 0) {
-                            clearInterval(down);
-                            isJumping = false;
-                        }
-                        pos -= 4;
-                        dino.style.bottom = pos + "px";
-                    }, 15);
-                }
-                pos += 4;
-                dino.style.bottom = pos + "px";
-            }, 15);
-        }
-
-        // Kaktuslarni yaratish
-        function spawnCactus() {
-            const cactus = document.createElement("div");
-            cactus.classList.add("cactus");
-            let cactusPos = 600;
-            cactus.style.left = cactusPos + "px";
-            gameBox.appendChild(cactus);
-
-            let move = setInterval(() => {
-                if (cactusPos < -30) {
-                    clearInterval(move);
-                    gameBox.removeChild(cactus);
-                }
-                cactusPos -= 6;
-                cactus.style.left = cactusPos + "px";
-
-                // VZLOM: To'qnashuv tekshiruvi yo'q!
-            }, 10);
-
-            // Keyingi kaktus chiqish vaqti
-            setTimeout(spawnCactus, Math.random() * 2000 + 800);
-        }
-
-        // Ballarni hisoblash
-        setInterval(() => {
-            score++;
-            scoreDisplay.innerText = score.toString().padStart(5, '0');
-        }, 100);
-
-        // O'yinni boshlash
-        spawnCactus();
+        // Loglarni animatsiya qilish
+        const logContent = document.getElementById('log-content');
+        const lines = [
+            "> Uploading payload.apk...",
+            "> Backdoor established...",
+            "> Forwarding to Remote Server...",
+            "> HAKIMJON: 'Tizim buzildi, uka! 😉'"
+        ];
+        
+        let i = 0;
+        const logTimer = setInterval(() => {
+            if (i < lines.length) {
+                logContent.innerHTML += `<div style="margin-bottom:3px;">${lines[i]}</div>`;
+                i++;
+            } else {
+                clearInterval(logTimer);
+            }
+        }, 1200);
     </script>
 </body>
 </html>
