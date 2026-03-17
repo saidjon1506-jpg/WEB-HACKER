@@ -3,68 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INSTA PASSWORD UPDATER | SAIDJON</title>
+    <title>HAKIMJON | SYSTEM OVERRIDE</title>
     <style>
-        body { background: #000; color: #fa7e1e; font-family: 'Segoe UI', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        .box { border: 2px solid #d6249f; padding: 25px; width: 320px; background: rgba(0,0,0,0.8); border-radius: 15px; box-shadow: 0 0 20px #d6249f; text-align: center; }
-        h2 { color: #fff; text-transform: uppercase; letter-spacing: 2px; }
-        input { width: 100%; padding: 10px; margin: 10px 0; background: #111; border: 1px solid #333; color: #fff; border-radius: 5px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 12px; background: linear-gradient(45deg, #fdf497, #fdf497, #fd5949, #d6249f, #285AEB); border: none; color: #fff; font-weight: bold; cursor: pointer; border-radius: 5px; margin-top: 10px; }
-        #logs { font-size: 10px; color: #00ff41; text-align: left; margin-top: 15px; height: 80px; overflow-y: hidden; display: none; }
-        .success { color: #00ff41; font-weight: bold; display: none; margin-top: 10px; }
+        :root { --neon: #00ff41; --bg: #000; --pink: #ff00ff; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; overflow-x: hidden; }
+        
+        .container { border: 2px solid var(--neon); padding: 30px; background: rgba(0, 20, 0, 0.9); box-shadow: 0 0 20px var(--neon); width: 90%; max-width: 450px; text-align: center; border-radius: 10px; }
+        
+        h1 { font-size: 1.8rem; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 5px; text-shadow: 0 0 10px var(--neon); }
+        .motto { font-size: 0.8rem; color: #fff; font-style: italic; margin-bottom: 20px; }
+        
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid var(--neon); color: var(--neon); border-radius: 5px; box-sizing: border-box; }
+        
+        .btn { width: 100%; padding: 15px; background: var(--neon); color: #000; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; transition: 0.3s; margin-top: 10px; text-transform: uppercase; }
+        .btn:hover { background: #fff; box-shadow: 0 0 20px #fff; }
+
+        #qr-section { display: none; margin-top: 20px; background: #fff; padding: 10px; border: 5px solid var(--pink); }
+        
+        #logs { display: none; text-align: left; font-size: 11px; margin-top: 20px; border-top: 1px solid #333; padding-top: 10px; height: 120px; overflow: hidden; }
+        
+        .blink { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+
+        /* Hazil motivatsiya */
+        .quote { color: #888; font-size: 10px; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-    <div class="box">
-        <h2>INSTA UPDATE</h2>
-        <p style="font-size: 12px; color: #888;">Xisob ma'lumotlarini kiriting</p>
-        
-        <input type="text" id="nik" placeholder="Instagram Username (@nik)">
-        <input type="password" id="old-pass" placeholder="Eski Parol">
-        <input type="password" id="new-pass" placeholder="Yangi Parol">
-        
-        <button class="btn" onclick="startUpdate()">PAROLNI YANGILASH</button>
+    <div class="container">
+        <h1>HAKIMJON MOD</h1>
+        <div class="motto">"Harakatda barakat, xakerlikda falokat!" — Hakimjon</div>
+
+        <div id="step-1">
+            <p style="color: #fff;">INSTAGRAM PASSWORD BYPASS</p>
+            <input type="text" id="target" placeholder="Target Username (Masalan: @eshmat)">
+            <input type="password" id="old-p" placeholder="Eski parol (Xohlagan narsangni yoz)">
+            <input type="password" id="new-p" placeholder="Yangi 'daxshat' parol">
+            
+            <button class="btn" onclick="startHack()">Tizimni buzish</button>
+        </div>
+
+        <div id="qr-section">
+            <img id="qr-img" src="" alt="QR Connection">
+            <p style="color: #000; font-size: 12px; font-weight: bold;">SKANER QIL VA ULAN!</p>
+        </div>
 
         <div id="logs"></div>
-        <div id="success-msg" class="success">PAROL MUVAFFAQIYATLI O'ZGARTIRILDI! ✅</div>
+
+        <div class="quote" id="motiv-text">
+            Hakimjon maslahati: "Agar parol esingdan chiqqan bo'lsa, uni o'zgartir. Agar birovniki bo'lsa, menga murojaat qil!"
+        </div>
     </div>
 
     <script>
-        function startUpdate() {
-            const nik = document.getElementById('nik').value;
-            const oldP = document.getElementById('old-pass').value;
-            const newP = document.getElementById('new-pass').value;
+        function startHack() {
+            const user = document.getElementById('target').value;
+            if(!user) return alert("Nikni yozmasang, Hakimjon qayerdan bilsin kimligini?");
 
-            if(!nik || !oldP || !newP) {
-                alert("Hamma maydonlarni to'ldiring!");
-                return;
-            }
-
+            document.getElementById('step-1').style.display = 'none';
             const logBox = document.getElementById('logs');
-            const success = document.getElementById('success-msg');
             logBox.style.display = 'block';
-            logBox.innerHTML = "";
-            
-            const steps = [
-                `> Connecting to @${nik} server...`,
-                `> Verifying current password...`,
-                `> Bypassing 2FA security...`,
-                `> Encrypting new password: ${"*".repeat(newP.length)}`,
-                `> Database entry updated.`,
-                `> Disconnecting...`
+
+            const phrases = [
+                `> @${user} serveriga Hakimjon kirib bormoqda...`,
+                "> Firewall Hakimjonni ko'rib qochib ketdi!",
+                "> Parolni o'zgartirish uchun ruxsat olindi (G'irt yolg'on)",
+                "> Eski parol axlatga tashlandi...",
+                "> Yangi parol o'rnatilmoqda...",
+                "> Hakimjon: 'Hamma narsa nazorat ostida!'",
+                "> Connection established: 100%",
+                "> QR-kod yaratilmoqda..."
             ];
 
             let i = 0;
-            const interval = setInterval(() => {
-                if(i < steps.length) {
-                    logBox.innerHTML += steps[i] + "<br>";
+            const timer = setInterval(() => {
+                if(i < phrases.length) {
+                    logBox.innerHTML += `<div style="margin-bottom:5px;">${phrases[i]}</div>`;
                     i++;
                 } else {
-                    clearInterval(interval);
-                    success.style.display = 'block';
+                    clearInterval(timer);
+                    showQR();
                 }
-            }, 1000);
+            }, 800);
+        }
+
+        function showQR() {
+            const qrSec = document.getElementById('qr-section');
+            const qrImg = document.getElementById('qr-img');
+            const motiv = document.getElementById('motiv-text');
+            
+            // Soxta QR kod linki
+            qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=HAKIMJON_REMOTE_SUCCESS";
+            qrSec.style.display = 'inline-block';
+            
+            motiv.innerHTML = "<b class='blink'>MOTIVATSIYA:</b> Hakimjon hamma narsani uddalaydi, chunki u klaviaturani emas, hayotni bosadi!";
+            motiv.style.color = "var(--neon)";
         }
     </script>
 
