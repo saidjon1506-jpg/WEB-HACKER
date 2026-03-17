@@ -3,100 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAIDJON | EDU-PORTAL</title>
+    <title>REK-HASHTAG 2026 | SAIDJON</title>
     <style>
-        :root { --neon: #00ff41; --bg: #050505; }
-        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 50px; }
+        :root { --accent: #00d2ff; --bg: #0a0a0c; --card: #16161a; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
-        header { background: #000; border-bottom: 2px solid var(--neon); padding: 25px; text-align: center; box-shadow: 0 0 25px var(--neon); }
-        h1 { margin: 0; color: var(--neon); letter-spacing: 3px; font-size: 1.8rem; text-transform: uppercase; }
-        .admin-tag { font-size: 12px; color: #888; margin-top: 5px; }
+        header { width: 100%; padding: 30px 0; text-align: center; background: linear-gradient(to bottom, #111, var(--bg)); border-bottom: 1px solid #333; }
+        h1 { margin: 0; font-size: 2rem; letter-spacing: 2px; color: var(--accent); }
 
-        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+        .container { width: 90%; max-width: 600px; margin-top: 40px; }
         
-        .section-title { border-left: 5px solid var(--neon); padding-left: 15px; margin: 30px 0 20px; font-weight: bold; font-size: 1.2rem; }
+        .search-box { display: flex; gap: 10px; margin-bottom: 30px; }
+        input { flex: 1; padding: 15px; border-radius: 10px; border: 1px solid #333; background: #111; color: #fff; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(0, 210, 255, 0.3); }
+        
+        .btn { padding: 15px 25px; border-radius: 10px; border: none; background: var(--accent); color: #000; font-weight: bold; cursor: pointer; }
 
-        /* Sinf Tanlash */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 12px; }
-        .class-card { background: #111; border: 1px solid #333; padding: 20px; text-align: center; cursor: pointer; border-radius: 10px; transition: 0.3s; font-size: 1.1rem; }
-        .class-card:hover { border-color: var(--neon); transform: scale(1.05); box-shadow: 0 0 15px var(--neon); }
-        .class-card.active { border-color: var(--neon); background: var(--neon); color: #000; font-weight: bold; }
+        /* Natijalar */
+        #result-area { display: none; background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid #222; }
+        .hashtag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
+        .tag { background: #222; padding: 8px 12px; border-radius: 5px; font-size: 14px; color: var(--accent); border: 1px solid #333; }
+        
+        .copy-btn { width: 100%; margin-top: 20px; padding: 10px; background: transparent; border: 1px solid var(--accent); color: var(--accent); cursor: pointer; border-radius: 8px; }
+        .copy-btn:hover { background: var(--accent); color: #000; }
 
-        /* Fanlar Bo'limi */
-        #subjects-panel { display: none; margin-top: 30px; background: #0a0a0a; border: 1px solid var(--neon); border-radius: 15px; padding: 20px; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .sub-list { list-style: none; padding: 0; }
-        .sub-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #222; transition: 0.2s; }
-        .sub-item:hover { background: rgba(0, 255, 65, 0.05); }
-        .sub-item a { color: #fff; text-decoration: none; font-size: 1rem; }
-        .sub-item span { color: var(--neon); font-size: 0.8rem; border: 1px solid var(--neon); padding: 2px 8px; border-radius: 5px; }
-
-        .motto-box { background: #111; padding: 20px; border-radius: 10px; margin-top: 40px; border: 1px dotted #444; }
+        footer { margin-top: auto; padding: 20px; color: #555; font-size: 12px; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>SAIDJON ACADEMY</h1>
-        <div class="admin-tag">Founder: Saidjon Ahmadjonov</div>
+        <h1>REK-GEN 2026</h1>
+        <p style="color: #888;">Saidjon Ahmadjonov tomonidan maxsus</p>
     </header>
 
     <div class="container">
-        <div class="section-title">SINFNI TANLANG:</div>
-        <div class="grid" id="class-grid">
-            </div>
-
-        <div id="subjects-panel">
-            <h2 id="class-title" style="color: var(--neon); border-bottom: 1px solid #333; padding-bottom: 10px;"></h2>
-            <div class="sub-list" id="list-container">
-                </div>
+        <div class="search-box">
+            <input type="text" id="topic" placeholder="Mavzuni yozing (masalan: Mashina, Edit, Food)">
+            <button class="btn" onclick="generateTags()">TOPISH</button>
         </div>
 
-        <div class="motto-box">
-            <h3 style="color: var(--neon); margin-top: 0;">Saidjon's Motivation:</h3>
-            <p style="font-style: italic; color: #ccc;">"Bilim olishdan to'xtama, uka. Bugungi qiyinchilik — ertangi muvaffaqiyating poydevori!"</p>
+        <div id="result-area">
+            <h3 style="margin-top:0;">Topilgan Hashtaglar:</h3>
+            <div class="hashtag-list" id="tag-container">
+                </div>
+            <button class="copy-btn" onclick="copyTags()">Nusxa olish</button>
         </div>
     </div>
 
-    <script>
-        // Sinflarni yaratish
-        const grid = document.getElementById('class-grid');
-        for(let i=1; i<=11; i++) {
-            let div = document.createElement('div');
-            div.className = 'class-card';
-            div.innerText = i + '-Sinf';
-            div.onclick = () => loadSubjects(i, div);
-            grid.appendChild(div);
-        }
+    <footer>© 2026 SAIDJON DEV | API READY</footer>
 
-        const subjects = {
-            8: ["Algebra", "Geometriya", "Fizika", "Adabiyot", "Informatika", "Ingliz tili"],
-            9: ["Algebra", "Kimyo", "Biologiya", "Tarix", "Geografiya"],
-            // Boshqa sinflar uchun fanlar ro'yxati
+    <script>
+        const hashDatabase = {
+            "edit": ["#edit", "#reels", "#instagram", "#trending", "#viral", "#alightmotion", "#capcut", "#2026", "#explore"],
+            "mashina": ["#car", "#speed", "#bmw", "#mercedes", "#uzb", "#auto", "#tuning", "#rek", "#avto"],
+            "food": ["#food", "#yummy", "#instafood", "#reelsuzb", "#mazzali", "#ovqat", "#dinner"],
+            "pubg": ["#pubg", "#pubgmobile", "#proplayer", "#gaming", "#highlights", "#headshot", "#reksayti"]
         };
 
-        function loadSubjects(num, element) {
-            document.querySelectorAll('.class-card').forEach(c => c.classList.remove('active'));
-            element.classList.add('active');
-
-            const panel = document.getElementById('subjects-panel');
-            const list = document.getElementById('list-container');
-            const title = document.getElementById('class-title');
-
-            panel.style.display = 'block';
-            title.innerText = num + "-Sinf Fanlari";
+        function generateTags() {
+            const topic = document.getElementById('topic').value.toLowerCase();
+            const container = document.getElementById('tag-container');
+            const area = document.getElementById('result-area');
             
-            let data = subjects[num] || ["Matematika", "Ona tili", "Ingliz tili", "Tabiat"];
+            let tags = hashDatabase[topic] || ["#rek", "#top", "#uzbekistan", "#viral", "#trending", "#reels", "#fyp", "#explore"];
             
-            list.innerHTML = data.map(s => `
-                <div class="sub-item">
-                    <a href="#">${s} darslik javoblari</a>
-                    <span>TEZ KUNDA</span>
-                </div>
-            `).join('');
+            container.innerHTML = tags.map(t => `<div class="tag">${t}</div>`).join('');
+            area.style.display = 'block';
+        }
 
-            panel.scrollIntoView({ behavior: 'smooth' });
+        function copyTags() {
+            const tags = Array.from(document.querySelectorAll('.tag')).map(t => t.innerText).join(' ');
+            navigator.clipboard.writeText(tags);
+            alert("Hashtaglar nusxalandi!");
         }
     </script>
 </body>
