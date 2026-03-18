@@ -3,67 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAIDJON | REK-STRATEGY 2026</title>
+    <title>FOYDALI PORTAL | ADMIN PANEL</title>
     <style>
-        :root { --neon: #00ff41; --bg: #000; --glass: rgba(255, 255, 255, 0.1); }
-        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; }
+        :root { --primary: #00d2ff; --bg: #0a0a0c; --card: #16161a; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 50px; }
         
-        .card { background: var(--glass); border: 1px solid var(--neon); border-radius: 15px; padding: 20px; margin-bottom: 25px; backdrop-filter: blur(10px); }
-        .title { color: var(--neon); font-weight: bold; font-size: 1.2rem; text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-        
-        .sxema { background: #111; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 13px; color: #00d2ff; border-left: 3px solid #00d2ff; margin: 10px 0; }
-        
-        .caption-area { background: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px; font-size: 14px; color: #ccc; position: relative; }
-        .copy-btn { position: absolute; right: 5px; top: 5px; background: var(--neon); color: #000; border: none; padding: 5px 10px; cursor: pointer; font-size: 10px; font-weight: bold; border-radius: 3px; }
+        header { background: #000; padding: 20px; text-align: center; border-bottom: 2px solid var(--primary); }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
 
-        .tags { color: var(--neon); font-size: 12px; margin-top: 10px; }
-        .badge { background: red; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; vertical-align: middle; }
+        /* Bo'limlar stili */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
+        .card { background: var(--card); border: 1px solid #333; padding: 20px; border-radius: 12px; position: relative; }
+        .card h3 { color: var(--primary); margin-top: 0; }
+        .card a { display: inline-block; margin-top: 10px; color: #fff; background: var(--primary); color: #000; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-weight: bold; }
+
+        /* Admin Panel stili */
+        #admin-section { display: none; background: #111; border: 2px dashed var(--primary); padding: 20px; border-radius: 15px; margin-top: 30px; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; background: #222; border: 1px solid #444; color: #fff; border-radius: 5px; box-sizing: border-box; }
+        .admin-btn { background: #22c55e; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        .delete-btn { background: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-top: 10px; }
+        
+        .secret-trigger { opacity: 0.1; cursor: pointer; text-align: center; margin-top: 50px; font-size: 10px; }
     </style>
 </head>
 <body>
 
-    <h1 style="text-align: center; color: var(--neon);">SAIDJON REK-SCHEMES 2026</h1>
-    <p style="text-align: center; font-size: 12px; color: #888;">Instagram Editlari uchun professional algoritmlar</p>
+<header>
+    <h1>FOYDALI PORTAL</h1>
+    <p>Saidjon Ahmadjonov loyihasi</p>
+</header>
 
-    <div class="card">
-        <div class="title">🚀 TEZLIK / MAGLEV / MACH 1 <span class="badge">HOT</span></div>
-        <div class="sxema">
-            [ SIMULATION_LOG_V8 ]<br>
-            > Velocity: 1,235 km/h (Mach 1)<br>
-            > Resistance: 0.001% (Vacuum Tube)<br>
-            > G-Force: 2.4G<br>
-            > Route: Tokyo - Osaka (18 min)
-        </div>
-        <div class="caption-area">
-            <button class="copy-btn" onclick="copyText('cap1')">COPY</button>
-            <span id="cap1">🚀 Bu tezlikka erishganingizda, siz endi yerda emas, tovush tezligida harakatlanayotgan bo'lasiz. Mach 1 simulyatsiyasi: Yaponiya bo'ylab 1,330 km/soat! 🌍🔥</span>
-        </div>
-        <div class="tags">#mach1 #speed #future #simulation #japan #engineering #rek #saidjoneditz</div>
+<div class="container">
+    <div id="user-view">
+        <div class="grid" id="sections-container">
+            </div>
     </div>
 
-    <div class="card">
-        <div class="title">💻 CYBERPUNK / CODING / SYSTEM</div>
-        <div class="sxema">
-            [ SYSTEM_OVERRIDE_ACTIVE ]<br>
-            > Kernel: v5.10-Saidjon<br>
-            > Encryption: AES-256<br>
-            > Status: REK_INJECTION_SUCCESS...<br>
-            > Target: Global_Explore_Page
-        </div>
-        <div class="caption-area">
-            <button class="copy-btn" onclick="copyText('cap2')">COPY</button>
-            <span id="cap2">💻 Tizim o'zgartirildi. 2026-yilning eng daxshatli texnologiyasi sening ekraningda. Kelajakni hozir ko'ring! ⚡🧬</span>
-        </div>
-        <div class="tags">#cyberpunk #coding #tech #future #matrix #aesthetic #2026 #reelsuzb</div>
+    <div id="admin-section">
+        <h2 style="color: var(--primary);">Admin Paneli</h2>
+        <input type="text" id="sec-title" placeholder="Bo'lim nomi (masalan: Yangi Bot)">
+        <textarea id="sec-desc" placeholder="Bo'lim haqida qisqacha ma'lumot"></textarea>
+        <input type="text" id="sec-link" placeholder="Link (Telegram kanal yoki Bot manzili)">
+        <button class="admin-btn" onclick="addSection()">Bo'limni Qo'shish</button>
+        <button onclick="toggleAdmin()" style="background:#555; color:white; border:none; padding:10px; border-radius:5px; margin-left:10px; cursor:pointer;">Panelni Yopish</button>
     </div>
 
-    <script>
-        function copyText(id) {
-            const text = document.getElementById(id).innerText;
-            const tags = document.getElementById(id).parentElement.nextElementSibling.innerText;
-            navigator.clipboard.writeText(text + "\n\n" + tags);
-            alert("Caption va Hashtaglar nusxalandi!");
+    <div class="secret-trigger" onclick="toggleAdmin()">ADMIN KIRISH</div>
+</div>
+
+<script>
+    // Boshlang'ich bo'limlar (Agar xotira bo'sh bo'lsa)
+    const defaultSections = [
+        { title: "Foydali Bot New", desc: "Eng yangi va foydali funksiyalar to'plami.", link: "https://t.me/foydalibot_new" },
+        { title: "Foydali UZ Bot", desc: "Barcha turdagi yordamchi xizmatlar bitta botda.", link: "https://t.me/FOYDAL1_UZBOT" }
+    ];
+
+    // Ma'lumotlarni yuklash
+    let mySections = JSON.parse(localStorage.getItem('portalSections')) || defaultSections;
+
+    function renderSections() {
+        const container = document.getElementById('sections-container');
+        container.innerHTML = '';
+        
+        mySections.forEach((sec, index) => {
+            container.innerHTML += `
+                <div class="card">
+                    <h3>${sec.title}</h3>
+                    <p>${sec.desc}</p>
+                    <a href="${sec.link}" target="_blank">Kirish</a>
+                    <div class="admin-only" style="display: ${adminVisible ? 'block' : 'none'}">
+                        <button class="delete-btn" onclick="deleteSection(${index})">O'chirish</button>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    let adminVisible = false;
+    function toggleAdmin() {
+        adminVisible = !adminVisible;
+        document.getElementById('admin-section').style.display = adminVisible ? 'block' : 'none';
+        renderSections();
+    }
+
+    function addSection() {
+        const title = document.getElementById('sec-title').value;
+        const desc = document.getElementById('sec-desc').value;
+        const link = document.getElementById('sec-link').value;
+
+        if(title && desc && link) {
+            mySections.push({ title, desc, link });
+            localStorage.setItem('portalSections', JSON.stringify(mySections));
+            renderSections();
+            // Formani tozalash
+            document.getElementById('sec-title').value = '';
+            document.getElementById('sec-desc').value = '';
+            document.getElementById('sec-link').value = '';
+        } else {
+            alert("Hamma maydonni to'ldiring!");
         }
-    </script>
+    }
+
+    function deleteSection(index) {
+        if(confirm("Ushbu bo'limni o'chirib tashlamoqchimisiz?")) {
+            mySections.splice(index, 1);
+            localStorage.setItem('portalSections', JSON.stringify(mySections));
+            renderSections();
+        }
+    }
+
+    // Birinchi marta yuklash
+    renderSections();
+</script>
+
 </body>
 </html>
