@@ -25,9 +25,14 @@
 
         /* Admin Panel */
         #admin-panel { display: none; background: #161616; border: 2px solid var(--neon); padding: 20px; border-radius: 15px; margin-bottom: 30px; }
-        input, textarea, select { width: 100%; padding: 10px; margin: 8px 0; background: #222; border: 1px solid #444; color: #fff; border-radius: 8px; box-sizing: border-box; }
+        input, textarea { width: 100%; padding: 10px; margin: 8px 0; background: #222; border: 1px solid #444; color: #fff; border-radius: 8px; box-sizing: border-box; }
         .btn-add { background: var(--neon); color: #000; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; }
         
+        /* Fayl tanlash tugmasi */
+        .file-label { display: block; background: #333; color: #fff; text-align: center; padding: 10px; border-radius: 8px; cursor: pointer; margin: 10px 0; font-size: 14px; }
+        .file-label:hover { background: #444; }
+        #m-file { display: none; }
+
         .footer-trigger { opacity: 0.2; text-align: center; margin-top: 50px; cursor: pointer; font-size: 12px; color: var(--neon); }
     </style>
 </head>
@@ -42,18 +47,19 @@
     
     <div id="admin-panel">
         <h3 style="color: var(--neon); margin-top: 0;">➕ YANGI BO'LIM QO'SHISH</h3>
+        
+        <label class="file-label" for="m-file">📁 RASM YOKI VIDEO TANLASH</label>
+        <input type="file" id="m-file" accept="image/*,video/*" onchange="previewFile()">
+        
+        <div id="preview-area" style="margin: 10px 0; text-align: center; display: none;">
+            <p style="font-size: 12px; color: #888;">Oldindan ko'rish:</p>
+            </div>
+
         <input type="text" id="m-title" placeholder="Sarlavha">
         <textarea id="m-desc" placeholder="Tavsif yozing..."></textarea>
         <input type="text" id="m-link" placeholder="Tugma uchun link (t.me/...)">
         
-        <label style="font-size: 12px; color: #888;">Media turi:</label>
-        <select id="m-type">
-            <option value="image">Rasm (URL)</option>
-            <option value="video">Video (URL / MP4)</option>
-        </select>
-        <input type="text" id="m-url" placeholder="Media URL manzilini kiriting">
-        
-        <button class="btn-add" onclick="saveMedia()">SAQLASH VA QO'SHISH</button>
+        <button class="btn-add" id="save-btn" onclick="saveMedia()">SAQLASH VA QO'SHISH</button>
         <button onclick="closeAdmin()" style="background:#333; color:#fff; border:none; width:100%; padding:10px; margin-top:10px; border-radius:8px; cursor:pointer;">PANELNI YOPISH</button>
     </div>
 
@@ -66,6 +72,8 @@
 <script>
     const PASS = "saidjon978";
     let isAdmin = false;
+    let selectedFileBase64 = null;
+    let selectedFileType = null;
 
     // LocalStorage dan ma'lumotlarni olish
     let data = JSON.parse(localStorage.getItem('saidjon_media_data')) || [];
@@ -79,21 +87,54 @@
         } else { alert("Xato!"); }
     }
 
+    function previewFile() {
+        const file = document.getElementById('m-file').files[0];
+        const previewArea = document.getElementById('preview-area');
+        const reader = new FileReader();
+
+        if (file) {
+            reader.onload = function(e) {
+                selectedFileBase64 = e.target.result;
+                selectedFileType = file.type.split('/')[0]; // 'image' yoki 'video'
+                
+                let previewHtml = '';
+                if(selectedFileType === 'image') {
+                    previewHtml = `<img src="${selectedFileBase64}" style="max-width: 100%; max-height: 150px; border-radius: 8px;">`;
+                } else {
+                    previewHtml = `<p style="color: var(--neon); font-size: 14px;">📹 Video tanlandi: ${file.name}</p>`;
+                }
+                previewArea.innerHTML = '<p style="font-size: 12px; color: #888;">Oldindan ko\'rish:</p>' + previewHtml;
+                previewArea.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
     function saveMedia() {
         const title = document.getElementById('m-title').value;
         const desc = document.getElementById('m-desc').value;
         const link = document.getElementById('m-link').value;
-        const type = document.getElementById('m-type').value;
-        const url = document.getElementById('m-url').value;
+        const saveBtn = document.getElementById('save-btn');
 
-        if(title && url) {
-            data.push({ title, desc, link, type, url });
-            localStorage.setItem('saidjon_media_data', JSON.stringify(data));
-            renderGrid();
-            // Tozalash
-            document.getElementById('m-title').value = '';
-            document.getElementById('m-url').value = '';
-        } else { alert("Sarlavha va Media URL bo'lishi shart!"); }
+        if(title && selectedFileBase64) {
+            saveBtn.innerText = "SAQLANMOQDA...";
+            saveBtn.disabled = true;
+
+            setTimeout(() => {
+                data.push({ title, desc, link, type: selectedFileType, url: selectedFileBase64 });
+                localStorage.setItem('saidjon_media_data', JSON.stringify(data));
+                renderGrid();
+                // Tozalash
+                document.getElementById('m-title').value = '';
+                document.getElementById('m-desc').value = '';
+                document.getElementById('m-link').value = '';
+                document.getElementById('m-file').value = '';
+                document.getElementById('preview-area').style.display = 'none';
+                selectedFileBase64 = null;
+                saveBtn.innerText = "SAQLASH VA QO'SHISH";
+                saveBtn.disabled = false;
+            }, 500); // Kichik pauza yuklash effekti uchun
+        } else { alert("Sarlavha va Media Fayl tanlash shart!"); }
     }
 
     function renderGrid() {
@@ -113,8 +154,8 @@
                     <div class="card-content">
                         <h3>${item.title}</h3>
                         <p>${item.desc}</p>
-                        <a href="${item.link}" target="_blank">BATAFSIL</a>
-                        ${isAdmin ? `<button onclick="deleteItem(${index})" style="background:red; color:white; border:none; padding:5px; margin-left:10px; border-radius:3px; cursor:pointer;">X</button>` : ''}
+                        ${item.link ? `<a href="${item.link}" target="_blank">BATAFSIL</a>` : ''}
+                        ${isAdmin ? `<button onclick="deleteItem(${index})" style="background:#ff4444; color:white; border:none; padding:5px 10px; margin-left:10px; border-radius:3px; cursor:pointer;">O'CHIRISH</button>` : ''}
                     </div>
                 </div>
             `;
@@ -122,7 +163,7 @@
     }
 
     function deleteItem(index) {
-        if(confirm("O'chirilsinmi?")) {
+        if(confirm("Haqiqatan ham o'chirilsinmi?")) {
             data.splice(index, 1);
             localStorage.setItem('saidjon_media_data', JSON.stringify(data));
             renderGrid();
