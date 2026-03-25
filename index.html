@@ -3,117 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FOYDALI SAYT | Admin System</title>
+    <title>FOYDALI SAYT | Multi-Admin System</title>
     <style>
-        :root { --main: #00d2ff; --bg: #0d1117; --card: #161b22; }
+        :root { --main: #00d2ff; --bg: #0b0e14; --card: #161b22; }
         body { margin: 0; background: var(--bg); color: white; font-family: sans-serif; }
-
-        /* MODAL STYLES */
-        #auth-screen, #admin-panel {
-            position: fixed; inset: 0; background: var(--bg); z-index: 9999;
-            display: none; padding: 30px; box-sizing: border-box;
-        }
-        input, select { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid var(--main); color: white; border-radius: 8px; }
-
-        /* UI */
-        .header { padding: 20px; text-align: center; background: var(--card); border-bottom: 2px solid var(--main); }
+        #auth-screen, #admin-panel { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: none; padding: 25px; box-sizing: border-box; overflow-y: auto; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0; background: #000; border: 1px solid var(--main); color: white; border-radius: 8px; }
+        .header { padding: 20px; text-align: center; background: var(--card); border-bottom: 2px solid var(--main); font-size: 22px; font-weight: bold; color: var(--main); }
         .page { padding: 20px; padding-bottom: 100px; display: none; }
         .active { display: block; }
-        .card { background: var(--card); border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid #30363d; }
-        .btn { background: var(--main); color: #000; border: none; padding: 12px; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; display: block; text-align: center; text-decoration: none; margin-top: 10px; }
-        
-        /* NAV */
+        .card { background: var(--card); border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid #30363d; position: relative; }
+        .btn { background: var(--main); color: #000; border: none; padding: 12px; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; display: block; text-align: center; text-decoration: none; }
         .nav { position: fixed; bottom: 0; width: 100%; height: 70px; background: var(--card); display: flex; border-top: 1px solid #30363d; }
-        .nav-link { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; color: #8b949e; }
+        .nav-link { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; color: #8b949e; cursor: pointer; }
         .nav-link.active-nav { color: var(--main); }
+        .admin-box { background: #1c2128; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px dashed var(--main); }
     </style>
 </head>
 <body>
 
 <div id="auth-screen">
-    <h2 style="color:var(--main)">ADMIN LOGIN</h2>
-    <p id="login-msg">Tizimga kirish uchun parolingizni yozing:</p>
-    <input type="password" id="pass-input" placeholder="PAROL...">
+    <h2 style="color:var(--main)">SYSTEM LOGIN</h2>
+    <input type="password" id="pass-input" placeholder="ADMIN PAROLI...">
     <button class="btn" onclick="login()">KIRISH</button>
     <button class="btn" style="background:#333; color:white" onclick="closeAll()">YOPISH</button>
 </div>
 
 <div id="admin-panel">
-    <h2 id="admin-welcome" style="color:var(--main)">Xush kelibsiz, Admin!</h2>
-    <div style="background:#222; padding:10px; border-radius:10px; margin-bottom:20px">
-        <p><b>Yangi post qo'shish:</b></p>
+    <h2 id="admin-welcome" style="color:var(--main)">Admin Panel</h2>
+    
+    <div class="admin-box">
+        <p><b>🆕 Yangi Mod/Bot qo'shish:</b></p>
         <input type="text" id="p-title" placeholder="Nomi...">
-        <input type="text" id="p-link" placeholder="Telegram link (https://t.me/...)">
+        <input type="text" id="p-link" placeholder="Telegram linki...">
         <select id="p-cat">
             <option value="mods">🎮 MOD APK</option>
             <option value="bots">🤖 BOTLAR</option>
         </select>
-        <button class="btn" onclick="savePost()">SAYTGA CHIQARISH</button>
+        <button class="btn" onclick="savePost()">POSTNI CHIQARISH</button>
     </div>
-    <button class="btn" style="background:red; color:white" onclick="closeAll()">CHIQISH</button>
+
+    <div id="super-admin-tools" class="admin-box" style="display:none;">
+        <p><b>👤 Yangi Admin qo'shish (Faqat Saidjon):</b></p>
+        <input type="text" id="new-admin-name" placeholder="Admin ismi...">
+        <input type="text" id="new-admin-pass" placeholder="Unga yangi parol...">
+        <button class="btn" style="background:#00ff00" onclick="addNewAdmin()">ADMINNI TASDIQLASH</button>
+    </div>
+
+    <button class="btn" style="background:red; color:white; margin-top:30px" onclick="closeAll()">CHIQISH</button>
 </div>
 
-<div class="header">
-    <div style="font-size:24px; font-weight:bold; color:var(--main)">FOYDALI SAYT</div>
-</div>
+<div class="header">FOYDALI SAYT</div>
 
 <div id="page-home" class="page active">
-    <div class="card">
-        <h4>📢 Rasmiy Kanal</h4>
-        <a href="https://t.me/modoyinlar26" class="btn">@modoyinlar26</a>
-    </div>
-    <div class="card">
-        <h4>🤖 Foydali Bot</h4>
-        <a href="https://t.me/FOYDAL1_UZBOT" class="btn">@FOYDAL1_UZBOT</a>
-    </div>
+    <div class="card"><h4>📢 Kanal: @modoyinlar26</h4><a href="https://t.me/modoyinlar26" class="btn">KIRISH</a></div>
+    <div class="card"><h4>🤖 Bot: @FOYDAL1_UZBOT</h4><a href="https://t.me/FOYDAL1_UZBOT" class="btn">ISHLATISH</a></div>
 </div>
 
-<div id="page-mods" class="page">
-    <h3>🎮 MOD O'YINLAR</h3>
-    <div id="mods-list"></div>
-</div>
-
-<div id="page-bots" class="page">
-    <h3>🤖 BOTLAR</h3>
-    <div id="bots-list"></div>
-</div>
+<div id="page-mods" class="page"><h3>🎮 MODLAR</h3><div id="mods-list"></div></div>
+<div id="page-bots" class="page"><h3>🤖 BOTLAR</h3><div id="bots-list"></div></div>
 
 <div class="nav">
     <div class="nav-link active-nav" onclick="nav('page-home', this)">🏠<br>Asosiy</div>
-    <div class="nav-link" onclick="nav('page-mods', this)">🎮<br>Modlar</div>
-    <div class="nav-link" onclick="nav('page-bots', this)">🤖<br>Botlar</div>
-    <div class="nav-link" onclick="openAuth()">🔑<br>Admin</div>
+    <div class="nav-item nav-link" onclick="nav('page-mods', this)">🎮<br>Modlar</div>
+    <div class="nav-item nav-link" onclick="nav('page-bots', this)">🤖<br>Botlar</div>
+    <div class="nav-item nav-link" onclick="openAuth()">🔑<br>Admin</div>
 </div>
 
 <script>
-    // ADMINLAR RO'YXATI (Shu yerga yangi admin qo'shish mumkin)
-    const ADMINS = {
-        "saidjon978": "Saidjon (Asosiy)",
-        "admin123": "Yordamchi Admin",
-        "modder01": "Bekzod"
-    };
-
+    // ASOSIY ADMIN (Buni o'zgartira olmaysan)
+    const SUPER_PASS = "saidjon978";
     let currentAdmin = "";
 
-    function openAuth() { document.getElementById('auth-screen').style.display = 'block'; }
-    function closeAll() { 
-        document.getElementById('auth-screen').style.display = 'none'; 
-        document.getElementById('admin-panel').style.display = 'none'; 
+    // ADMINLARNI BRAUZER XOTIRASIDAN OLISH
+    function getAdmins() {
+        let admins = JSON.parse(localStorage.getItem('site_admins') || "{}");
+        admins[SUPER_PASS] = "Saidjon (Asosiy)"; // Saidjon doim admin
+        return admins;
     }
+
+    function openAuth() { document.getElementById('auth-screen').style.display = 'block'; }
+    function closeAll() { document.getElementById('auth-screen').style.display = 'none'; document.getElementById('admin-panel').style.display = 'none'; }
 
     function login() {
         const pass = document.getElementById('pass-input').value;
-        if (ADMINS[pass]) {
-            currentAdmin = ADMINS[pass];
+        const admins = getAdmins();
+
+        if (admins[pass]) {
+            currentAdmin = admins[pass];
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'block';
-            document.getElementById('admin-welcome').innerText = "Xush kelibsiz, " + currentAdmin;
-        } else {
-            alert("Xato parol! Siz admin emassiz.");
+            document.getElementById('admin-welcome').innerText = "Admin: " + currentAdmin;
+
+            // Agar Saidjon kiritgan bo'lsa, "Admin qo'shish" bo'limini ko'rsatish
+            if(pass === SUPER_PASS) {
+                document.getElementById('super-admin-tools').style.display = 'block';
+            } else {
+                document.getElementById('super-admin-tools').style.display = 'none';
+            }
+        } else { alert("Xato parol!"); }
+    }
+
+    // YANGI ADMIN QO'SHISH FUNKSIYASI
+    function addNewAdmin() {
+        const name = document.getElementById('new-admin-name').value;
+        const pass = document.getElementById('new-admin-pass').value;
+
+        if(name && pass) {
+            let admins = JSON.parse(localStorage.getItem('site_admins') || "{}");
+            admins[pass] = name;
+            localStorage.setItem('site_admins', JSON.stringify(admins));
+            alert(name + " endi admin bo'ldi! Paroli: " + pass);
+            document.getElementById('new-admin-name').value = "";
+            document.getElementById('new-admin-pass').value = "";
         }
     }
 
-    // MA'LUMOTLARNI SAQLASH
+    // POSTLARNI SAQLASH
     window.onload = () => { render('mods'); render('bots'); };
 
     function savePost() {
@@ -126,7 +132,7 @@
             data.push({title, link, admin: currentAdmin});
             localStorage.setItem(cat, JSON.stringify(data));
             render(cat);
-            alert("Muvaffaqiyatli qo'shildi!");
+            alert("Post chiqdi!");
             document.getElementById('p-title').value = "";
             document.getElementById('p-link').value = "";
         }
@@ -135,13 +141,7 @@
     function render(cat) {
         const list = document.getElementById(cat + '-list');
         const data = JSON.parse(localStorage.getItem(cat) || "[]");
-        list.innerHTML = data.map(i => `
-            <div class="card">
-                <h4>${i.title}</h4>
-                <a href="${i.link}" class="btn">O'TISH</a>
-                <small style="color:#555">Qo'shdi: ${i.admin}</small>
-            </div>
-        `).join('');
+        list.innerHTML = data.map(i => `<div class="card"><h4>${i.title}</h4><a href="${i.link}" class="btn">O'TISH</a><small style="color:#555">Qo'shdi: ${i.admin}</small></div>`).join('');
     }
 
     function nav(id, el) {
