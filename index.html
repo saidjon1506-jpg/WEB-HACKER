@@ -3,82 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FOYDALI SAYT | Multi-Admin System</title>
+    <title>FOYDALI SAYT | Admin System</title>
     <style>
-        :root { --main: #00d2ff; --bg: #0b0e14; --card: #161b22; }
-        body { margin: 0; background: var(--bg); color: white; font-family: sans-serif; }
-        #auth-screen, #admin-panel { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: none; padding: 25px; box-sizing: border-box; overflow-y: auto; }
+        :root { --main: #00d2ff; --bg-overlay: rgba(11, 14, 20, 0.85); --card: rgba(22, 27, 34, 0.9); }
+        
+        body { 
+            margin: 0; 
+            /* BU YERDA FON RASMI */
+            background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); 
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: white; 
+            font-family: sans-serif; 
+        }
+
+        /* Sahifa ustiga qorong'u qatlam (tekstlar yaxshi ko'rinishi uchun) */
+        .overlay {
+            background: var(--bg-overlay);
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        #auth-screen, #admin-panel { position: fixed; inset: 0; background: #0b0e14; z-index: 9999; display: none; padding: 25px; box-sizing: border-box; overflow-y: auto; }
         input, select { width: 100%; padding: 12px; margin: 8px 0; background: #000; border: 1px solid var(--main); color: white; border-radius: 8px; }
-        .header { padding: 20px; text-align: center; background: var(--card); border-bottom: 2px solid var(--main); font-size: 22px; font-weight: bold; color: var(--main); }
+        
+        .header { padding: 20px; text-align: center; background: var(--card); border-bottom: 2px solid var(--main); font-size: 22px; font-weight: bold; color: var(--main); backdrop-filter: blur(5px); }
         .page { padding: 20px; padding-bottom: 100px; display: none; }
         .active { display: block; }
-        .card { background: var(--card); border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid #30363d; position: relative; }
+        
+        .card { 
+            background: var(--card); 
+            border-radius: 12px; 
+            padding: 15px; 
+            margin-bottom: 15px; 
+            border: 1px solid #30363d; 
+            backdrop-filter: blur(10px); /* Orqani xiralashtirish */
+        }
+        
         .btn { background: var(--main); color: #000; border: none; padding: 12px; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; display: block; text-align: center; text-decoration: none; }
-        .nav { position: fixed; bottom: 0; width: 100%; height: 70px; background: var(--card); display: flex; border-top: 1px solid #30363d; }
+        .nav { position: fixed; bottom: 0; width: 100%; height: 70px; background: var(--card); display: flex; border-top: 1px solid #30363d; backdrop-filter: blur(10px); }
         .nav-link { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; color: #8b949e; cursor: pointer; }
         .nav-link.active-nav { color: var(--main); }
-        .admin-box { background: #1c2128; padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px dashed var(--main); }
     </style>
 </head>
 <body>
 
-<div id="auth-screen">
-    <h2 style="color:var(--main)">SYSTEM LOGIN</h2>
-    <input type="password" id="pass-input" placeholder="ADMIN PAROLI...">
-    <button class="btn" onclick="login()">KIRISH</button>
-    <button class="btn" style="background:#333; color:white" onclick="closeAll()">YOPISH</button>
-</div>
-
-<div id="admin-panel">
-    <h2 id="admin-welcome" style="color:var(--main)">Admin Panel</h2>
-    
-    <div class="admin-box">
-        <p><b>🆕 Yangi Mod/Bot qo'shish:</b></p>
-        <input type="text" id="p-title" placeholder="Nomi...">
-        <input type="text" id="p-link" placeholder="Telegram linki...">
-        <select id="p-cat">
-            <option value="mods">🎮 MOD APK</option>
-            <option value="bots">🤖 BOTLAR</option>
-        </select>
-        <button class="btn" onclick="savePost()">POSTNI CHIQARISH</button>
+<div class="overlay"> <div id="auth-screen">
+        <h2 style="color:var(--main)">SYSTEM LOGIN</h2>
+        <input type="password" id="pass-input" placeholder="ADMIN PAROLI...">
+        <button class="btn" onclick="login()">KIRISH</button>
+        <button class="btn" style="background:#333; color:white" onclick="closeAll()">YOPISH</button>
     </div>
 
-    <div id="super-admin-tools" class="admin-box" style="display:none;">
-        <p><b>👤 Yangi Admin qo'shish (Faqat Saidjon):</b></p>
-        <input type="text" id="new-admin-name" placeholder="Admin ismi...">
-        <input type="text" id="new-admin-pass" placeholder="Unga yangi parol...">
-        <button class="btn" style="background:#00ff00" onclick="addNewAdmin()">ADMINNI TASDIQLASH</button>
+    <div id="admin-panel">
+        <h2 id="admin-welcome" style="color:var(--main)">Admin Panel</h2>
+        <div style="background:#1c2128; padding:15px; border-radius:10px; margin-top:20px;">
+            <p><b>🆕 Post qo'shish:</b></p>
+            <input type="text" id="p-title" placeholder="Nomi...">
+            <input type="text" id="p-link" placeholder="Link...">
+            <select id="p-cat">
+                <option value="mods">🎮 MOD APK</option>
+                <option value="bots">🤖 BOTLAR</option>
+            </select>
+            <button class="btn" onclick="savePost()">POSTNI CHIQARISH</button>
+        </div>
+        <div id="super-admin-tools" style="display:none; margin-top:15px; border:1px dashed var(--main); padding:10px; border-radius:10px;">
+            <p>👤 Yangi Admin qo'shish:</p>
+            <input type="text" id="new-admin-name" placeholder="Ismi...">
+            <input type="text" id="new-admin-pass" placeholder="Paroli...">
+            <button class="btn" style="background:#00ff00" onclick="addNewAdmin()">QO'SHISH</button>
+        </div>
+        <button class="btn" style="background:red; color:white; margin-top:30px" onclick="closeAll()">CHIQISH</button>
     </div>
 
-    <button class="btn" style="background:red; color:white; margin-top:30px" onclick="closeAll()">CHIQISH</button>
-</div>
+    <div class="header">FOYDALI SAYT</div>
 
-<div class="header">FOYDALI SAYT</div>
+    <div id="page-home" class="page active">
+        <div class="card"><h4>📢 Kanal: @modoyinlar26</h4><a href="https://t.me/modoyinlar26" class="btn">KIRISH</a></div>
+        <div class="card"><h4>🤖 Bot: @FOYDAL1_UZBOT</h4><a href="https://t.me/FOYDAL1_UZBOT" class="btn">ISHLATISH</a></div>
+    </div>
 
-<div id="page-home" class="page active">
-    <div class="card"><h4>📢 Kanal: @modoyinlar26</h4><a href="https://t.me/modoyinlar26" class="btn">KIRISH</a></div>
-    <div class="card"><h4>🤖 Bot: @FOYDAL1_UZBOT</h4><a href="https://t.me/FOYDAL1_UZBOT" class="btn">ISHLATISH</a></div>
-</div>
+    <div id="page-mods" class="page"><h3>🎮 MODLAR</h3><div id="mods-list"></div></div>
+    <div id="page-bots" class="page"><h3>🤖 BOTLAR</h3><div id="bots-list"></div></div>
 
-<div id="page-mods" class="page"><h3>🎮 MODLAR</h3><div id="mods-list"></div></div>
-<div id="page-bots" class="page"><h3>🤖 BOTLAR</h3><div id="bots-list"></div></div>
+    <div class="nav">
+        <div class="nav-link active-nav" onclick="nav('page-home', this)">🏠<br>Asosiy</div>
+        <div class="nav-link" onclick="nav('page-mods', this)">🎮<br>Modlar</div>
+        <div class="nav-link" onclick="nav('page-bots', this)">🤖<br>Botlar</div>
+        <div class="nav-link" onclick="openAuth()">🔑<br>Admin</div>
+    </div>
 
-<div class="nav">
-    <div class="nav-link active-nav" onclick="nav('page-home', this)">🏠<br>Asosiy</div>
-    <div class="nav-item nav-link" onclick="nav('page-mods', this)">🎮<br>Modlar</div>
-    <div class="nav-item nav-link" onclick="nav('page-bots', this)">🤖<br>Botlar</div>
-    <div class="nav-item nav-link" onclick="openAuth()">🔑<br>Admin</div>
-</div>
-
-<script>
-    // ASOSIY ADMIN (Buni o'zgartira olmaysan)
+</div> <script>
     const SUPER_PASS = "saidjon978";
     let currentAdmin = "";
 
-    // ADMINLARNI BRAUZER XOTIRASIDAN OLISH
     function getAdmins() {
         let admins = JSON.parse(localStorage.getItem('site_admins') || "{}");
-        admins[SUPER_PASS] = "Saidjon (Asosiy)"; // Saidjon doim admin
+        admins[SUPER_PASS] = "Saidjon";
         return admins;
     }
 
@@ -88,60 +110,45 @@
     function login() {
         const pass = document.getElementById('pass-input').value;
         const admins = getAdmins();
-
         if (admins[pass]) {
             currentAdmin = admins[pass];
             document.getElementById('auth-screen').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'block';
             document.getElementById('admin-welcome').innerText = "Admin: " + currentAdmin;
-
-            // Agar Saidjon kiritgan bo'lsa, "Admin qo'shish" bo'limini ko'rsatish
-            if(pass === SUPER_PASS) {
-                document.getElementById('super-admin-tools').style.display = 'block';
-            } else {
-                document.getElementById('super-admin-tools').style.display = 'none';
-            }
-        } else { alert("Xato parol!"); }
+            if(pass === SUPER_PASS) document.getElementById('super-admin-tools').style.display = 'block';
+        } else { alert("Xato!"); }
     }
 
-    // YANGI ADMIN QO'SHISH FUNKSIYASI
     function addNewAdmin() {
         const name = document.getElementById('new-admin-name').value;
         const pass = document.getElementById('new-admin-pass').value;
-
         if(name && pass) {
             let admins = JSON.parse(localStorage.getItem('site_admins') || "{}");
             admins[pass] = name;
             localStorage.setItem('site_admins', JSON.stringify(admins));
-            alert(name + " endi admin bo'ldi! Paroli: " + pass);
-            document.getElementById('new-admin-name').value = "";
-            document.getElementById('new-admin-pass').value = "";
+            alert(name + " qo'shildi!");
         }
     }
 
-    // POSTLARNI SAQLASH
     window.onload = () => { render('mods'); render('bots'); };
 
     function savePost() {
         const title = document.getElementById('p-title').value;
         const link = document.getElementById('p-link').value;
         const cat = document.getElementById('p-cat').value;
-
         if(title && link) {
             let data = JSON.parse(localStorage.getItem(cat) || "[]");
             data.push({title, link, admin: currentAdmin});
             localStorage.setItem(cat, JSON.stringify(data));
             render(cat);
             alert("Post chiqdi!");
-            document.getElementById('p-title').value = "";
-            document.getElementById('p-link').value = "";
         }
     }
 
     function render(cat) {
         const list = document.getElementById(cat + '-list');
         const data = JSON.parse(localStorage.getItem(cat) || "[]");
-        list.innerHTML = data.map(i => `<div class="card"><h4>${i.title}</h4><a href="${i.link}" class="btn">O'TISH</a><small style="color:#555">Qo'shdi: ${i.admin}</small></div>`).join('');
+        list.innerHTML = data.map(i => `<div class="card"><h4>${i.title}</h4><a href="${i.link}" class="btn">O'TISH</a><small style="color:#aaa">Admin: ${i.admin}</small></div>`).join('');
     }
 
     function nav(id, el) {
