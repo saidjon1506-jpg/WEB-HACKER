@@ -4,125 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAIDJON | FOYDALI SAYT</title>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
-    
     <style>
-        :root { --neon: #00ff00; --bg: #0a0a0a; --card: #1a1a1a; }
-        body { background: var(--bg); color: white; font-family: sans-serif; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        header { border-bottom: 2px solid var(--neon); width: 100%; max-width: 500px; text-align: center; margin-bottom: 20px; }
+        :root { --neon: #00ff00; --bg: #000; --card: #111; }
+        body { background: var(--bg); color: white; font-family: sans-serif; padding: 20px; display: flex; flex-direction: column; align-items: center; margin: 0; }
         
+        header { width: 100%; max-width: 500px; text-align: center; border-bottom: 2px solid var(--neon); padding: 15px 0; margin-bottom: 20px; }
+        .dev-tag { color: var(--neon); font-size: 13px; }
+
         /* Statistika */
         .stats { display: flex; gap: 10px; width: 100%; max-width: 450px; margin-bottom: 20px; }
-        .stat-box { background: var(--card); flex: 1; padding: 10px; border-radius: 10px; text-align: center; border: 1px solid #333; }
-        .stat-box span { color: var(--neon); font-weight: bold; }
+        .stat-box { background: var(--card); flex: 1; padding: 12px; border-radius: 12px; text-align: center; border: 1px solid #222; }
+        .stat-box span { color: var(--neon); font-weight: bold; display: block; font-size: 18px; }
 
         /* Admin Panel */
-        #admin-panel { display: none; background: var(--card); border: 2px solid var(--neon); padding: 20px; border-radius: 15px; width: 100%; max-width: 400px; margin-bottom: 20px; }
-        input, textarea { width: 100%; background: #262626; border: 1px solid #444; color: white; padding: 12px; margin-bottom: 10px; border-radius: 8px; box-sizing: border-box; }
-        .btn-save { background: var(--neon); color: black; border: none; width: 100%; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        #admin-panel { 
+            display: none; 
+            background: #000; border: 2px solid var(--neon); 
+            padding: 20px; border-radius: 20px; width: 100%; max-width: 400px; 
+            margin-bottom: 30px;
+        }
+        input, textarea { width: 100%; background: #1a1a1a; border: 1px solid #333; color: white; padding: 12px; margin-bottom: 12px; border-radius: 10px; box-sizing: border-box; }
+        .btn-save { background: var(--neon); color: black; border: none; width: 100%; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; }
 
-        /* Kontent */
+        /* Kartochkalar */
         #content-area { width: 100%; max-width: 450px; display: flex; flex-direction: column; gap: 20px; }
-        .card { background: var(--card); border-radius: 15px; overflow: hidden; border: 1px solid #333; position: relative; }
-        .card img { width: 100%; height: auto; }
-        .card-body { padding: 15px; }
-        .card-body h3 { color: var(--neon); margin: 0 0 10px; }
-        .btn-more { background: var(--neon); color: black; text-decoration: none; padding: 8px 20px; border-radius: 5px; font-weight: bold; display: inline-block; }
-        .btn-del { background: red; color: white; border: none; padding: 5px 10px; border-radius: 5px; float: right; cursor: pointer; display: none; }
+        .card { background: #111; border-radius: 25px; overflow: hidden; border: 1px solid #222; }
+        .card img { width: 100%; height: auto; display: block; }
+        .card-body { padding: 20px; }
+        .card-body h3 { color: var(--neon); margin: 0; text-transform: uppercase; }
+        .btn-more { background: var(--neon); color: black; text-decoration: none; padding: 10px 25px; border-radius: 10px; font-weight: bold; display: inline-block; margin-top: 15px; }
+        
+        /* O'chirish */
+        .del-btn { background: #ff4444; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; float: right; display: none; }
 
-        .admin-trigger { margin-top: 50px; color: var(--neon); cursor: pointer; opacity: 0.3; font-size: 10px; }
+        .admin-trigger { margin-top: 80px; color: var(--neon); cursor: pointer; opacity: 0.2; font-size: 11px; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>FOYDALI SAYT</h1>
-        <div style="color:var(--neon); font-size:14px;">Dev: @saidjon_mc1</div>
+        <h1 style="margin:0;">FOYDALI SAYT</h1>
+        <div class="dev-tag">Dev: @saidjon_mc1</div>
     </header>
 
     <div class="stats">
-        <div class="stat-box">Tashriflar: <span id="total-v">1542</span></div>
-        <div class="stat-box">Onlayn: <span id="online-v">7</span></div>
+        <div class="stat-box">Tashriflar<span id="v-count">1,506</span></div>
+        <div class="stat-box">Onlayn<span id="o-count">7</span></div>
     </div>
 
     <div id="admin-panel">
-        <h3 style="color:var(--neon); margin-top:0;">+ YANGI BO'LIM</h3>
-        <input type="text" id="img-url" placeholder="Rasm URL (yoki rasm linki)">
-        <input type="text" id="title" placeholder="Sarlavha">
-        <textarea id="desc" rows="3" placeholder="Tavsif..."></textarea>
-        <input type="text" id="link" placeholder="Tugma linki (t.me/...)">
-        <button class="btn-save" onclick="uploadToFirebase()">SAQLASH VA HAMMAGA CHIQARISH</button>
+        <h3 style="color:var(--neon);">➕ YANGI BO'LIM</h3>
+        <input type="text" id="p-img" placeholder="Rasm URL">
+        <input type="text" id="p-title" placeholder="Sarlavha">
+        <textarea id="p-desc" rows="3" placeholder="Tavsif..."></textarea>
+        <input type="text" id="p-link" placeholder="Link (t.me/...)">
+        <button class="btn-save" onclick="saveData()">SAQLASH VA QO'SHISH</button>
     </div>
 
-    <div id="content-area"></div>
+    <div id="content-area">
+        </div>
 
-    <div class="admin-trigger" onclick="adminKirish()">[ ADMIN LOGIN ]</div>
+    <div class="admin-trigger" onclick="checkAdmin()">[ ADMIN PANELGA KIRISH ]</div>
 
     <script>
-        // --- BU YERGA FIREBASE KALITINGIZNI QO'YING ---
-        const firebaseConfig = {
-            apiKey: "SIZNING_API_KEY",
-            databaseURL: "https://SIZNING_LOYIHA.firebaseio.com",
-            projectId: "SIZNING_LOYIHA",
-            appId: "SIZNING_APP_ID"
-        };
-        // ----------------------------------------------
-
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
         let isAdmin = false;
 
-        // 1. Ma'lumotlarni bazadan olish (Hammada ko'rinadi)
-        db.ref('postlar').on('value', (res) => {
-            const data = res.val();
+        // Ma'lumotlarni yuklash (localStorage orqali)
+        function loadData() {
+            const data = JSON.parse(localStorage.getItem('mySiteData') || '[]');
             const area = document.getElementById('content-area');
             area.innerHTML = '';
-            for (let id in data) {
+            data.forEach((item, index) => {
                 area.insertAdjacentHTML('afterbegin', `
                     <div class="card">
-                        <img src="${data[id].rasm}">
+                        <img src="${item.img}">
                         <div class="card-body">
-                            <h3>${data[id].sarlavha}</h3>
-                            <p>${data[id].tavsif}</p>
-                            <a href="${data[id].link}" class="btn-more">BATAFSIL</a>
-                            <button class="btn-del" id="del-${id}" onclick="deletePost('${id}')" style="display:${isAdmin?'block':'none'}">O'CHIRISH</button>
+                            <h3>${item.title}</h3>
+                            <p>${item.desc}</p>
+                            <a href="${item.link}" class="btn-more">BATAFSIL</a>
+                            <button class="del-btn" onclick="deleteItem(${index})" style="display:${isAdmin?'block':'none'}">O'CHIRISH</button>
                         </div>
                     </div>
                 `);
-            }
-        });
+            });
+        }
 
-        // 2. Admin kirish
-        function adminKirish() {
+        function checkAdmin() {
             if(prompt("Parol:") === "saidjon978") {
                 isAdmin = true;
                 document.getElementById('admin-panel').style.display = 'block';
-                document.querySelectorAll('.btn-del').forEach(b => b.style.display = 'block');
+                loadData();
             }
         }
 
-        // 3. Bazaga qo'shish
-        function uploadToFirebase() {
-            const rasm = document.getElementById('img-url').value;
-            const title = document.getElementById('title').value;
-            const desc = document.getElementById('desc').value;
-            const link = document.getElementById('link').value;
+        function saveData() {
+            const img = document.getElementById('p-img').value;
+            const title = document.getElementById('p-title').value;
+            const desc = document.getElementById('p-desc').value;
+            const link = document.getElementById('p-link').value;
 
-            if(title && rasm) {
-                db.ref('postlar').push({ rasm, sarlavha: title, tavsif: desc, link });
-                alert("Hamma uchun qo'shildi!");
-                document.getElementById('admin-panel').style.display = 'none';
-            }
+            const data = JSON.parse(localStorage.getItem('mySiteData') || '[]');
+            data.push({ img, title, desc, link });
+            localStorage.setItem('mySiteData', JSON.stringify(data));
+            loadData();
+            alert("Qo'shildi!");
         }
 
-        // 4. Bazadan o'chirish
-        function deletePost(id) {
-            if(confirm("O'chirilsinmi?")) db.ref('postlar/' + id).remove();
+        function deleteItem(index) {
+            let data = JSON.parse(localStorage.getItem('mySiteData') || '[]');
+            data.splice(index, 1);
+            localStorage.setItem('mySiteData', JSON.stringify(data));
+            loadData();
         }
 
-        // Onlayn simulyatsiya
-        setInterval(() => { document.getElementById('online-v').innerText = Math.floor(Math.random()*15)+3; }, 4000);
+        loadData();
+        setInterval(() => { document.getElementById('o-count').innerText = Math.floor(Math.random()*15)+5; }, 4000);
     </script>
 </body>
 </html>
