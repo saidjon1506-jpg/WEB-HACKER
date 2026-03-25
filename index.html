@@ -15,7 +15,7 @@
         body {
             background-color: var(--bg-dark);
             color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: sans-serif;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -25,20 +25,18 @@
 
         header {
             text-align: center;
-            margin-bottom: 20px;
             border-bottom: 2px solid var(--neon-green);
             width: 100%;
             max-width: 500px;
             padding-bottom: 10px;
-            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
+            margin-bottom: 20px;
         }
 
-        h1 { margin: 0; font-size: 24px; letter-spacing: 2px; }
-        .dev-tag { color: var(--neon-green); font-size: 14px; margin-top: 5px; }
+        .dev-tag { color: var(--neon-green); font-size: 14px; }
 
-        /* Admin Panel Stili */
+        /* Admin Panel */
         #admin-panel {
-            display: none; /* Default yopiq */
+            display: none;
             background: var(--card-bg);
             border: 2px solid var(--neon-green);
             border-radius: 15px;
@@ -48,16 +46,20 @@
             margin-bottom: 30px;
         }
 
-        .panel-title {
-            color: var(--neon-green);
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
+        .file-label {
+            display: block;
+            background: #333;
+            padding: 12px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border: 1px dashed var(--neon-green);
         }
 
-        input, textarea {
+        input[type="file"] { display: none; }
+
+        input[type="text"], textarea {
             width: 100%;
             background: var(--input-bg);
             border: 1px solid #444;
@@ -77,63 +79,17 @@
             padding: 15px;
             border-radius: 8px;
             cursor: pointer;
-            margin-top: 10px;
         }
 
-        .btn-close {
-            background: #333;
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-
-        /* Kontent Qismi */
-        #content-area {
-            width: 100%;
-            max-width: 450px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid #333;
-        }
-
-        .card img { width: 100%; height: auto; display: block; }
-
+        /* Card Style */
+        #content-area { width: 100%; max-width: 450px; display: flex; flex-direction: column; gap: 20px; }
+        .card { background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid #333; }
+        .card img { width: 100%; height: auto; }
         .card-body { padding: 15px; }
+        .card-body h3 { color: var(--neon-green); margin: 0 0 10px; }
+        .btn-more { background: var(--neon-green); color: black; text-decoration: none; padding: 8px 20px; border-radius: 5px; font-weight: bold; display: inline-block; }
 
-        .card-body h3 { color: var(--neon-green); margin: 0 0 10px 0; text-transform: uppercase; }
-
-        .card-body p { font-size: 14px; color: #ccc; line-height: 1.5; }
-
-        .btn-more {
-            background: var(--neon-green);
-            color: black;
-            text-decoration: none;
-            display: inline-block;
-            padding: 8px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 12px;
-            margin-top: 10px;
-        }
-
-        .admin-trigger {
-            margin-top: 40px;
-            color: var(--neon-green);
-            cursor: pointer;
-            font-size: 12px;
-            opacity: 0.5;
-        }
+        .admin-trigger { margin-top: 40px; color: var(--neon-green); cursor: pointer; opacity: 0.5; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -144,79 +100,79 @@
     </header>
 
     <div id="admin-panel">
-        <div class="panel-title"><span>+</span> YANGI BO'LIM QO'SHISH</div>
-        <input type="text" id="img-url" placeholder="Rasm URL manzili (masalan: https://...)">
+        <h3 style="color:var(--neon-green); margin-top:0;">+ YANGI BO'LIM</h3>
+        
+        <label class="file-label" for="rasm-yuklash">
+            📁 RASM YOKI VIDEO TANLASH
+        </label>
+        <input type="file" id="rasm-yuklash" accept="image/*">
+        
         <input type="text" id="title" placeholder="Sarlavha">
         <textarea id="desc" rows="3" placeholder="Tavsif yozing..."></textarea>
         <input type="text" id="link" placeholder="Tugma uchun link (t.me/...)">
+        
         <button class="btn-save" onclick="addSection()">SAQLASH VA QO'SHISH</button>
-        <button class="btn-close" onclick="toggleAdmin()">PANELNI YOPISH</button>
+        <button onclick="document.getElementById('admin-panel').style.display='none'" style="width:100%; margin-top:10px; background:none; color:white; border:none; cursor:pointer;">PANELNI YOPISH</button>
     </div>
 
     <div id="content-area">
-        <div class="card">
-            <img src="https://via.placeholder.com/400x250/000/00ff00?text=MOD+APK" alt="Post rasm">
-            <div class="card-body">
-                <h3>BIZNING KANAL</h3>
-                <p>MOD ILOVALAR BARI TEKN REKLAMALARSIZ XAVFSIZ VIRUSLARSIZ</p>
-                <a href="#" class="btn-more">BATAFSIL</a>
-            </div>
         </div>
-    </div>
 
     <div class="admin-trigger" onclick="checkPassword()">[ ADMIN PANELGA KIRISH ]</div>
 
     <script>
-        // Parolni tekshirish
+        let tanlanganRasmURL = "";
+
+        // Rasmni galereyadan o'qib olish
+        document.getElementById('rasm-yuklash').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(event) {
+                tanlanganRasmURL = event.target.result;
+                alert("Rasm tanlandi!");
+            };
+            
+            if(file) reader.readAsDataURL(file);
+        });
+
         function checkPassword() {
             let pass = prompt("Parolni kiriting:");
             if (pass === "saidjon978") {
                 document.getElementById('admin-panel').style.display = 'block';
-                window.scrollTo(0, 0);
             } else {
-                alert("Xato! Siz admin emassiz.");
+                alert("Xato!");
             }
         }
 
-        // Panelni yopish
-        function toggleAdmin() {
-            document.getElementById('admin-panel').style.display = 'none';
-        }
-
-        // Yangi bo'lim qo'shish
         function addSection() {
-            const img = document.getElementById('img-url').value;
             const title = document.getElementById('title').value;
             const desc = document.getElementById('desc').value;
             const link = document.getElementById('link').value;
 
-            if (!title || !desc) {
-                alert("Sarlavha va tavsifni to'ldiring!");
+            if (!title || !tanlanganRasmURL) {
+                alert("Rasm tanlang va sarlavha yozing!");
                 return;
             }
 
-            const contentArea = document.getElementById('content-area');
-            
-            const newCard = document.createElement('div');
-            newCard.className = 'card';
-            newCard.innerHTML = `
-                <img src="${img ? img : 'https://via.placeholder.com/400x250'}" alt="Rasm">
-                <div class="card-body">
-                    <h3>${title}</h3>
-                    <p>${desc}</p>
-                    <a href="${link}" class="btn-more">BATAFSIL</a>
+            const card = `
+                <div class="card">
+                    <img src="${tanlanganRasmURL}">
+                    <div class="card-body">
+                        <h3>${title}</h3>
+                        <p>${desc}</p>
+                        <a href="${link}" class="btn-more">BATAFSIL</a>
+                    </div>
                 </div>
             `;
 
-            contentArea.prepend(newCard); // Yangisini tepaga qo'shish
+            document.getElementById('content-area').innerHTML = card + document.getElementById('content-area').innerHTML;
             
             // Tozalash
-            document.getElementById('img-url').value = '';
-            document.getElementById('title').value = '';
-            document.getElementById('desc').value = '';
-            document.getElementById('link').value = '';
-            
-            alert("Muvaffaqiyatli qo'shildi!");
+            tanlanganRasmURL = "";
+            document.getElementById('title').value = "";
+            document.getElementById('desc').value = "";
+            alert("Qo'shildi!");
         }
     </script>
 </body>
