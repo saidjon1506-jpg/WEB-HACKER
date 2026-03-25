@@ -4,133 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAIDJON | FOYDALI SAYT</title>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    
     <style>
-        :root {
-            --neon-green: #00ff00;
-            --bg-dark: #0a0a0a;
-            --card-bg: #1a1a1a;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: white;
-            font-family: sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        header {
-            text-align: center;
-            border-bottom: 2px solid var(--neon-green);
-            width: 100%;
-            max-width: 500px;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-
+        :root { --neon: #00ff00; --bg: #0a0a0a; --card: #1a1a1a; }
+        body { background: var(--bg); color: white; font-family: sans-serif; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        header { border-bottom: 2px solid var(--neon); width: 100%; max-width: 500px; text-align: center; margin-bottom: 20px; }
+        
         /* Statistika */
-        .stats {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            width: 100%;
-            max-width: 450px;
-        }
+        .stats { display: flex; gap: 10px; width: 100%; max-width: 450px; margin-bottom: 20px; }
+        .stat-box { background: var(--card); flex: 1; padding: 10px; border-radius: 10px; text-align: center; border: 1px solid #333; }
+        .stat-box span { color: var(--neon); font-weight: bold; }
 
-        .stat-box {
-            background: var(--card-bg);
-            flex: 1;
-            padding: 10px;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid #333;
-        }
+        /* Admin Panel */
+        #admin-panel { display: none; background: var(--card); border: 2px solid var(--neon); padding: 20px; border-radius: 15px; width: 100%; max-width: 400px; margin-bottom: 20px; }
+        input, textarea { width: 100%; background: #262626; border: 1px solid #444; color: white; padding: 12px; margin-bottom: 10px; border-radius: 8px; box-sizing: border-box; }
+        .btn-save { background: var(--neon); color: black; border: none; width: 100%; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
-        .stat-box span { color: var(--neon-green); font-weight: bold; }
-
-        /* Tugmalar (Kartochkalar) */
-        #content-area {
-            width: 100%;
-            max-width: 450px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid #333;
-            transition: 0.3s;
-        }
-
-        .card:hover { border-color: var(--neon-green); }
-
-        .card img { width: 100%; height: auto; display: block; }
-
+        /* Kontent */
+        #content-area { width: 100%; max-width: 450px; display: flex; flex-direction: column; gap: 20px; }
+        .card { background: var(--card); border-radius: 15px; overflow: hidden; border: 1px solid #333; position: relative; }
+        .card img { width: 100%; height: auto; }
         .card-body { padding: 15px; }
+        .card-body h3 { color: var(--neon); margin: 0 0 10px; }
+        .btn-more { background: var(--neon); color: black; text-decoration: none; padding: 8px 20px; border-radius: 5px; font-weight: bold; display: inline-block; }
+        .btn-del { background: red; color: white; border: none; padding: 5px 10px; border-radius: 5px; float: right; cursor: pointer; display: none; }
 
-        .card-body h3 { color: var(--neon-green); margin: 0 0 10px; text-transform: uppercase; }
-
-        .card-body p { font-size: 14px; color: #ccc; margin-bottom: 15px; }
-
-        .btn-more {
-            background: var(--neon-green);
-            color: black;
-            text-decoration: none;
-            padding: 10px 25px;
-            border-radius: 8px;
-            font-weight: bold;
-            display: inline-block;
-        }
+        .admin-trigger { margin-top: 50px; color: var(--neon); cursor: pointer; opacity: 0.3; font-size: 10px; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>FOYDALI SAYT</h1>
-        <div style="color:var(--neon-green); font-size:14px;">Dev: @saidjon_mc1</div>
+        <div style="color:var(--neon); font-size:14px;">Dev: @saidjon_mc1</div>
     </header>
 
     <div class="stats">
-        <div class="stat-box">Tashriflar: <span id="view-count">Loading...</span></div>
-        <div class="stat-box">Onlayn: <span id="online-count">12</span></div>
+        <div class="stat-box">Tashriflar: <span id="total-v">1542</span></div>
+        <div class="stat-box">Onlayn: <span id="online-v">7</span></div>
     </div>
 
-    <div id="content-area">
-
-        <div class="card">
-            <img src="https://via.placeholder.com/400x200/000/00ff00?text=MOD+APK" alt="Rasm">
-            <div class="card-body">
-                <h3>BIZNING KANAL</h3>
-                <p>MOD ILOVALAR BARI TEKIN REKLAMALARSIZ VA XAVFSIZ</p>
-                <a href="https://t.me/your_link" class="btn-more">BATAFSIL</a>
-            </div>
-        </div>
-
-        <div class="card">
-            <img src="https://via.placeholder.com/400x200/000/00ff00?text=SMM+BOT" alt="Rasm">
-            <div class="card-body">
-                <h3>SMM XIZMATLARI</h3>
-                <p>Instagram va Telegram uchun eng arzon nakrutka botimiz.</p>
-                <a href="https://t.me/NAKRUTKATOPSMMBOT" class="btn-more">BOTGA KIRISH</a>
-            </div>
-        </div>
-
+    <div id="admin-panel">
+        <h3 style="color:var(--neon); margin-top:0;">+ YANGI BO'LIM</h3>
+        <input type="text" id="img-url" placeholder="Rasm URL (yoki rasm linki)">
+        <input type="text" id="title" placeholder="Sarlavha">
+        <textarea id="desc" rows="3" placeholder="Tavsif..."></textarea>
+        <input type="text" id="link" placeholder="Tugma linki (t.me/...)">
+        <button class="btn-save" onclick="uploadToFirebase()">SAQLASH VA HAMMAGA CHIQARISH</button>
     </div>
+
+    <div id="content-area"></div>
+
+    <div class="admin-trigger" onclick="adminKirish()">[ ADMIN LOGIN ]</div>
 
     <script>
-        // Oddiy statistika simulyatsiyasi
-        document.getElementById('view-count').innerText = Math.floor(Math.random() * 500) + 1000;
-        
-        setInterval(() => {
-            let online = Math.floor(Math.random() * 15) + 5;
-            document.getElementById('online-count').innerText = online;
-        }, 3000);
+        // --- BU YERGA FIREBASE KALITINGIZNI QO'YING ---
+        const firebaseConfig = {
+            apiKey: "SIZNING_API_KEY",
+            databaseURL: "https://SIZNING_LOYIHA.firebaseio.com",
+            projectId: "SIZNING_LOYIHA",
+            appId: "SIZNING_APP_ID"
+        };
+        // ----------------------------------------------
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        let isAdmin = false;
+
+        // 1. Ma'lumotlarni bazadan olish (Hammada ko'rinadi)
+        db.ref('postlar').on('value', (res) => {
+            const data = res.val();
+            const area = document.getElementById('content-area');
+            area.innerHTML = '';
+            for (let id in data) {
+                area.insertAdjacentHTML('afterbegin', `
+                    <div class="card">
+                        <img src="${data[id].rasm}">
+                        <div class="card-body">
+                            <h3>${data[id].sarlavha}</h3>
+                            <p>${data[id].tavsif}</p>
+                            <a href="${data[id].link}" class="btn-more">BATAFSIL</a>
+                            <button class="btn-del" id="del-${id}" onclick="deletePost('${id}')" style="display:${isAdmin?'block':'none'}">O'CHIRISH</button>
+                        </div>
+                    </div>
+                `);
+            }
+        });
+
+        // 2. Admin kirish
+        function adminKirish() {
+            if(prompt("Parol:") === "saidjon978") {
+                isAdmin = true;
+                document.getElementById('admin-panel').style.display = 'block';
+                document.querySelectorAll('.btn-del').forEach(b => b.style.display = 'block');
+            }
+        }
+
+        // 3. Bazaga qo'shish
+        function uploadToFirebase() {
+            const rasm = document.getElementById('img-url').value;
+            const title = document.getElementById('title').value;
+            const desc = document.getElementById('desc').value;
+            const link = document.getElementById('link').value;
+
+            if(title && rasm) {
+                db.ref('postlar').push({ rasm, sarlavha: title, tavsif: desc, link });
+                alert("Hamma uchun qo'shildi!");
+                document.getElementById('admin-panel').style.display = 'none';
+            }
+        }
+
+        // 4. Bazadan o'chirish
+        function deletePost(id) {
+            if(confirm("O'chirilsinmi?")) db.ref('postlar/' + id).remove();
+        }
+
+        // Onlayn simulyatsiya
+        setInterval(() => { document.getElementById('online-v').innerText = Math.floor(Math.random()*15)+3; }, 4000);
     </script>
 </body>
 </html>
