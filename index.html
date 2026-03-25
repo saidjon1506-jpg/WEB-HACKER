@@ -9,7 +9,6 @@
             --neon-green: #00ff00;
             --bg-dark: #0a0a0a;
             --card-bg: #1a1a1a;
-            --input-bg: #262626;
         }
 
         body {
@@ -32,148 +31,106 @@
             margin-bottom: 20px;
         }
 
-        .dev-tag { color: var(--neon-green); font-size: 14px; }
+        /* Statistika */
+        .stats {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 450px;
+        }
 
-        /* Admin Panel */
-        #admin-panel {
-            display: none;
+        .stat-box {
             background: var(--card-bg);
-            border: 2px solid var(--neon-green);
-            border-radius: 15px;
-            padding: 20px;
-            width: 100%;
-            max-width: 400px;
-            margin-bottom: 30px;
-        }
-
-        .file-label {
-            display: block;
-            background: #333;
-            padding: 12px;
+            flex: 1;
+            padding: 10px;
+            border-radius: 10px;
             text-align: center;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            border: 1px dashed var(--neon-green);
+            border: 1px solid #333;
         }
 
-        input[type="file"] { display: none; }
+        .stat-box span { color: var(--neon-green); font-weight: bold; }
 
-        input[type="text"], textarea {
+        /* Tugmalar (Kartochkalar) */
+        #content-area {
             width: 100%;
-            background: var(--input-bg);
-            border: 1px solid #444;
-            color: white;
-            padding: 12px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            box-sizing: border-box;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .btn-save {
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: 0.3s;
+        }
+
+        .card:hover { border-color: var(--neon-green); }
+
+        .card img { width: 100%; height: auto; display: block; }
+
+        .card-body { padding: 15px; }
+
+        .card-body h3 { color: var(--neon-green); margin: 0 0 10px; text-transform: uppercase; }
+
+        .card-body p { font-size: 14px; color: #ccc; margin-bottom: 15px; }
+
+        .btn-more {
             background: var(--neon-green);
             color: black;
-            font-weight: bold;
-            border: none;
-            width: 100%;
-            padding: 15px;
+            text-decoration: none;
+            padding: 10px 25px;
             border-radius: 8px;
-            cursor: pointer;
+            font-weight: bold;
+            display: inline-block;
         }
-
-        /* Card Style */
-        #content-area { width: 100%; max-width: 450px; display: flex; flex-direction: column; gap: 20px; }
-        .card { background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid #333; }
-        .card img { width: 100%; height: auto; }
-        .card-body { padding: 15px; }
-        .card-body h3 { color: var(--neon-green); margin: 0 0 10px; }
-        .btn-more { background: var(--neon-green); color: black; text-decoration: none; padding: 8px 20px; border-radius: 5px; font-weight: bold; display: inline-block; }
-
-        .admin-trigger { margin-top: 40px; color: var(--neon-green); cursor: pointer; opacity: 0.5; font-size: 12px; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>FOYDALI SAYT</h1>
-        <div class="dev-tag">Dev: @saidjon_mc1</div>
+        <div style="color:var(--neon-green); font-size:14px;">Dev: @saidjon_mc1</div>
     </header>
 
-    <div id="admin-panel">
-        <h3 style="color:var(--neon-green); margin-top:0;">+ YANGI BO'LIM</h3>
-        
-        <label class="file-label" for="rasm-yuklash">
-            📁 RASM YOKI VIDEO TANLASH
-        </label>
-        <input type="file" id="rasm-yuklash" accept="image/*">
-        
-        <input type="text" id="title" placeholder="Sarlavha">
-        <textarea id="desc" rows="3" placeholder="Tavsif yozing..."></textarea>
-        <input type="text" id="link" placeholder="Tugma uchun link (t.me/...)">
-        
-        <button class="btn-save" onclick="addSection()">SAQLASH VA QO'SHISH</button>
-        <button onclick="document.getElementById('admin-panel').style.display='none'" style="width:100%; margin-top:10px; background:none; color:white; border:none; cursor:pointer;">PANELNI YOPISH</button>
+    <div class="stats">
+        <div class="stat-box">Tashriflar: <span id="view-count">Loading...</span></div>
+        <div class="stat-box">Onlayn: <span id="online-count">12</span></div>
     </div>
 
     <div id="content-area">
+
+        <div class="card">
+            <img src="https://via.placeholder.com/400x200/000/00ff00?text=MOD+APK" alt="Rasm">
+            <div class="card-body">
+                <h3>BIZNING KANAL</h3>
+                <p>MOD ILOVALAR BARI TEKIN REKLAMALARSIZ VA XAVFSIZ</p>
+                <a href="https://t.me/your_link" class="btn-more">BATAFSIL</a>
+            </div>
         </div>
 
-    <div class="admin-trigger" onclick="checkPassword()">[ ADMIN PANELGA KIRISH ]</div>
+        <div class="card">
+            <img src="https://via.placeholder.com/400x200/000/00ff00?text=SMM+BOT" alt="Rasm">
+            <div class="card-body">
+                <h3>SMM XIZMATLARI</h3>
+                <p>Instagram va Telegram uchun eng arzon nakrutka botimiz.</p>
+                <a href="https://t.me/NAKRUTKATOPSMMBOT" class="btn-more">BOTGA KIRISH</a>
+            </div>
+        </div>
+
+    </div>
 
     <script>
-        let tanlanganRasmURL = "";
-
-        // Rasmni galereyadan o'qib olish
-        document.getElementById('rasm-yuklash').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            
-            reader.onload = function(event) {
-                tanlanganRasmURL = event.target.result;
-                alert("Rasm tanlandi!");
-            };
-            
-            if(file) reader.readAsDataURL(file);
-        });
-
-        function checkPassword() {
-            let pass = prompt("Parolni kiriting:");
-            if (pass === "saidjon978") {
-                document.getElementById('admin-panel').style.display = 'block';
-            } else {
-                alert("Xato!");
-            }
-        }
-
-        function addSection() {
-            const title = document.getElementById('title').value;
-            const desc = document.getElementById('desc').value;
-            const link = document.getElementById('link').value;
-
-            if (!title || !tanlanganRasmURL) {
-                alert("Rasm tanlang va sarlavha yozing!");
-                return;
-            }
-
-            const card = `
-                <div class="card">
-                    <img src="${tanlanganRasmURL}">
-                    <div class="card-body">
-                        <h3>${title}</h3>
-                        <p>${desc}</p>
-                        <a href="${link}" class="btn-more">BATAFSIL</a>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('content-area').innerHTML = card + document.getElementById('content-area').innerHTML;
-            
-            // Tozalash
-            tanlanganRasmURL = "";
-            document.getElementById('title').value = "";
-            document.getElementById('desc').value = "";
-            alert("Qo'shildi!");
-        }
+        // Oddiy statistika simulyatsiyasi
+        document.getElementById('view-count').innerText = Math.floor(Math.random() * 500) + 1000;
+        
+        setInterval(() => {
+            let online = Math.floor(Math.random() * 15) + 5;
+            document.getElementById('online-count').innerText = online;
+        }, 3000);
     </script>
 </body>
 </html>
