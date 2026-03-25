@@ -3,181 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAIDJON | FOYDALI SAYT </title>
+    <title>SAIDJON | FOYDALI SAYT</title>
     <style>
-        :root { --neon: #00ff41; --bg: #050505; --card: #111; }
-        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 100px; }
-        
-        header { background: #000; padding: 20px; text-align: center; border-bottom: 2px solid var(--neon); box-shadow: 0 0 15px var(--neon); }
-        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        :root {
+            --neon-green: #00ff00;
+            --bg-dark: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --input-bg: #262626;
+        }
 
-        /* Media Grid */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
-        .card { background: var(--card); border: 1px solid #333; border-radius: 15px; overflow: hidden; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); border-color: var(--neon); }
-        
-        /* Rasm va Video stillari */
-        .card-media { width: 100%; height: 200px; object-fit: cover; background: #222; border-bottom: 1px solid #333; }
-        .card-content { padding: 15px; }
-        .card h3 { color: var(--neon); margin: 0 0 10px 0; font-size: 18px; }
-        .card p { font-size: 14px; color: #ccc; margin-bottom: 15px; }
-        .card a { display: inline-block; background: var(--neon); color: #000; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 13px; }
+        body {
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-        /* Admin Panel */
-        #admin-panel { display: none; background: #161616; border: 2px solid var(--neon); padding: 20px; border-radius: 15px; margin-bottom: 30px; }
-        input, textarea { width: 100%; padding: 10px; margin: 8px 0; background: #222; border: 1px solid #444; color: #fff; border-radius: 8px; box-sizing: border-box; }
-        .btn-add { background: var(--neon); color: #000; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        
-        /* Fayl tanlash tugmasi */
-        .file-label { display: block; background: #333; color: #fff; text-align: center; padding: 10px; border-radius: 8px; cursor: pointer; margin: 10px 0; font-size: 14px; }
-        .file-label:hover { background: #444; }
-        #m-file { display: none; }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--neon-green);
+            width: 100%;
+            max-width: 500px;
+            padding-bottom: 10px;
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
+        }
 
-        .footer-trigger { opacity: 0.2; text-align: center; margin-top: 50px; cursor: pointer; font-size: 12px; color: var(--neon); }
+        h1 { margin: 0; font-size: 24px; letter-spacing: 2px; }
+        .dev-tag { color: var(--neon-green); font-size: 14px; margin-top: 5px; }
+
+        /* Admin Panel Stili */
+        #admin-panel {
+            display: none; /* Default yopiq */
+            background: var(--card-bg);
+            border: 2px solid var(--neon-green);
+            border-radius: 15px;
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 30px;
+        }
+
+        .panel-title {
+            color: var(--neon-green);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input, textarea {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid #444;
+            color: white;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .btn-save {
+            background: var(--neon-green);
+            color: black;
+            font-weight: bold;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-close {
+            background: #333;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        /* Kontent Qismi */
+        #content-area {
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .card img { width: 100%; height: auto; display: block; }
+
+        .card-body { padding: 15px; }
+
+        .card-body h3 { color: var(--neon-green); margin: 0 0 10px 0; text-transform: uppercase; }
+
+        .card-body p { font-size: 14px; color: #ccc; line-height: 1.5; }
+
+        .btn-more {
+            background: var(--neon-green);
+            color: black;
+            text-decoration: none;
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .admin-trigger {
+            margin-top: 40px;
+            color: var(--neon-green);
+            cursor: pointer;
+            font-size: 12px;
+            opacity: 0.5;
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>FOYDALI SAYT</h1>
-    <div style="font-size: 12px; color: var(--neon);">Dev: @saidjon_mc1</div>
-</header>
+    <header>
+        <h1>FOYDALI SAYT</h1>
+        <div class="dev-tag">Dev: @saidjon_mc1</div>
+    </header>
 
-<div class="container">
-    
     <div id="admin-panel">
-        <h3 style="color: var(--neon); margin-top: 0;">➕ YANGI BO'LIM QO'SHISH</h3>
-        
-        <label class="file-label" for="m-file">📁 RASM YOKI VIDEO TANLASH</label>
-        <input type="file" id="m-file" accept="image/*,video/*" onchange="previewFile()">
-        
-        <div id="preview-area" style="margin: 10px 0; text-align: center; display: none;">
-            <p style="font-size: 12px; color: #888;">Oldindan ko'rish:</p>
-            </div>
-
-        <input type="text" id="m-title" placeholder="Sarlavha">
-        <textarea id="m-desc" placeholder="Tavsif yozing..."></textarea>
-        <input type="text" id="m-link" placeholder="Tugma uchun link (t.me/...)">
-        
-        <button class="btn-add" id="save-btn" onclick="saveMedia()">SAQLASH VA QO'SHISH</button>
-        <button onclick="closeAdmin()" style="background:#333; color:#fff; border:none; width:100%; padding:10px; margin-top:10px; border-radius:8px; cursor:pointer;">PANELNI YOPISH</button>
+        <div class="panel-title"><span>+</span> YANGI BO'LIM QO'SHISH</div>
+        <input type="text" id="img-url" placeholder="Rasm URL manzili (masalan: https://...)">
+        <input type="text" id="title" placeholder="Sarlavha">
+        <textarea id="desc" rows="3" placeholder="Tavsif yozing..."></textarea>
+        <input type="text" id="link" placeholder="Tugma uchun link (t.me/...)">
+        <button class="btn-save" onclick="addSection()">SAQLASH VA QO'SHISH</button>
+        <button class="btn-close" onclick="toggleAdmin()">PANELNI YOPISH</button>
     </div>
 
-    <div class="grid" id="media-grid">
+    <div id="content-area">
+        <div class="card">
+            <img src="https://via.placeholder.com/400x250/000/00ff00?text=MOD+APK" alt="Post rasm">
+            <div class="card-body">
+                <h3>BIZNING KANAL</h3>
+                <p>MOD ILOVALAR BARI TEKN REKLAMALARSIZ XAVFSIZ VIRUSLARSIZ</p>
+                <a href="#" class="btn-more">BATAFSIL</a>
+            </div>
         </div>
+    </div>
 
-    <div class="footer-trigger" onclick="openAdmin()">[ ADMIN PANELGA KIRISH ]</div>
-</div>
+    <div class="admin-trigger" onclick="checkPassword()">[ ADMIN PANELGA KIRISH ]</div>
 
-<script>
-    const PASS = "saidjon978";
-    let isAdmin = false;
-    let selectedFileBase64 = null;
-    let selectedFileType = null;
-
-    // LocalStorage dan ma'lumotlarni olish
-    let data = JSON.parse(localStorage.getItem('saidjon_media_data')) || [];
-
-    function openAdmin() {
-        let p = prompt("Parolni kiriting:");
-        if(p === PASS) {
-            isAdmin = true;
-            document.getElementById('admin-panel').style.display = 'block';
-            renderGrid();
-        } else { alert("Xato!"); }
-    }
-
-    function previewFile() {
-        const file = document.getElementById('m-file').files[0];
-        const previewArea = document.getElementById('preview-area');
-        const reader = new FileReader();
-
-        if (file) {
-            reader.onload = function(e) {
-                selectedFileBase64 = e.target.result;
-                selectedFileType = file.type.split('/')[0]; // 'image' yoki 'video'
-                
-                let previewHtml = '';
-                if(selectedFileType === 'image') {
-                    previewHtml = `<img src="${selectedFileBase64}" style="max-width: 100%; max-height: 150px; border-radius: 8px;">`;
-                } else {
-                    previewHtml = `<p style="color: var(--neon); font-size: 14px;">📹 Video tanlandi: ${file.name}</p>`;
-                }
-                previewArea.innerHTML = '<p style="font-size: 12px; color: #888;">Oldindan ko\'rish:</p>' + previewHtml;
-                previewArea.style.display = 'block';
-            }
-            reader.readAsDataURL(file);
-        }
-    }
-
-    function saveMedia() {
-        const title = document.getElementById('m-title').value;
-        const desc = document.getElementById('m-desc').value;
-        const link = document.getElementById('m-link').value;
-        const saveBtn = document.getElementById('save-btn');
-
-        if(title && selectedFileBase64) {
-            saveBtn.innerText = "SAQLANMOQDA...";
-            saveBtn.disabled = true;
-
-            setTimeout(() => {
-                data.push({ title, desc, link, type: selectedFileType, url: selectedFileBase64 });
-                localStorage.setItem('saidjon_media_data', JSON.stringify(data));
-                renderGrid();
-                // Tozalash
-                document.getElementById('m-title').value = '';
-                document.getElementById('m-desc').value = '';
-                document.getElementById('m-link').value = '';
-                document.getElementById('m-file').value = '';
-                document.getElementById('preview-area').style.display = 'none';
-                selectedFileBase64 = null;
-                saveBtn.innerText = "SAQLASH VA QO'SHISH";
-                saveBtn.disabled = false;
-            }, 500); // Kichik pauza yuklash effekti uchun
-        } else { alert("Sarlavha va Media Fayl tanlash shart!"); }
-    }
-
-    function renderGrid() {
-        const grid = document.getElementById('media-grid');
-        grid.innerHTML = '';
-        data.forEach((item, index) => {
-            let mediaHtml = '';
-            if(item.type === 'image') {
-                mediaHtml = `<img src="${item.url}" class="card-media" alt="img">`;
+    <script>
+        // Parolni tekshirish
+        function checkPassword() {
+            let pass = prompt("Parolni kiriting:");
+            if (pass === "saidjon978") {
+                document.getElementById('admin-panel').style.display = 'block';
+                window.scrollTo(0, 0);
             } else {
-                mediaHtml = `<video src="${item.url}" class="card-media" controls></video>`;
+                alert("Xato! Siz admin emassiz.");
+            }
+        }
+
+        // Panelni yopish
+        function toggleAdmin() {
+            document.getElementById('admin-panel').style.display = 'none';
+        }
+
+        // Yangi bo'lim qo'shish
+        function addSection() {
+            const img = document.getElementById('img-url').value;
+            const title = document.getElementById('title').value;
+            const desc = document.getElementById('desc').value;
+            const link = document.getElementById('link').value;
+
+            if (!title || !desc) {
+                alert("Sarlavha va tavsifni to'ldiring!");
+                return;
             }
 
-            grid.innerHTML += `
-                <div class="card">
-                    ${mediaHtml}
-                    <div class="card-content">
-                        <h3>${item.title}</h3>
-                        <p>${item.desc}</p>
-                        ${item.link ? `<a href="${item.link}" target="_blank">BATAFSIL</a>` : ''}
-                        ${isAdmin ? `<button onclick="deleteItem(${index})" style="background:#ff4444; color:white; border:none; padding:5px 10px; margin-left:10px; border-radius:3px; cursor:pointer;">O'CHIRISH</button>` : ''}
-                    </div>
+            const contentArea = document.getElementById('content-area');
+            
+            const newCard = document.createElement('div');
+            newCard.className = 'card';
+            newCard.innerHTML = `
+                <img src="${img ? img : 'https://via.placeholder.com/400x250'}" alt="Rasm">
+                <div class="card-body">
+                    <h3>${title}</h3>
+                    <p>${desc}</p>
+                    <a href="${link}" class="btn-more">BATAFSIL</a>
                 </div>
             `;
-        });
-    }
 
-    function deleteItem(index) {
-        if(confirm("Haqiqatan ham o'chirilsinmi?")) {
-            data.splice(index, 1);
-            localStorage.setItem('saidjon_media_data', JSON.stringify(data));
-            renderGrid();
+            contentArea.prepend(newCard); // Yangisini tepaga qo'shish
+            
+            // Tozalash
+            document.getElementById('img-url').value = '';
+            document.getElementById('title').value = '';
+            document.getElementById('desc').value = '';
+            document.getElementById('link').value = '';
+            
+            alert("Muvaffaqiyatli qo'shildi!");
         }
-    }
-
-    function closeAdmin() {
-        isAdmin = false;
-        document.getElementById('admin-panel').style.display = 'none';
-        renderGrid();
-    }
-
-    renderGrid();
-</script>
-
+    </script>
 </body>
 </html>
