@@ -3,82 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAIDJON Admin Panel</title>
+    <title>SAIDJON | Mod & Bot Center</title>
     <style>
-        :root { --lime: #cdff00; --bg: #000; --card: #121212; }
-        body { margin: 0; background: var(--bg); color: white; font-family: sans-serif; }
+        :root { --accent: #00ff00; --bg: #080808; --card: #151515; }
+        body { margin: 0; background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; }
         
-        /* ADMIN PANEL MODAL */
+        /* ADMIN PANEL */
         #admin-auth, #admin-panel {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg); z-index: 2000; display: none; padding: 20px; box-sizing: border-box;
+            background: rgba(0,0,0,0.98); z-index: 2000; display: none; padding: 30px; box-sizing: border-box;
+            border: 2px solid var(--accent);
         }
-        input, select { width: 100%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #444; color: white; border-radius: 8px; }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid var(--accent); color: var(--accent); border-radius: 8px; }
+
+        /* HEADER */
+        .header { padding: 25px; text-align: center; border-bottom: 1px solid #222; background: #111; }
+        .logo { color: var(--accent); font-weight: bold; font-size: 24px; letter-spacing: 2px; }
+
+        /* MAIN SECTION */
+        .page { padding: 20px; padding-bottom: 100px; display: none; }
+        .active { display: block; animation: slideUp 0.4s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* MOD CARDS */
+        .card { background: var(--card); border-radius: 15px; padding: 20px; margin-bottom: 15px; border: 1px solid #222; transition: 0.3s; }
+        .card:hover { border-color: var(--accent); }
+        .badge { background: var(--accent); color: black; padding: 3px 8px; border-radius: 5px; font-size: 10px; font-weight: bold; margin-bottom: 10px; display: inline-block; }
         
-        /* UI ELEMENTS */
-        .header { padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; }
-        .page { padding: 15px; padding-bottom: 100px; display: none; }
-        .active { display: block; }
-        .card { background: var(--card); border-radius: 12px; padding: 15px; margin-bottom: 10px; border: 1px solid #222; position: relative; }
-        .btn { background: var(--lime); color: #000; border: none; padding: 10px; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; }
-        
-        /* NAVIGATION */
-        .nav { position: fixed; bottom: 0; width: 100%; height: 70px; background: #080808; display: flex; border-top: 1px solid #222; }
-        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; color: #777; cursor: pointer; }
-        .nav-item.active-nav { color: var(--lime); }
+        /* LINKS & BUTTONS */
+        .btn { background: var(--accent); color: #000; border: none; padding: 14px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; text-decoration: none; display: block; text-align: center; margin-top: 10px; }
+        .btn-tg { background: #2481cc; color: white; }
+
+        /* NAV */
+        .nav { position: fixed; bottom: 0; width: 100%; height: 75px; background: #111; display: flex; border-top: 1px solid #222; z-index: 1000; }
+        .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 11px; color: #666; cursor: pointer; }
+        .nav-item.active-nav { color: var(--accent); }
     </style>
 </head>
 <body>
 
 <div id="admin-auth">
-    <h2>Admin Kirish</h2>
-    <input type="password" id="admin-pass" placeholder="Parolni kiriting...">
-    <button class="btn" onclick="checkPass()">KIRISH</button>
-    <p onclick="closeAdmin()" style="text-align:center; margin-top:20px; color:#888">Yopish</p>
+    <h2 style="color:var(--accent)">SECURITY LOGIN</h2>
+    <input type="password" id="admin-pass" placeholder="PASSWORD...">
+    <button class="btn" onclick="checkPass()">LOGIN</button>
+    <p onclick="closeAdmin()" style="text-align:center; color:#555; margin-top:20px">CLOSE</p>
 </div>
 
 <div id="admin-panel">
-    <h2>Boshqaruv Paneli</h2>
-    <p>Yangi bo'lim qo'shish:</p>
-    <input type="text" id="new-btn-name" placeholder="Tugma nomi (masalan: Yangi xizmat)">
-    <input type="text" id="new-btn-desc" placeholder="Tavsif (masalan: Bu yangi funksiya)">
-    <select id="target-page">
-        <option value="p-home">Bosh sahifa</option>
-        <option value="p-servis">Servislar</option>
+    <h2 style="color:var(--accent)">ADD NEW MOD/BOT</h2>
+    <input type="text" id="item-name" placeholder="Ilova yoki O'yin nomi...">
+    <input type="text" id="item-link" placeholder="Telegram linki (https://t.me/...)">
+    <select id="item-type">
+        <option value="mods-list">MOD APK</option>
+        <option value="bots-list">BOTLAR</option>
     </select>
-    <button class="btn" onclick="addNewElement()">QO'SHISH</button>
-    <hr>
-    <button class="btn" style="background:red; color:white" onclick="closeAdmin()">PANELDAN CHIQISH</button>
+    <button class="btn" onclick="saveItem()">SAYTGA JOYLAsh</button>
+    <button class="btn" style="background:#333; color:white" onclick="closeAdmin()">CHIQISH</button>
 </div>
 
 <div class="header">
-    <div onclick="openAuth()" style="cursor:pointer">⚙️ Saidjon</div>
-    <div id="status" style="color:var(--lime); font-size:12px">Online</div>
+    <div class="logo">WEB-HACKER</div>
+    <div style="font-size: 12px; color: #888; margin-top: 5px;">Saidjon Mod Center</div>
 </div>
 
 <div id="p-home" class="page active">
-    <h3>Asosiy bo'limlar</h3>
-    <div id="home-list">
+    <h3>📢 BIZNING KANALLAR</h3>
+    <div class="card">
+        <div class="badge">CHANNEL</div>
+        <h4>MOD APK @modoyinlar26</h4>
+        <p>Eng so'nggi mod o'yinlar va dasturlar kanali.</p>
+        <a href="https://t.me/modoyinlar26" class="btn btn-tg">KANALGA KIRISH</a>
+    </div>
+
+    <div class="card">
+        <div class="badge" style="background: #f1c40f;">BOT</div>
+        <h4>𝙁𝙊𝙔𝘿𝘼𝙇𝙄 𝘽𝙊𝙏 (𝚞𝚣)</h4>
+        <p>Sizga kerakli barcha foydali funksiyalar bitta botda.</p>
+        <a href="https://t.me/FOYDAL1_UZBOT" class="btn btn-tg" style="background: #00d2ff;">BOTNI ISHLATISH</a>
+    </div>
+</div>
+
+<div id="p-mods" class="page">
+    <h3>🎮 MOD O'YINLAR VA APK</h3>
+    <div id="mods-list">
         <div class="card">
-            <h4>Hambi SMART</h4>
-            <p>Premium obuna yoqilgan</p>
+            <div class="badge">GAME</div>
+            <h4>PUBG Mobile Mod</h4>
+            <p>Skinlar va qo'shimcha imkoniyatlar.</p>
+            <button class="btn">YUKLAB OLISH</button>
         </div>
     </div>
 </div>
 
-<div id="p-servis" class="page">
-    <h3>Xizmatlar</h3>
-    <div id="servis-list"></div>
+<div id="p-bots" class="page">
+    <h3>🤖 FOYDALIDAGI BOTLAR</h3>
+    <div id="bots-list">
+        <div class="card">
+            <h4>Video Downloader</h4>
+            <p>Instagram va TikTok'dan video yuklash.</p>
+            <button class="btn">BOTGA O'TISH</button>
+        </div>
+    </div>
 </div>
 
 <div class="nav">
     <div class="nav-item active-nav" onclick="nav('p-home', this)">🏠<br>Asosiy</div>
-    <div class="nav-item" onclick="nav('p-servis', this)">🔳<br>Servislar</div>
-    <div class="nav-item" onclick="openAuth()">🔑<br>Admin</div>
+    <div class="nav-item" onclick="nav('p-mods', this)">🎮<br>Modlar</div>
+    <div class="nav-item" onclick="nav('p-bots', this)">🤖<br>Botlar</div>
+    <div class="nav-item" onclick="openAuth()">⚙️<br>Admin</div>
 </div>
 
 <script>
-    // PAROLNI TEKSHIRISH
+    const P = "saidjon978";
+
     function openAuth() { document.getElementById('admin-auth').style.display = 'block'; }
     function closeAdmin() { 
         document.getElementById('admin-auth').style.display = 'none'; 
@@ -86,37 +123,43 @@
     }
 
     function checkPass() {
-        const pass = document.getElementById('admin-pass').value;
-        if(pass === "saidjon978") {
+        if(document.getElementById('admin-pass').value === P) {
             document.getElementById('admin-auth').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'block';
-        } else {
-            alert("Xato parol!");
-        }
+        } else { alert("Xato!"); }
     }
 
-    // YANGI ELEMENT QO'SHISH
-    function addNewElement() {
-        const name = document.getElementById('new-btn-name').value;
-        const desc = document.getElementById('new-btn-desc').value;
-        const page = document.getElementById('target-page').value;
-        const listId = (page === 'p-home') ? 'home-list' : 'servis-list';
+    // LOCALSTORAGE BILAN ISHLASH
+    window.onload = () => { render('mods-list'); render('bots-list'); };
 
-        if(name && desc) {
-            const newCard = document.createElement('div');
-            newCard.className = 'card';
-            newCard.innerHTML = `<h4>${name}</h4><p>${desc}</p><button class="btn" onclick="alert('${name} bosildi')">Ochish</button>`;
-            
-            document.getElementById(listId).appendChild(newCard);
-            
-            // Tozalash
-            document.getElementById('new-btn-name').value = "";
-            document.getElementById('new-btn-desc').value = "";
+    function saveItem() {
+        const name = document.getElementById('item-name').value;
+        const link = document.getElementById('item-link').value;
+        const type = document.getElementById('item-type').value;
+
+        if(name && link) {
+            const data = JSON.parse(localStorage.getItem(type) || "[]");
+            data.push({name, link});
+            localStorage.setItem(type, JSON.stringify(data));
+            render(type);
             alert("Muvaffaqiyatli qo'shildi!");
+            closeAdmin();
         }
     }
 
-    // NAVIGATSIYA
+    function render(id) {
+        const data = JSON.parse(localStorage.getItem(id) || "[]");
+        const box = document.getElementById(id);
+        if(data.length > 0) {
+            box.innerHTML = data.map(i => `
+                <div class="card">
+                    <h4>${i.name}</h4>
+                    <a href="${i.link}" class="btn">O'TISH</a>
+                </div>
+            `).join('');
+        }
+    }
+
     function nav(id, el) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(id).classList.add('active');
